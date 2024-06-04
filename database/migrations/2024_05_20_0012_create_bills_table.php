@@ -16,7 +16,6 @@ class CreateBillsTable extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->increments('id_bill'); // PK, NOT NULL, tự động tăng
             $table->integer('id_user')->unsigned(); // FK, NOT NULL, Mã khách hàng
-            $table->integer('id_customer')->unsigned(); // FK, NOT NULL, Mã khách hàng
            
             $table->boolean('transport_status')->default(0); // BOOLEAN, Default = 0
             $table->boolean('payment_status')->default(0); // BOOLEAN, Default = 0
@@ -27,7 +26,6 @@ class CreateBillsTable extends Migration
 
             // Add foreign key constraints
             $table->foreign('id_user')->references('id_user')->on('users');
-            $table->foreign('id_customer')->references('id_customer')->on('customers');
           
 
         });
