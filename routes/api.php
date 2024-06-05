@@ -10,6 +10,6 @@ Route::prefix('/cate') -> group(function () {
 });
 Route::prefix('/product') -> group(function () {
     Route::get('/', [ProductController::class, 'product']);
-    Route::get('{id_product}', [ProductController::class, ['productDetail']]);
-    Route::get('{id_category}', [ProductController::class, ['productCate']]);
+    Route::get('{id_product}', [ProductController::class,'productDetail']);
 });
+Route::get('/productcate{id_category}', [ProductController::class,'productCate']);
