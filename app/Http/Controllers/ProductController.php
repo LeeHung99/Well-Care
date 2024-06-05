@@ -7,27 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
-{
-    private $cate;
+{ 
 
-    function __construct(Category $cate)
+    function cate()
     {
-        $this->cate = $cate;
-    }
-
-    function index($id_category = 0, $id_se_category = 0)
-    {
-        $cate = $this->cate->category();
-        $seCate = DB::table('se_categories')
-            ->where('id_category', $id_category)
-            ->get();
-        $thirdCate = DB::table('third_categories')
-            ->where('id_se_category',$id_se_category)
-            ->get();
+        $cate = DB::table('category')->get(); 
+        $seCate = DB::table('se_categories')->get(); 
+        $thirdCate = DB::table('third_categories')->get(); 
+        // dd($cate);
         return response()->json([
             'cate' => $cate,
-            'seCate' => $seCate,
-            'thirdCate' => $thirdCate
+            'se_cate' => $seCate,
+            'third' => $thirdCate
         ], 200);
     }
 }
+

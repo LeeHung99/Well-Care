@@ -5,5 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/{id_category}{id_se_category}', [ProductController::class, 'index']);
-// Route::get('/secate{id}', [ProductController::class, 'secate']);
+Route::prefix('/cate') -> group(function () {
+    Route::get('/', [ProductController::class, 'cate']);
+});
