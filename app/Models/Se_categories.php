@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Se_categories extends Model
 {
@@ -13,5 +14,10 @@ class Se_categories extends Model
     public function Category()
     {
         return $this->belongsTo(Category::class, 'id_category');
+    }
+    public function SeCategory()
+    {
+        $seCate = DB::table('Se_categories')->get();
+        return $seCate;
     }
 }

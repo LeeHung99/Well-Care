@@ -13,12 +13,13 @@ class ProductController extends Controller
     {
         $this->cate = $cate;
     }
-    
-    function index(){
+
+    function index()
+    {
         $cate = $this->cate->category();
-        return response()->json
-        ([
-            'cate' => $cate
-        ], 200);
+        $seCate = $this->seCate->seCategory();
+        return response()->json([
+                'cate' => $cate
+            ], 200);
     }
 }
