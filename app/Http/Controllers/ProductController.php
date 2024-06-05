@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     private $cate;
-
+ 
     function __construct(Category $cate)
     {
         $this->cate = $cate;
@@ -17,9 +17,8 @@ class ProductController extends Controller
     function index()
     {
         $cate = $this->cate->category();
-        $seCate = $this->seCate->seCategory();
         return response()->json([
-                'cate' => $cate
+                'cate' => $cate,
             ], 200);
     }
 }
