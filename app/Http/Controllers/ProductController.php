@@ -14,13 +14,37 @@ class ProductController extends Controller
         $cate = DB::table('category')->get();
         $seCate = DB::table('se_categories')->get();
         $thirdCate = DB::table('third_categories')->get();
-        // dd($cate);
+
+
+        /*  Huy   */
+        $seById = [];
+        $thirdById = [];
+
+        foreach ($cate as $category) {
+            $data = DB::table('se_categories')
+                ->where('id_category', $category->id_category)
+                ->get();
+
+            $seById[$category->id_category] = $data;
+        }
+
+        foreach ($seCate as $seCategory) {
+            $data = DB::table('third_categories')
+                ->where('id_se_category', $seCategory->id_se_category)
+                ->get();
+
+            $thirdById[$seCategory->id_se_category] = $data;
+        }
+
         return response()->json([
             'cate' => $cate,
-            'se_cate' => $seCate,
-            'third' => $thirdCate
+            'seById' => $seById,
+            'thirdById' => $thirdById,
         ], 200);
+
+        /*  Huy   */
     }
+
     function product()
     {
         $product = DB::table('products')->get();
@@ -39,11 +63,56 @@ class ProductController extends Controller
         ], 200);
     }
 
+
+    /*  Huy   */
+    function productSale()
+    {
+        $data = DB::table('products')
+            ->orderBy('sale', 'desc')
+            ->limit(5)
+            ->get();
+
+        return response()->json([
+            'productSale' => $data
+        ], 200);
+    }
+
+    function productHot()
+    {
+        $data = DB::table('products')
+            ->where('hot', 1)
+            ->limit(5)
+            ->get();
+        return response()->json([
+            'productHot' => $data
+        ], 200);
+    }
+
+    function productSold()
+    {
+        $data = DB::table('products')
+            ->orderBy('sold', 'desc')
+            ->limit(5)
+            ->get();
+        return response()->json([
+            'productSold' => $data
+        ], 200);
+    }
+
+    function voucher(){
+        $data = DB::table('vouchers')
+            ->limit(4)
+            ->get();
+        return response()->json([
+            'voucher' => $data
+        ], 200);
+    }
+
     function productCate($id_category)
     {
         $productCate = DB::table('products')
-        ->where('id_third_category',$id_category)
-        ->get();
+            ->where('id_third_category', $id_category)
+            ->get();
         return response()->json([
             'productCate' => $productCate
         ], 200);
