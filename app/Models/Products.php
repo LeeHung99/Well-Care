@@ -18,4 +18,8 @@ class Products extends Model
     {
         return $this->belongsTo(Third_categories::class, 'id_image_product');
     }
+    public function Sick(){
+        return $this->belongsTo(Sick::class, 'id_sick');
+    }
+
 }
