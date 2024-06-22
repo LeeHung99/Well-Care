@@ -13,15 +13,12 @@ Route::prefix('/product')->group(function () {
     Route::get('{id_product}', [ProductController::class, 'productDetail']);
 });
 
-
-
 //Huy
 Route::get('sale', [ProductController::class, 'productSale']);
 Route::get('hot', [ProductController::class, 'productHot']);
 Route::get('sold', [ProductController::class, 'productSold']);
 Route::get('voucher', [ProductController::class, 'voucher']);
 
-
-
-
 Route::get('/productcate{id_category}', [ProductController::class, 'productCate']);
+Route::get('bill', [ProductController::class, 'bill']);
+Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
