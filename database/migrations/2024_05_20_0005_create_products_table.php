@@ -4,11 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
-     * 
+     *
      */
     public function up()
     {
@@ -16,6 +17,8 @@ return new class extends Migration {
             $table->increments('id_product'); // PK, NOT NULL, tự động tăng
             $table->integer('id_third_category')->unsigned(); // FK, NOT NULL
             $table->integer('id_image_product')->unsigned(); // FK, NOT NULL
+            $table->integer('id_sick')->unsigned(); // FK, NOT NULL
+            $table->integer('id_object')->unsigned(); // FK, NOT NULL
             $table->string('name', 250); // NOT NULL
             $table->string('avatar'); // NOT NULL
             $table->integer('price'); // NOT NULL
@@ -25,13 +28,14 @@ return new class extends Migration {
             $table->boolean('hot')->default(0); // BOOLEAN, Default = 0
             $table->integer('sold'); // NOT NULL
             $table->integer('sale')->default(0); // Default = 0
-            $table->string('sick', 250)->nullable(); // NULL
             $table->string('symptom', 250)->nullable(); // NULL
             $table->boolean('hide')->default(0); // BOOLEAN, Default = 0
 
             // Add foreign key constraints
             $table->foreign('id_third_category')->references('id_third_category')->on('third_categories');
             $table->foreign('id_image_product')->references('id_image_product')->on('image_products');
+            $table->foreign('id_sick')->references('id_sick')->on('sick');
+            $table->foreign('id_object')->references('id_object')->on('object');
 
             // Add timestamps (created_at and updated_at columns)
             $table->timestamps();
@@ -41,7 +45,7 @@ return new class extends Migration {
     /**
      * Reverse the migrations.
      *
-     * 
+     *
      */
     public function down()
     {

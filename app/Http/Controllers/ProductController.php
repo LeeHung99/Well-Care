@@ -117,4 +117,20 @@ class ProductController extends Controller
             'productCate' => $productCate
         ], 200);
     }
+
+    function bill(){
+        $bill = DB::table('bills')
+        ->get();
+        return response()->json([
+            'bill' => $bill
+        ], 200);
+    }
+    function billdetail($id_bill){
+        $billdetail = DB::table('bill_details')
+        ->where('id_bill',$id_bill)
+        ->get();
+        return response()->json([
+            'billdetail' => $billdetail
+        ], 200);
+    }
 }
