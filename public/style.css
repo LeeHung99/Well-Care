@@ -1,0 +1,71 @@
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.admin-bar{
+    width: 100%;
+    height: 40px;
+    background-color: #1d2327;
+}
+.admin-bar .nav-bar{
+    height: 40px;
+    align-items: center;
+}
+.admin-bar i{
+    font-size: 18px;
+    padding: 0 10px;
+    color: #fff;
+}
+.admin-bar p{
+    margin: 0;
+    color: #fff;
+}
+.admin-bar .view-website{
+    position: relative;
+    cursor: pointer;
+}
+.admin-bar .view-user{
+    cursor: pointer;
+}
+.admin-bar .dropdown-view-user{
+    display: none;
+    position: absolute; 
+    top: 30px; 
+    right: 0; 
+    background: #1d2327d8; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+.admin-bar .view-user:hover .dropdown-view-user {
+    display: block;
+}
+.admin-bar .view-user .dropdown-view-user ul{
+    margin: 0;
+    padding: 10px;
+}
+.admin-bar .view-user .dropdown-view-user ul li a{
+    color: #c7c7c7;
+}
+.admin-bar .view-user .dropdown-view-user ul li a:hover{
+    color: #fff;
+}
+
+.main-admin .contain-side-bar{
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+    background-color: #1d2327;
+}
+.accordion{
+    --bs-accordion-bg: #1d2327;
+    --bs-accordion-active-bg: #1d2327;
+    --bs-accordion-active-color: #fff;
+}
+.accordion-button{
+    color: #fff;
+}
+.list-group{
+    --bs-list-group-bg: #1d2327;
+}

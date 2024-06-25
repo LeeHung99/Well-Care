@@ -14,8 +14,6 @@ class ProductController extends Controller
         $cate = DB::table('category')->get();
         $seCate = DB::table('se_categories')->get();
         $thirdCate = DB::table('third_categories')->get();
-
-
         /*  Huy   */
         $seById = [];
         $thirdById = [];
@@ -131,6 +129,21 @@ class ProductController extends Controller
         ->get();
         return response()->json([
             'billdetail' => $billdetail
+        ], 200);
+    }
+    function sick(){
+        $sick = DB::table('sick')
+        ->get();
+        return response()->json([
+            'sick' => $sick
+        ], 200);
+    }
+    function productsick($id_sick){
+        $productsick = DB::table('products')
+        ->where('id_sick',$id_sick)
+        ->get();
+        return response()->json([
+            'productsick' => $productsick
         ], 200);
     }
 }
