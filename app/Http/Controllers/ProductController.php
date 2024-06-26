@@ -138,6 +138,20 @@ class ProductController extends Controller
             'sick' => $sick
         ], 200);
     }
+    function object(){
+        $object = DB::table('object')
+        ->get();
+        return response()->json([
+            'object' => $object
+        ], 200);
+    }
+    function banner(){
+        $banner = DB::table('image_banners')
+        ->get();
+        return response()->json([
+            'banner' => $banner
+        ], 200);
+    }
     function productsick($id_sick){
         $productsick = DB::table('products')
         ->where('id_sick',$id_sick)
