@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Notifications\Messages\VonageMessage;
 use Illuminate\Http\Request;
-
+use App\Services\SmsService;
+use App\Services\VonageService;
+use App\Services\SpeedSMSService;
 class UserController extends Controller
 {
-    public function login(Request $request)
+    protected $speedSMSService;
+
+    public function __construct(SpeedSMSService $speedSMSService)
     {
-        $basic  = new \Vonage\Client\Credentials\Basic("ac42e63e", "muW2swq0QOWIoeH2");
-        $client = new \Vonage\Client($basic);
+        $this->speedSMSService = $speedSMSService;
+    }
 
-        $OTP_CODE = 123;
-        $phone_number = $request->phone;
-        $response = $client->sms()->send(
+    public function send(Request $request)
+    {
+        $phoneNumber = '84962925412' ;
+        $message = 'test OTP';
 
-            // phone number
-            new \Vonage\SMS\Message\SMS("84339332612", 'Nhà thuốc WellCare', 'Mã OTP: '.$OTP_CODE.'')
-        );
+        $response = $this->speedSMSService->sendSMS($phoneNumber, $message);
 
-        $message = $response->current();
-
-        if ($message->getStatus() == 0) {
-            echo "The message was sent successfully\n";
-        } else {
-            echo "The message failed with status: " . $message->getStatus() . "\n";
-        }
+        return response()->json($response);
     }
 }
