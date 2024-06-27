@@ -146,4 +146,26 @@ class ProductController extends Controller
             'productsick' => $productsick
         ], 200);
     }
+    function articlePost(){
+        $articlePost = DB::table('article_categories')
+        ->get();
+        return response()->json([
+            'articlePost' => $articlePost
+        ], 200);
+    }
+    function post(){
+        $post = DB::table('posts')
+        ->get();
+        return response()->json([
+            'post' => $post
+        ], 200);
+    }
+    function postbycate($id_cate){
+        $postbycate = DB::table('posts')
+        ->where('id_article_category',$id_cate)
+        ->get();
+        return response()->json([
+            'postbycate' => $postbycate
+        ], 200);
+    }
 }

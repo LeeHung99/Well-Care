@@ -22,4 +22,7 @@ Route::get('productsick{id_sick}', [ProductController::class, 'productsick']);
 Route::get('/productcate{id_category}', [ProductController::class, 'productCate']);
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
+Route::get('articlePost', [ProductController::class, 'articlePost']);
+Route::get('post', [ProductController::class, 'post']);
+Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
 Route::get('login', [UserController::class, 'login']);
