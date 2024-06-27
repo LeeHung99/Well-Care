@@ -182,4 +182,20 @@ class ProductController extends Controller
             'postbycate' => $postbycate
         ], 200);
     }
+    function postDetail($id_post){
+        $postdetail = DB::table('posts')
+        ->where('id_post',$id_post)
+        ->get();
+        return response()->json([
+            'postdetail' => $postdetail
+        ], 200);
+    }
+    function user(){
+        $user = DB::table('users')
+        ->get();
+        return response()->json([
+            'user' => $user
+        ], 200);
+    }
+    
 }
