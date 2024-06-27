@@ -160,4 +160,10 @@ class ProductController extends Controller
             'productsick' => $productsick
         ], 200);
     }
+    function test($id_cate){
+        $test = DB::table('third_categories')->where('id_se_category',$id_cate)->get();
+        return response()->json([
+            'test' => $test
+        ], 200);
+    }
 }
