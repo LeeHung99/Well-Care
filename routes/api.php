@@ -29,6 +29,6 @@ Route::get('test{id_cate}', [ProductController::class, 'test']);
 Route::get('articlePost', [ProductController::class, 'articlePost']);
 Route::get('post', [ProductController::class, 'post']);
 Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
-Route::get('user', [ProductController::class, 'user ']);
+Route::get('user', [ProductController::class, 'user']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
 Route::get('login', [UserController::class, 'login']);

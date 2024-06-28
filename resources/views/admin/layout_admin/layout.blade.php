@@ -12,7 +12,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/29ac88f093.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -57,7 +57,7 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Tất cả bài viết</a></li>
+                                            <li class="list-group-item"><a href="/admin/post" class="nav-link text-white">Tất cả bài viết</a></li>
                                             <li class="list-group-item"><a href="" class="nav-link text-white">Viết bài mới</a></li>
                                         </ul>
                                     </div>
@@ -150,7 +150,11 @@
                     </div>
                 </div>
                 <div class="col-xl-10">
-
+                    <div class="row">
+                        <div class="col-xl-12">
+                            @yield('noidungchinh')
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
