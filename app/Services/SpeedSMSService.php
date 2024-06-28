@@ -26,7 +26,7 @@ class SpeedSMSService
                 'json' => [
                     'to' => [$phoneNumber],
                     'content' => $message,
-                    'sms_type' => 2 // 2 là quảng cáo, 1 là OTP, 3 là CSKH
+                    'sms_type' => 5 // 2 là quảng cáo, 1 là OTP, 3 là CSKH
                 ]
             ]);
 

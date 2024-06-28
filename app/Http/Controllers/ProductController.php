@@ -203,5 +203,4 @@ class ProductController extends Controller
             'user' => $user
         ], 200);
     }
-    
 }
