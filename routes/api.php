@@ -15,7 +15,7 @@ Route::prefix('/product')->group(function () {
 });
 Route::get('sale', [ProductController::class, 'productSale']);
 Route::get('hot', [ProductController::class, 'productHot']);
-Route::get('sold', [ProductController::class, 'productSold']);
+Route::get('sold', [ProductController::class, 'productSold']);  
 Route::get('voucher', [ProductController::class, 'voucher']);
 Route::get('sick', [ProductController::class, 'sick']);
 Route::get('object', [ProductController::class, 'object']);
@@ -27,7 +27,6 @@ Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
 Route::get('articlePost', [ProductController::class, 'articlePost']);
 Route::get('post', [ProductController::class, 'post']);
 Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
-Route::get('user', [ProductController::class, 'user']);
-
+Route::get('user', [ProductController::class, 'user ']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
 Route::get('login', [UserController::class, 'login']);
