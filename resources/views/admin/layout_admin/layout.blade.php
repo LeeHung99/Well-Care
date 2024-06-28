@@ -58,7 +58,7 @@
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item"><a href="/admin/post" class="nav-link text-white">Tất cả bài viết</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Viết bài mới</a></li>
+                                            <li class="list-group-item"><a href="/admin/createpost" class="nav-link text-white">Viết bài mới</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -78,7 +78,6 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Tất cả danh mục</a></li>
                                             <li class="list-group-item"><a href="" class="nav-link text-white">Danh mục cấp 1</a></li>
                                             <li class="list-group-item"><a href="" class="nav-link text-white">Danh mục cấp 2</a></li>
                                             <li class="list-group-item"><a href="" class="nav-link text-white">Danh mục cấp 3</a></li>
