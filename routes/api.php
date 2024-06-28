@@ -25,11 +25,9 @@ Route::get('/productcate{id_category}', [ProductController::class, 'productCate'
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
 Route::get('login', [UserController::class, 'send']);
-Route::get('login', [UserController::class, 'login']);
 Route::get('test{id_cate}', [ProductController::class, 'test']);
 Route::get('articlePost', [ProductController::class, 'articlePost']);
 Route::get('post', [ProductController::class, 'post']);
 Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
 Route::get('user', [ProductController::class, 'user ']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
-Route::get('login', [UserController::class, 'login']);
