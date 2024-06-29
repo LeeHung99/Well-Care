@@ -1,16 +1,18 @@
 <?php
 
+use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\ProductController;
-use App\Http\Middleware\CheckAdmin;
+use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\AdminPostsController;
 
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
-
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
+Route::get('order_view', [CheckOutController::class, 'test_view_checkout'])->name('order_view');
+Route::post('order_test', [CheckOutController::class, 'store'])->name('order_test');
 
 Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function()  {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');

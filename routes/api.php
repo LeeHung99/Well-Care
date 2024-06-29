@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckOutController;
 
 
 Route::prefix('/cate')->group(function () {
@@ -34,3 +35,7 @@ Route::get('post', [ProductController::class, 'post']);
 Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
 Route::get('user', [ProductController::class, 'user']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
+
+// payment route
+Route::post('order', [CheckOutController::class, 'store']);
+
