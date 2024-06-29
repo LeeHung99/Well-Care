@@ -11,7 +11,7 @@ Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
 
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
-
+Route::get('/exit', [AdminController::class, 'exit']);
 Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function()  {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/post', [AdminPostsController::class, 'index']);
