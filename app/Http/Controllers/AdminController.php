@@ -42,20 +42,17 @@ class AdminController extends Controller
                 $request->session()->regenerate();
                 return redirect()->route('dashboard')->with('success', 'Welcome Admin!');
             } else {
-                // Auth::logout();
-                return 'Tài khoản không có quyền admin';
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Tài khoản không có quyền admin');
+                // return 'Tài khoản không có quyền admin';
                 // return back()->withErrors(['email' => 'Tài khoản không có quyền admin']);
                 // return response()->json(['error' => 'Tài khoản không có quyền admin !'], 400)->back();
             }
         }
 
-        return 'Không có tài khoản';
+        // return 'Không có tài khoản';
+        return redirect()->route('login')->with('error', 'Tài khoản không tồn tại');
         // return back()->withErrors(['email' => 'Tài khoản không tồn tại !'], 400);
         // return response()->json(['error' => 'Tài khoản không tồn tại !'], 400)->back();
-    }
-    function exit()
-    {
-        auth()->guard('web')->logout();
-        return redirect('/login')->with('thongbao', 'Bạn đã thoát thành công');
     }
 }
