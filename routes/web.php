@@ -5,9 +5,15 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\CheckAdmin;
 
-Route::group(['prefix' => 'admin'], function()  {
-    Route::get('/', [AdminController::class, 'index']);
+Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
+Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
+
+// Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
+
+Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function()  {
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/post', [AdminPostsController::class, 'index']);
     Route::get('/createpost', [AdminPostsController::class, 'createpost']);
     Route::post('/storepost', [AdminPostsController::class, 'storepost']);
@@ -15,5 +21,5 @@ Route::group(['prefix' => 'admin'], function()  {
     Route::post('/updatepost{id_post}', [AdminPostsController::class, 'updatepost']);
     Route::post('/destroypost{id_post}', [AdminPostsController::class, 'destroypost']);
 });
-Route::get('login', [UserController::class, 'send']);
-Route::post('/send-sms', [UserController::class, 'send']);
+
+

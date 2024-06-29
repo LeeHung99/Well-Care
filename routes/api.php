@@ -24,7 +24,10 @@ Route::get('productsick{id_sick}', [ProductController::class, 'productsick']);
 Route::get('/productcate{id_category}', [ProductController::class, 'productCate']);
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
-Route::get('login', [UserController::class, 'send']);
+
+Route::post('loginSMS', [UserController::class, 'send']);
+Route::post('loginSMS_verify', [UserController::class, 'verify']); 
+
 Route::get('test{id_cate}', [ProductController::class, 'test']);
 Route::get('articlePost', [ProductController::class, 'articlePost']);
 Route::get('post', [ProductController::class, 'post']);
