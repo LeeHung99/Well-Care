@@ -3,7 +3,7 @@
     <div class="title_post d-flex my-3">
         <h2 class="me-3">Thêm bài viết</h2>
     </div>
-    <form class="m-auto" id="frm" method="post" action="/admin/storepost"> @csrf
+    <form class="m-auto" id="frm" method="post" action="/admin/storepost" enctype="multipart/form-data"> @csrf
         <div class="row">
             <div class="col-xl-9">
                 <div class='mb-3 px-2'>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="card-body">
                         <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="imgInp" name="avatar">
+                            <input type="file" name="avatar" class="form-control" id="imgInp" >
                         </div>
                         <img id="blah" src="#" alt="your image" width="100px" height="100px" />
                     </div>

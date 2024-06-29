@@ -12,18 +12,18 @@ class AdminController extends Controller
     {
         return view('index');
     }
-    // public function createAdminUser()
-    // {
-    //     $user = new User();
-    //     $user->name = 'user Test';
-    //     $user->password = Hash::make('password123');
-    //     $user->phone = 111111111;
-    //     $user->email = 'user@test.com';
-    //     $user->role = 0; 
-    //     $user->save();
+    public function createAdminUser()
+    {
+        $user = new User();
+        $user->name = 'user Test';
+        $user->pass = Hash::make('password123');
+        $user->phone = '111111111';
+        $user->email = 'user@test.com';
+        $user->role = 1; 
+        $user->save();
 
-    //     return 'Admin user created successfully!';
-    // }
+        return 'Admin user created successfully!';
+    }
     public function loginAdmin()
     {
         return view('/login.loginView');

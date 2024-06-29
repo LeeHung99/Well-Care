@@ -14,6 +14,7 @@ Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('logi
 Route::get('order_view', [CheckOutController::class, 'test_view_checkout'])->name('order_view');
 Route::post('order_test', [CheckOutController::class, 'store'])->name('order_test');
 
+Route::get('/exit', [AdminController::class, 'exit']);
 Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function()  {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/post', [AdminPostsController::class, 'index']);
