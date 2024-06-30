@@ -15,8 +15,8 @@ return [
     |
     */
 
-    'default' => env('CACHE_STORE', 'database'), // default cache bằng database
-    // 'default' => env('CACHE_DRIVER', 'array'),
+    // 'default' => env('CACHE_STORE', 'database'), // default cache bằng database
+    'default' => env('CACHE_DRIVER', 'array'),
 
     /*
     |--------------------------------------------------------------------------
