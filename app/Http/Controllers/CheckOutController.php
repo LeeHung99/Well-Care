@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bills;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 class CheckOutController extends Controller
 {
+    protected $productArr = [];
     public function test_view_checkout()
     {
         return view('test_view_checkout');
@@ -53,31 +55,36 @@ class CheckOutController extends Controller
                 3 => [
                     'quantity' => 1,
                     'price' => 10,
-                    'total_amount' => 10,
                 ],
                 10 => [
                     'quantity' => 2,
                     'price' => 10,
-                    'total_amount' => 10,
                 ],
                 12 => [
                     'quantity' => 3,
                     'price' => 10,
-                    'total_amount' => 10,
                 ],
                 13 => [
                     'quantity' => 4,
                     'price' => 10,
-                    'total_amount' => 10,
+
                 ],
             ];
 
-            // session([
-            //     'pending_order' => [
-            //         'request' => $request->all(),
-            //         'productArr' => $productArr,
-            //     ]
+            $dataToInsert = [];
+            foreach ($productArr as $id_product => $details) {
+                $details['id_product'] = $id_product;
+                $dataToInsert[] = $details;
+            }
+
+            // Chèn dữ liệu vào bảng
+            DB::table('product_session')->insert($dataToInsert);
+            // Session::put('pending_order', [
+            //     'request' => $request->all(),
+            //     'productArr' => $productArr,
             // ]);
+            Log::info('Session after setting:', ['pending_order' => session('pending_order')]);
+            // Log::info('Session ID:', ['id' => session()->getId()]);
             // $validatedData = $request->validate([
             //     'name' => 'required|string|max:255',
             //     'phone' => 'required|string|max:15',
@@ -114,13 +121,13 @@ class CheckOutController extends Controller
                 // Lấy đường dẫn thanh toán từ MoMo và redirect người dùng
                 $payUrl = $response['payUrl'];
 
-                session([
-                    'pending_order' => [
-                        'request' => $request->all(),
-                        'productArr' => $productArr,
-                        'orderId' => $response['orderId'] // Giả sử MoMo trả về orderId
-                    ]
-                ]);
+                // session([
+                //     'pending_order' => [
+                //         'request' => $request->all(),
+                //         'productArr' => $productArr,
+                //         'orderId' => $response['orderId'] // Giả sử MoMo trả về orderId
+                //     ]
+                // ]);
 
 
                 // Lưu thông tin đơn hàng vào database
@@ -182,12 +189,7 @@ class CheckOutController extends Controller
     {
         try {
             // Thực hiện tạo yêu cầu thanh toán với VNPAY
-            $orderData = [
-                'request' => $request->all(),
-                'productArr' => $productArr,
-            ];
-
-            session(['pending_order' => $orderData]);
+            // dd(session('pending_order'));
             // Cache::put('pending_order', $orderData, now()->addMinutes(30));
             // Cache::remember('pending_order', now()->addMinutes(30), function () use ($orderData) {
             //     return $orderData;
@@ -365,7 +367,11 @@ class CheckOutController extends Controller
 
         if ($secureHash == $vnp_SecureHash) {
             // Lấy thông tin từ session
-            $orderData = session('pending_order');
+            $orderData = $request->session()->get('pending_order');
+            // $orderData = Session::get('pending_order');
+            Log::info('Session after setting:', ['pending_order' => $orderData]);
+            // Log::info('Session ID:', ['id' => session()->getId()]);
+            dd($orderData);
             try {
                 $this->saveOrderToDatabase($request, $productArr);
                 return redirect('/order_view')->with('success', 'Đơn hàng đã được lưu thành công!');
@@ -387,8 +393,9 @@ class CheckOutController extends Controller
                 throw new \Exception('Không có sản phẩm trong đơn hàng');
             }
 
-            $orderData = session('pending_order');
-            // dd($orderData);
+            // $orderData = session('pending_order');
+            $orderData = DB::table('product_session')->get();
+            dd($orderData);
             // Tạo đơn hàng mới
             $bill = Bills::create([
                 'id_user' => 2, // Đảm bảo rằng user với id này tồn tại
