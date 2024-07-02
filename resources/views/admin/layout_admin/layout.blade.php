@@ -25,12 +25,12 @@
                         <p>Well-care</p>
                     </div>
                     <div class="view-user d-flex">
-                        <p>Chào, <span>Admin</span></p>
+                        <p> Chào, <span> {{ Auth::user()->name }}</span></p>
                         <i class="fa-solid fa-user"></i>
                         <div class="dropdown-view-user">
                             <ul class="menu-user">
                                 <li><a href="">Chỉnh sửa hồ sơ</a></li>
-                                <li><a href="">Đăng xuất</a></li>
+                                <li><a href="/exit">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>
@@ -57,8 +57,10 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="/admin/post" class="nav-link text-white">Tất cả bài viết</a></li>
-                                            <li class="list-group-item"><a href="/admin/createpost" class="nav-link text-white">Viết bài mới</a></li>
+                                            <li class="list-group-item"><a href="/admin/post"
+                                                    class="nav-link text-white">Tất cả bài viết</a></li>
+                                            <li class="list-group-item"><a href="/admin/createpost"
+                                                    class="nav-link text-white">Viết bài mới</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -78,9 +80,12 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Danh mục cấp 1</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Danh mục cấp 2</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Danh mục cấp 3</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Danh mục cấp 1</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Danh mục cấp 2</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Danh mục cấp 3</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -97,8 +102,10 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Tất cả sản phẩm</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Thêm sản phẩm</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Tất cả sản phẩm</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Thêm sản phẩm</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -118,19 +125,23 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Logo</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Banner Header</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Banner Main</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Banner Footer</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Logo</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Banner Header</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Banner Main</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Banner Footer</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapseFive" aria-expanded="false"
-                                        aria-controls="flush-collapseFive">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
+                                        aria-expanded="false" aria-controls="flush-collapseFive">
                                         Thành viên
                                     </button>
                                 </h2>
@@ -138,9 +149,12 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Tất cả người dùng</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Thêm người dùng mới</a></li>
-                                            <li class="list-group-item"><a href="" class="nav-link text-white">Hồ sơ</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Tất cả người dùng</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Thêm người dùng mới</a></li>
+                                            <li class="list-group-item"><a href=""
+                                                    class="nav-link text-white">Hồ sơ</a></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -12,18 +12,18 @@ class AdminController extends Controller
     {
         return view('index');
     }
-    // public function createAdminUser()
-    // {
-    //     $user = new User();
-    //     $user->name = 'user Test';
-    //     $user->password = Hash::make('password123');
-    //     $user->phone = 111111111;
-    //     $user->email = 'user@test.com';
-    //     $user->role = 0; 
-    //     $user->save();
+    public function createAdminUser()
+    {
+        $user = new User();
+        $user->name = 'user Test';
+        $user->pass = Hash::make('password123');
+        $user->phone = '111111111';
+        $user->email = 'user@test.com';
+        $user->role = 1; 
+        $user->save();
 
-    //     return 'Admin user created successfully!';
-    // }
+        return 'Admin user created successfully!';
+    }
     public function loginAdmin()
     {
         return view('/login.loginView');
@@ -42,15 +42,17 @@ class AdminController extends Controller
                 $request->session()->regenerate();
                 return redirect()->route('dashboard')->with('success', 'Welcome Admin!');
             } else {
-                // Auth::logout();
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Tài khoản không có quyền admin');
                 // return 'Tài khoản không có quyền admin';
                 // return back()->withErrors(['email' => 'Tài khoản không có quyền admin']);
-                return response()->json(['error' => 'Tài khoản không có quyền admin !'], 400)->back();
+                // return response()->json(['error' => 'Tài khoản không có quyền admin !'], 400)->back();
             }
         }
 
         // return 'Không có tài khoản';
+        return redirect()->route('login')->with('error', 'Tài khoản không tồn tại');
         // return back()->withErrors(['email' => 'Tài khoản không tồn tại !'], 400);
-        return response()->json(['error' => 'Tài khoản không tồn tại !'], 400)->back();
+        // return response()->json(['error' => 'Tài khoản không tồn tại !'], 400)->back();
     }
 }

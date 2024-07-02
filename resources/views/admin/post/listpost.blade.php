@@ -50,12 +50,10 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td colspan="6"> {{ $posts->onEachSide(3)->links() }}
-                                </td>
-                            </tr>
+                                
                         </tbody>
                     </table>
+                    {{ $posts->onEachSide(3)->links() }}
                 </div>
             </div>
         </div>

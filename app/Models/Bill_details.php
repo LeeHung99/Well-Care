@@ -10,6 +10,7 @@ class Bill_details extends Model
     use HasFactory;
     protected $table = 'bill_details';
     protected $primaryKey = 'id_bill_details';
+    protected $fillable = ['id_product', 'quantity', 'total_amount'];
     public function Bills()
     {
         return $this->belongsTo(Bills::class, 'id_bill');
