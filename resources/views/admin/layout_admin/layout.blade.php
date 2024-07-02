@@ -111,7 +111,9 @@
                                 </div>
                             </div>
                             <div class="accordion-item">
-                                <button class="accordion-button collapsed" type="button">Các ưu đãi</button>
+                                <button class="accordion-button collapsed" type="button">
+                                    <a href="/admin/voucher" class="nav-link text-white">Các ưu đãi</a>
+                                </button>
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
@@ -125,14 +127,10 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="/admin/logo"
                                                     class="nav-link text-white">Logo</a></li>
-                                            <li class="list-group-item"><a href=""
-                                                    class="nav-link text-white">Banner Header</a></li>
-                                            <li class="list-group-item"><a href=""
-                                                    class="nav-link text-white">Banner Main</a></li>
-                                            <li class="list-group-item"><a href=""
-                                                    class="nav-link text-white">Banner Footer</a></li>
+                                            <li class="list-group-item"><a href="/admin/banner"
+                                                    class="nav-link text-white">Banner</a></li>
                                         </ul>
                                     </div>
                                 </div>

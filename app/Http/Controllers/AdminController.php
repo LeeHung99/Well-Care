@@ -55,4 +55,8 @@ class AdminController extends Controller
         // return back()->withErrors(['email' => 'Tài khoản không tồn tại !'], 400);
         // return response()->json(['error' => 'Tài khoản không tồn tại !'], 400)->back();
     }
+    public function exit(){
+        auth()->guard('web')->logout();
+        return redirect('/login')->with('thongbao', 'Bạn đã thoát thành công');
+    }
 }

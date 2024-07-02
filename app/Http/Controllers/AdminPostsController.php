@@ -32,35 +32,35 @@ class AdminPostsController extends Controller
         return view('admin/post/creatpost', ['catepost' => $catepost, 'user' => $user]);
     }
     public function storepost(PostValid $request)
-{
-    $title = $request['title'];
-    $shortdes = $request['shortdes'];
-    $description = $request['des'];
-    $id_cate = $request['id_cate'];
+    {
+        $title = $request['title'];
+        $shortdes = $request['shortdes'];
+        $description = $request['des'];
+        $id_cate = $request['id_cate'];
 
-    if ($request->hasFile('avatar')) {
-        if (!is_dir(public_path('images/post'))) {
-            mkdir(public_path('images/post'), 0777, true);
+        if ($request->hasFile('avatar')) {
+            if (!is_dir(public_path('images/post'))) {
+                mkdir(public_path('images/post'), 0777, true);
+            }
+            $file = $request->file('avatar');
+            $filename = $file->getClientOriginalName();
+            $filePath = 'images/post/' . $filename;
+            $file->move(public_path('images/post'), $filename);
+        } else {
+            $filename = null;
         }
-        $file = $request->file('avatar');
-        $filename = $file->getClientOriginalName();
-        $filePath = 'images/post/' . $filename;
-        $file->move(public_path('images/post'), $filename);
-    } else {
-        $filename = null; // Or set a default image name
-    }
-    DB::table('posts')->insert([
-        'title' => $title,
-        'short_des' => $shortdes,
-        'description' => $description,
-        'id_article_category' => $id_cate,
-        'avatar' => $filename,
-        'id_user' =>  Auth::user()->id_user,
-    ]);
+        DB::table('posts')->insert([
+            'title' => $title,
+            'short_des' => $shortdes,
+            'description' => $description,
+            'id_article_category' => $id_cate,
+            'avatar' => $filename,
+            'id_user' =>  Auth::user()->id_user,
+        ]);
 
-    $request->session()->flash('thongbao', 'Thêm bài viết thành công');
-    return redirect('/admin/post');
-}
+        $request->session()->flash('thongbao', 'Thêm bài viết thành công');
+        return redirect('/admin/post');
+    }
 
     public function editpost(Request $request, string $id_post)
     {
