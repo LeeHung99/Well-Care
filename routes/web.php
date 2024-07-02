@@ -5,6 +5,7 @@ use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminLogoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\AdminPostsController;
@@ -44,10 +45,7 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/updatevoucher{id_voucher}', [AdminVoucherController::class, 'updatevoucher']);
     Route::post('/destroyvoucher{id_voucher}', [AdminVoucherController::class, 'destroyvoucher']);
 
-    Route::get('/logo', [AdminVoucherController::class, 'index']);
-    Route::get('/createlogo', [AdminVoucherController::class, 'createlogo']);
-    Route::post('/storelogo', [AdminVoucherController::class, 'storelogo']);
-    Route::get('/editlogo{id_logo}', [AdminVoucherController::class, 'editlogo']);
-    Route::post('/updatelogo{id_logo}', [AdminVoucherController::class, 'updatelogo']);
-    Route::post('/destroylogo{id_logo}', [AdminVoucherController::class, 'destroylogo']);
+    Route::get('/logo', [AdminLogoController::class, 'index']);
+    Route::get('/editlogo{id_logo}', [AdminLogoController::class, 'editlogo']);
+    Route::post('/updatelogo{id_logo}', [AdminLogoController::class, 'updatelogo']);
 });
