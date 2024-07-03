@@ -100,7 +100,7 @@ class CheckOutController extends Controller
                 $details['id_product'] = $id_product;
                 $dataToInsert[] = $details;
             }
-            DB::table('product_session')->truncate();
+            DB::table('product_session')->truncate();   
             // // Chèn dữ liệu vào bảng
             DB::table('product_session')->insert($dataToInsert);
 

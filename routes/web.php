@@ -16,7 +16,7 @@ Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('logi
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
 
 Route::get('order_view', [CheckOutController::class, 'test_view_checkout'])->name('order_view');
-Route::post('order_test', [CheckOutController::class, 'store'])->name('order_test');
+Route::post('/order_test', [CheckOutController::class, 'store'])->name('order_test');
 Route::get('vnpay_return', [CheckOutController::class, 'vnpayReturn'])->name('vnpay_return');
 Route::get('/momo-callback', [CheckOutController::class, 'momoCallback'])->name('momo.callback');
 
