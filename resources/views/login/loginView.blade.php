@@ -89,7 +89,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Login Admin</h2>
+                    <h2 class="heading-section">ĐĂNG NHẬP ADMIN</h2>
                 </div>
             </div>
             <form action="{{ route('loginVerify') }}" method="post">
@@ -100,7 +100,7 @@
                             <div class="icon d-flex align-items-center justify-content-center">
                                 <span class="fa fa-user-circle"></span>
                             </div>
-                            <h3 class="text-center mb-4">Sign In</h3>
+                            <h3 class="text-center mb-4">Đăng nhập</h3>
                             @if (session('error'))
                                 <div class="alert alert-danger text-center" role="alert">
                                     {{ session('error') }}
@@ -122,18 +122,7 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="submit"
-                                        class="form-control btn btn-primary rounded submit px-3">Login</button>
-                                </div>
-                                <div class="form-group d-md-flex">
-                                    <div class="w-50">
-                                        <label class="checkbox-wrap checkbox-primary">Remember Me
-                                            <input type="checkbox" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="w-50 text-md-right">
-                                        <a href="#">Forgot Password</a>
-                                    </div>
+                                        class="form-control btn btn-primary rounded submit px-3">Đăng nhập</button>
                                 </div>
                             </form>
                         </div>
