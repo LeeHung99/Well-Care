@@ -26,8 +26,7 @@ Route::get('/productcate{id_category}', [ProductController::class, 'productCate'
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
 
-Route::post('loginSMS', [UserController::class, 'send']);
-Route::post('loginSMS_verify', [UserController::class, 'verify']);
+
 
 Route::get('test{id_cate}', [ProductController::class, 'test']);
 Route::get('articlePost', [ProductController::class, 'articlePost']);

@@ -17,6 +17,8 @@ use App\Http\Controllers\AdminVoucherController;
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
+Route::post('loginSMS', [UserController::class, 'send']);
+Route::post('loginSMS_verify', [UserController::class, 'verify']);
 
 Route::get('order_view', [CheckOutController::class, 'test_view_checkout'])->name('order_view');
 Route::post('/order_test', [CheckOutController::class, 'store'])->name('order_test');
