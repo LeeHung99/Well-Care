@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\AdminLogoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\AdminPostsController;
+use App\Http\Controllers\AdminSeCategoryController;
+use App\Http\Controllers\AdminThirdCategoryController;
 use App\Http\Controllers\AdminVoucherController;
 
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
@@ -48,4 +51,25 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::get('/logo', [AdminLogoController::class, 'index']);
     Route::get('/editlogo{id_logo}', [AdminLogoController::class, 'editlogo']);
     Route::post('/updatelogo{id_logo}', [AdminLogoController::class, 'updatelogo']);
+
+    Route::get('/category', [AdminCategoryController::class, 'index']);
+    Route::get('/createcategory', [AdminCategoryController::class, 'createcategory']);
+    Route::post('/storecategory', [AdminCategoryController::class, 'storecategory']);
+    Route::get('/editcategory{id_category}', [AdminCategoryController::class, 'editcategory']);
+    Route::post('/updatecategory{id_category}', [AdminCategoryController::class, 'updatecategory']);
+    Route::post('/destroycategory{id_category}', [AdminCategoryController::class, 'destroycategory']);
+
+    Route::get('/secategory', [AdminSeCategoryController::class, 'index']);
+    Route::get('/createsecategory', [AdminSeCategoryController::class, 'createsecategory']);
+    Route::post('/storesecategory', [AdminSeCategoryController::class, 'storesecategory']);
+    Route::get('/editsecategory{id_category}', [AdminSeCategoryController::class, 'editsecategory']);
+    Route::post('/updatesecategory{id_category}', [AdminSeCategoryController::class, 'updatesecategory']);
+    Route::post('/destroysecategory{id_category}', [AdminSeCategoryController::class, 'destroysecategory']);
+
+    Route::get('/thirdcategory', [AdminThirdCategoryController::class, 'index']);
+    Route::get('/createthirdcategory', [AdminThirdCategoryController::class, 'createthirdcategory']);
+    Route::post('/storethirdcategory', [AdminThirdCategoryController::class, 'storethirdcategory']);
+    Route::get('/editthirdcategory{id_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
+    Route::post('/updatethirdcategory{id_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
+    Route::post('/destroythirdcategory{id_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
 });

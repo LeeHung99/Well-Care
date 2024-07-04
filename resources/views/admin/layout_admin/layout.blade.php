@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/png" href="/images/logo/LOGOsite.png" />
     <title>TRANG QUẢN TRỊ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -80,11 +81,11 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="/admin/category"
                                                     class="nav-link text-white">Danh mục cấp 1</a></li>
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="/admin/secategory"
                                                     class="nav-link text-white">Danh mục cấp 2</a></li>
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="/admin/thirdcategory"
                                                     class="nav-link text-white">Danh mục cấp 3</a></li>
                                         </ul>
                                     </div>
