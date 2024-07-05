@@ -18,12 +18,12 @@ use Infobip\Model\SmsAdvancedTextualRequest;
 
 class UserController extends Controller
 {
-    protected $speedSMSService;
+    // protected $speedSMSService;
 
-    public function __construct(SpeedSMSService $speedSMSService)
-    {
-        $this->speedSMSService = $speedSMSService;
-    }
+    // public function __construct(SpeedSMSService $speedSMSService)
+    // {
+    //     $this->speedSMSService = $speedSMSService;
+    // }
 
     public function send(Request $request)
     {
@@ -32,54 +32,59 @@ class UserController extends Controller
             host: 'ggx3xj.api.infobip.com',
             apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
         );
+        // dd($request);
+        // $configuration = new Configuration(
+        //     host: 'ggx3xj.api.infobip.com',
+        //     apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
+        // );
 
-        // dd($request->input('phone'));
-        $brand_name = 'WellCare';
-        $sendSmsApi = new SmsApi(config: $configuration);
+        // // dd($request->input('phone'));
+        // $brand_name = 'WellCare';
+        // $sendSmsApi = new SmsApi(config: $configuration);
 
-        $request->validate([
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        ]);
+        // $request->validate([
+        //     'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        // ]);
 
 
 
-        // $phoneNumber = $request->input('phone');
-        $phoneNumber = '0339332612';
-        $userExists = User::where('phone', $phoneNumber)->exists();
-        $otp = random_int(100000, 999999);
-        $expiration = now()->addSecond(30);
-        // Cache::store('array')->put('otp_' .$phoneNumber, [
-        //     'code' => $otp,
-        //     'expiration' => $expiration,
-        //     'user_exists' => $userExists
-        // ], $expiration);
+        // // $phoneNumber = $request->input('phone');
+        // $phoneNumber = '0339332612';
+        // $userExists = User::where('phone', $phoneNumber)->exists();
+        // $otp = random_int(100000, 999999);
+        // $expiration = now()->addSecond(30);
+        // // Cache::store('array')->put('otp_' .$phoneNumber, [
+        // //     'code' => $otp,
+        // //     'expiration' => $expiration,
+        // //     'user_exists' => $userExists
+        // // ], $expiration);
 
-        session(['phoneNumber' => $phoneNumber]);
-        session([
-            'otp_' . $phoneNumber => [
-                'code' => $otp,
-                'expiration' => $expiration,
-                'user_exists' => $userExists
-            ]
-        ]);
-        $message = new SmsTextualMessage(
-            destinations: [
-                new SmsDestination(to: '+84' . ltrim($phoneNumber, '0')) // $phoneNumber request phone user
-            ],
-            from: $brand_name,
-            text: "Mã OTP của bạn là: $otp. Mã có hiệu lực trong 30 giây."
-        );
+        // session(['phoneNumber' => $phoneNumber]);
+        // session([
+        //     'otp_' . $phoneNumber => [
+        //         'code' => $otp,
+        //         'expiration' => $expiration,
+        //         'user_exists' => $userExists
+        //     ]
+        // ]);
+        // $message = new SmsTextualMessage(
+        //     destinations: [
+        //         new SmsDestination(to: '+84' . ltrim($phoneNumber, '0')) // $phoneNumber request phone user
+        //     ],
+        //     from: $brand_name,
+        //     text: "Mã OTP của bạn là: $otp. Mã có hiệu lực trong 30 giây."
+        // );
 
-        $request = new SmsAdvancedTextualRequest(messages: [$message]);
+        // $request = new SmsAdvancedTextualRequest(messages: [$message]);
 
-        try {
-            $smsResponse = $sendSmsApi->sendSmsMessage($request);
-            return response()->json(['message' => 'Gửi OTP thành công', 'user_exists' => $userExists], 200);
-            // return 'gửi thành công';
-        } catch (ApiException $apiException) {
-            return response()->json(['error' => 'Lỗi gửi OTP: ' . $apiException->getMessage()], 500);
-            // return 'Lỗi' . $apiException->getMessage();;
-        }
+        // try {
+        //     $smsResponse = $sendSmsApi->sendSmsMessage($request);
+        //     return response()->json(['message' => 'Gửi OTP thành công', 'user_exists' => $userExists], 200);
+        //     // return 'gửi thành công';
+        // } catch (ApiException $apiException) {
+        //     return response()->json(['error' => 'Lỗi gửi OTP: ' . $apiException->getMessage()], 500);
+        //     // return 'Lỗi' . $apiException->getMessage();;
+        // }
     }
     public function verify(Request $request)
     {
