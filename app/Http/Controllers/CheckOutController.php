@@ -66,6 +66,7 @@ class CheckOutController extends Controller
     }
     public function store(Request $request)
     {
+        dd($request);
         try {
             /**
              * Cần truyền thêm tham số array $productArr vào function store
