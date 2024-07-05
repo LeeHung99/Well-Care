@@ -27,6 +27,12 @@ class UserController extends Controller
 
     public function send(Request $request)
     {
+        // dd($request);
+        // $configuration = new Configuration(
+        //     host: 'ggx3xj.api.infobip.com',
+        //     apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
+        // );
+        // dd($request);
         // $configuration = new Configuration(
         //     host: 'ggx3xj.api.infobip.com',
         //     apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
