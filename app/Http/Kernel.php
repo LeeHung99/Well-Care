@@ -2,8 +2,8 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\CorsMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Http\Middleware\HandleCors;
 
 class Kernel extends HttpKernel
 {
@@ -14,7 +14,8 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         // ... Middleware route của bạn ...
-        CorsMiddleware::class,
+        // CorsMiddleware::class,
+       
     ];
 
     /**
@@ -23,7 +24,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        // ... Middleware toàn cầu của bạn ...
+        // Các middleware khác...
+        \App\Http\Middleware\CorsMiddleware::class,
     ];
 
     /**
@@ -31,8 +33,15 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
-    protected $routeGroups = [
-        // ... Nhóm route của bạn ...
+    protected $middlewareGroups = [
+        'web' => [
+            
+        ],
+    
+        'api' => [
+            \App\Http\Middleware\CorsMiddleware::class,
+          
+        ],
     ];
 
     /**

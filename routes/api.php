@@ -27,7 +27,6 @@ Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
 
 
-
 Route::get('test{id_cate}', [ProductController::class, 'test']);
 Route::get('articlePost', [ProductController::class, 'articlePost']);
 Route::get('post', [ProductController::class, 'post']);
@@ -38,3 +37,8 @@ Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
 // payment route
 Route::post('order', [CheckOutController::class, 'store']);
 
+// Route::post('loginSMS', [UserController::class, 'send']);
+// Route::post('loginSMS_verify', [UserController::class, 'verify']);
+Route::middleware('api')->post('/loginSMS', function (Request $request) {
+    return 'hello';
+});
