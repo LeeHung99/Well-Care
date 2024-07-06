@@ -33,7 +33,7 @@ Route::get('post', [ProductController::class, 'post']);
 Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
 Route::get('user', [ProductController::class, 'user']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
-
+Route::get('userbyid{id_user}',[ProductController::class, 'userbyid']);
 // payment route
 Route::post('order', [CheckOutController::class, 'store']);
 

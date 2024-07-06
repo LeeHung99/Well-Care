@@ -113,14 +113,19 @@
                             </div>
                             <div class="accordion-item">
                                 <button class="accordion-button collapsed" type="button">
+                                    <a href="/admin/bill" class="nav-link text-white">Đơn hàng</a>
+                                </button>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-button collapsed" type="button">
                                     <a href="/admin/voucher" class="nav-link text-white">Các ưu đãi</a>
                                 </button>
                             </div>
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapseFour" aria-expanded="false"
-                                        aria-controls="flush-collapseFour">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFour"
+                                        aria-expanded="false" aria-controls="flush-collapseFour">
                                         Giao diện
                                     </button>
                                 </h2>
@@ -152,7 +157,8 @@
                                                     class="nav-link text-white">Tất cả khách hàng</a></li>
                                             <li class="list-group-item"><a href="/admin/users"
                                                     class="nav-link text-white">Tất cả nhân viên</a></li>
-                                            <li class="list-group-item"><a href="/admin/editusers{{Auth::user()->id_user}}"
+                                            <li class="list-group-item"><a
+                                                    href="/admin/editusers{{ Auth::user()->id_user }}"
                                                     class="nav-link text-white">Hồ sơ</a></li>
                                         </ul>
                                     </div>

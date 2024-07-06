@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminBillController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
@@ -88,7 +89,13 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     // Route::post('/updatethirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
     // Route::post('/destroythirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
 
-    
+    Route::get('/bill', [AdminBillController::class, 'index']);
+    Route::get('/createbill', [AdminBillController::class, 'createbill']);
+    Route::post('/storebill', [AdminBillController::class, 'storebill']);
+    Route::get('/editbill{id_bill}', [AdminBillController::class, 'editbill']);
+    Route::post('/updatebill{id_bill}', [AdminBillController::class, 'updatebill']);
+    Route::post('/destroybill{id_bill}', [AdminBillController::class, 'destroybill']);
+
     Route::get('/users', [AdminUsersController::class, 'index']);
     Route::get('/createusers', [AdminUsersController::class, 'createusers']);
     Route::post('/storeusers', [AdminUsersController::class, 'storeusers']);
