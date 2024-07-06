@@ -40,5 +40,6 @@ Route::post('order', [CheckOutController::class, 'store']);
 // Route::post('loginSMS', [UserController::class, 'send']);
 // Route::post('loginSMS_verify', [UserController::class, 'verify']);
 Route::middleware('api')->post('/loginSMS', function (Request $request) {
-    return 'hello';
+    // return response()->json(['data' => $request]);
+    return 'cc';
 });

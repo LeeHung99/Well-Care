@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\AdminSeCategoryController;
 use App\Http\Controllers\AdminThirdCategoryController;
 use App\Http\Controllers\AdminVoucherController;
+use App\Http\Controllers\AdminProductController;
 
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
@@ -73,4 +74,11 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::get('/editthirdcategory{id_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
     Route::post('/updatethirdcategory{id_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
     Route::post('/destroythirdcategory{id_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
+
+    Route::get('/product', [AdminProductController::class, 'index'])->name('product');
+    Route::get('/editproduct{id}', [AdminProductController::class, 'edit'])->name('editproduct');
+    Route::get('/storeproduct', [AdminProductController::class, 'storeView'])->name('storeproduct');
+    Route::post('/storeproduct', [AdminProductController::class, 'store']);
+    Route::post('/updateproduct{id}', [AdminProductController::class, 'updateproduct'])->name('updateproduct');
+    Route::get('/destroyproduct{id}', [AdminProductController::class, 'destroy'])->name('destroyproduct');
 });

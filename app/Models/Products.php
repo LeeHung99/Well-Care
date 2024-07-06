@@ -10,6 +10,9 @@ class Products extends Model
     use HasFactory;
     protected $table = 'products';
     protected $primaryKey = 'id_product';
+    protected $fillable = [
+        'name', 'avatar', 'price', 'in_stock', 'brand', 'hide', 'id_third_category',
+    ];
     public function Third_categories()
     {
         return $this->belongsTo(Third_categories::class, 'id_third_category');

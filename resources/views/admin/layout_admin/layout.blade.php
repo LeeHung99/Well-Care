@@ -103,9 +103,9 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="{{ route('product') }}"
                                                     class="nav-link text-white">Tất cả sản phẩm</a></li>
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="{{ route('storeproduct') }}"
                                                     class="nav-link text-white">Thêm sản phẩm</a></li>
                                         </ul>
                                     </div>
