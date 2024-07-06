@@ -7,13 +7,14 @@ use Infobip\Api\SmsApi;
 use Infobip\ApiException;
 use Infobip\Configuration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Services\SpeedSMSService;
 use Infobip\Model\SmsDestination;
 use Illuminate\Support\Facades\DB;
-use Infobip\Model\SmsTextualMessage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Infobip\Model\SmsTextualMessage;
 
+use Illuminate\Support\Facades\Cache;
 use Infobip\Model\SmsAdvancedTextualRequest;
 
 class UserController extends Controller
@@ -44,26 +45,13 @@ class UserController extends Controller
         // ]);
 
         $phoneNumber = $request->phoneNumber;
-        //  return response()->json(['data' => $phoneNumber, 'brand_name' => $brand_name, '$sendSmsApi' => $sendSmsApi ]);
         // $phoneNumber = '0339332612';
         $userExists = User::where('phone', $phoneNumber)->exists();
         $otp = random_int(100000, 999999);
         $expiration = now()->addSecond(30);
-        // Cache::store('array')->put('otp_' .$phoneNumber, [
-        //     'code' => $otp,
-        //     'expiration' => $expiration,
-        //     'user_exists' => $userExists
-        // ], $expiration);
+        $timeLogin = Carbon::now();
 
-        session(['phoneNumber' => $phoneNumber]);
-        session([
-            'otp_' . $phoneNumber => [
-                'code' => $otp,
-                'expiration' => $expiration,
-                'user_exists' => $userExists,
-                'phoneNumber' => $phoneNumber,
-            ]
-        ]);
+        DB::table('otp_login')->insert(['otp_code' => $otp, 'phoneNumber' => $phoneNumber, 'timeLogin' => $timeLogin, 'expiration' => $expiration, 'userExists' => $userExists]);
         $message = new SmsTextualMessage(
             destinations: [
                 new SmsDestination(to: '+84' . ltrim($phoneNumber, '0')) // $phoneNumber request phone user
@@ -85,29 +73,60 @@ class UserController extends Controller
     }
     public function verify(Request $request)
     {
-        $phoneNumber = session('phoneNumber');
+        // $phoneNumber = session('phoneNumber');
         // $phoneNumber = $request->phone;
         $inputOtp = $request->otp;
-        
-
-        $sessionData = session('otp_' . $phoneNumber);
+        // return 'a';
+        $otp_check = DB::table('otp_login')->where('otp_code', $inputOtp)->exists();
+        // $sessionData = session('otp_' . $phoneNumber);
         // $storedOtp = $sessionData['code'];
-        $expiration = $sessionData['expiration'];
-        $userExists = $sessionData['user_exists'];
-        if (!$sessionData) {
-            return response()->json(['error' => 'OTP không tồn tại hoặc đã hết hạn'], 400);
+        if ($otp_check != false) {
+            $data = DB::table('otp_login')->where('otp_code', $inputOtp)->first();
+            $expiration = $data->expiration;
+            $userExists = $data->userExists;
+            // if ($inputOtp != $data->otp_code) { // $inputOtp != session('otp'. $phoneNumber['code'])
+            //     return response()->json(['error' => 'OTP không chính xác'], 400);
+            // }
+            $expiration = now()->addSecond(30);
+            if (now()->isAfter($expiration)) {
+                // session()->forget('otp_' . $phoneNumber);
+                return response()->json(['error' => 'OTP đã hết hạn'], 400);
+            }
+
+
+            // session()->forget('otp_' . $phoneNumber);
+
+            if ($userExists != 0) {
+                $user = User::where('phone', $data->phoneNumber)->first();
+                DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
+                return response()->json([
+                    'message' => 'Đăng nhập thành công',
+                    'user' => $user
+                ], 200);
+            } else {
+                // return response()->json(['phone' => $data->phoneNumber], 400);
+                $user = User::create([
+                    'name' => $data->phoneNumber,
+                    'phone' => $data->phoneNumber,
+                    'password' => Hash::make($inputOtp),
+                ]);
+                DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
+                return response()->json([
+                    'message' => 'Đăng nhập thành công',
+                    'user' => $user
+                ], 201);
+            }
+        } else {
+            return response()->json(['error' => 'OTP không chính xác hoặc đã hết hạn'], 400);
         }
+        // return response()->json(['data' => $data]);
 
 
-        $expiration = now()->addSecond(30);
-        
-
-        // $cachedData = Cache::get('otp_' . $phoneNumber);
-        // if (!Cache::has('otp_' . $phoneNumber)) {
+        // if (!$data || $data == null) {
         //     return response()->json(['error' => 'OTP không tồn tại hoặc đã hết hạn'], 400);
         // }
 
-        $phoneNumber = session('phoneNumber');
+
 
         // session test 
         // session([
@@ -117,36 +136,7 @@ class UserController extends Controller
         //         'user_exists' => false
         //     ]
         // ]);
-        // $sessionData = session('otp_' . $phoneNumber);
-        $userExists = $sessionData['user_exists'];
-        if (now()->isAfter($expiration)) {
-            session()->forget('otp_' . $phoneNumber);
-            return response()->json(['error' => 'OTP đã hết hạn'], 400);
-        }
 
-        if ($inputOtp != session('otp'. $phoneNumber['code'])) { // $inputOtp != session('otp'. $phoneNumber['code'])
-            return response()->json(['error' => 'OTP không chính xác'], 400);
-        }
-
-        session()->forget('otp_' . $phoneNumber);
-
-        if ($userExists) {
-            $user = User::where('phone', $phoneNumber)->first();
-            return response()->json([
-                'message' => 'Đăng nhập thành công',
-                'user' => $user
-            ], 200);
-        } else {
-            $user = User::create([
-                'name' => $phoneNumber,
-                'phone' => $phoneNumber,
-                'password' => Hash::make($inputOtp),
-            ]);
-            return response()->json([
-                'message' => 'Đăng nhập thành công',
-                'user' => $user
-            ], 201);
-        }
         // return response()->json(['message' => 'Xác thực OTP thành công'], 200);
     }
 }
