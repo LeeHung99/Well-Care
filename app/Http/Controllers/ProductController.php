@@ -203,4 +203,12 @@ class ProductController extends Controller
             'user' => $user
         ], 200);
     }
+    function userbyid($id_user){
+        $user = DB::table('users')
+        ->where('id_user', $id_user)
+        ->first();
+        return response()->json([
+            'user' => $user
+        ], 200);
+    }
 }
