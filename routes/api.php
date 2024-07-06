@@ -47,4 +47,5 @@ Route::post('order', [CheckOutController::class, 'store']);
 Route::middleware('api')->post('/loginSMS', [UserController::class, 'send']);
 Route::middleware('api')->post('/loginSMS_verify', [UserController::class, 'verify']);
 Route::middleware('api')->post('/order_test', [CheckOutController::class, 'store']);
+Route::middleware('api')->post('/order_view', [CheckOutController::class, 'test_view_checkout']);
 // Route::post('loginSMS_verify', [UserController::class, 'verify']);
