@@ -66,7 +66,8 @@ class CheckOutController extends Controller
     }
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+        return response()->json(['request' => $request, 'cart' => $request->cart, 'formData' => $request->formData, 'paymentMethod' => $request->paymentMethod]);
         try {
             /**
              * Cần truyền thêm tham số array $productArr vào function store
@@ -75,27 +76,28 @@ class CheckOutController extends Controller
              * 
              * $productArr đang là mảng tạm để chứ product trong bills
              */
-            $productArr = [
-                3 => [
-                    'quantity' => 1,
-                    'price' => 10,
-                ],
-                10 => [
+            $productArr = $request->cart;
+            // $productArr = [
+            //     3 => [
+            //         'quantity' => 1,
+            //         'price' => 10,
+            //     ],
+            //     10 => [
 
-                    'quantity' => 2,
-                    'price' => 10,
-                ],
-                12 => [
+            //         'quantity' => 2,
+            //         'price' => 10,
+            //     ],
+            //     12 => [
 
-                    'quantity' => 3,
-                    'price' => 10,
-                ],
-                13 => [
-                    'quantity' => 4,
-                    'price' => 10,
+            //         'quantity' => 3,
+            //         'price' => 10,
+            //     ],
+            //     13 => [
+            //         'quantity' => 4,
+            //         'price' => 10,
 
-                ],
-            ];
+            //     ],
+            // ];
             $dataToInsert = [];
             foreach ($productArr as $id_product => $details) {
                 $details['id_product'] = $id_product;
