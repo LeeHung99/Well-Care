@@ -27,16 +27,13 @@ class UserController extends Controller
 
     public function send(Request $request)
     {
+        // $data = $request->phoneNumber;
+        // return response()->json(['data' => $data]);
         // dd($request);
         $configuration = new Configuration(
             host: 'ggx3xj.api.infobip.com',
             apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
         );
-        // dd($request);
-        // $configuration = new Configuration(
-        //     host: 'ggx3xj.api.infobip.com',
-        //     apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
-        // );
 
         // dd($request->input('phone'));
         $brand_name = 'WellCare';
@@ -46,10 +43,9 @@ class UserController extends Controller
         //     'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         // ]);
 
-
-
-        // $phoneNumber = $request->input('phone');
-        $phoneNumber = '0339332612';
+        $phoneNumber = $request->phoneNumber;
+        //  return response()->json(['data' => $phoneNumber, 'brand_name' => $brand_name, '$sendSmsApi' => $sendSmsApi ]);
+        // $phoneNumber = '0339332612';
         $userExists = User::where('phone', $phoneNumber)->exists();
         $otp = random_int(100000, 999999);
         $expiration = now()->addSecond(30);
@@ -92,7 +88,7 @@ class UserController extends Controller
         $phoneNumber = session('phoneNumber');
         // $phoneNumber = $request->phone;
         $inputOtp = $request->otp;
-
+        
 
         $sessionData = session('otp_' . $phoneNumber);
         // $storedOtp = $sessionData['code'];
@@ -111,7 +107,7 @@ class UserController extends Controller
         //     return response()->json(['error' => 'OTP không tồn tại hoặc đã hết hạn'], 400);
         // }
 
-
+        $phoneNumber = session('phoneNumber');
 
         // session test 
         // session([

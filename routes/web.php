@@ -6,12 +6,14 @@ use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminKhController;
 use App\Http\Controllers\AdminLogoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\AdminSeCategoryController;
 use App\Http\Controllers\AdminThirdCategoryController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminVoucherController;
 use App\Http\Controllers\AdminProductController;
 
@@ -20,8 +22,8 @@ Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('logi
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
 
 
-Route::get('order_view', [CheckOutController::class, 'test_view_checkout'])->name('order_view');
-Route::post('/order_test', [CheckOutController::class, 'store'])->name('order_test');
+// Route::get('order_view', [CheckOutController::class, 'test_view_checkout'])->name('order_view');
+// Route::post('/order_test', [CheckOutController::class, 'store'])->name('order_test');
 Route::get('vnpay_return', [CheckOutController::class, 'vnpayReturn'])->name('vnpay_return');
 Route::get('/momo-callback', [CheckOutController::class, 'momoCallback'])->name('momo.callback');
 
@@ -64,9 +66,9 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::get('/secategory', [AdminSeCategoryController::class, 'index']);
     Route::get('/createsecategory', [AdminSeCategoryController::class, 'createsecategory']);
     Route::post('/storesecategory', [AdminSeCategoryController::class, 'storesecategory']);
-    Route::get('/editsecategory{id_category}', [AdminSeCategoryController::class, 'editsecategory']);
-    Route::post('/updatesecategory{id_category}', [AdminSeCategoryController::class, 'updatesecategory']);
-    Route::post('/destroysecategory{id_category}', [AdminSeCategoryController::class, 'destroysecategory']);
+    Route::get('/editsecategory{id_se_category}', [AdminSeCategoryController::class, 'editsecategory']);
+    Route::post('/updatesecategory{id_se_category}', [AdminSeCategoryController::class, 'updatesecategory']);
+    Route::post('/destroysecategory{id_se_category}', [AdminSeCategoryController::class, 'destroysecategory']);
 
     Route::get('/thirdcategory', [AdminThirdCategoryController::class, 'index']);
     Route::get('/createthirdcategory', [AdminThirdCategoryController::class, 'createthirdcategory']);
@@ -81,4 +83,16 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/storeproduct', [AdminProductController::class, 'store']);
     Route::post('/updateproduct{id}', [AdminProductController::class, 'updateproduct'])->name('updateproduct');
     Route::get('/destroyproduct{id}', [AdminProductController::class, 'destroy'])->name('destroyproduct');
+    // Route::get('/editthirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
+    // Route::post('/updatethirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
+    // Route::post('/destroythirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
+
+    
+    Route::get('/users', [AdminUsersController::class, 'index']);
+    Route::get('/createusers', [AdminUsersController::class, 'createusers']);
+    Route::post('/storeusers', [AdminUsersController::class, 'storeusers']);
+    Route::get('/editusers{id_user}', [AdminUsersController::class, 'editusers']);
+    Route::post('/updateusers{id_user}', [AdminUsersController::class, 'updateusers']);
+    Route::post('/destroyusers{id_user}', [AdminUsersController::class, 'destroyusers']);
+    Route::get('/kh', [AdminKhController::class, 'index']);
 });

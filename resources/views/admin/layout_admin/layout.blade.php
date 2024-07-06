@@ -148,11 +148,11 @@
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body p-0">
                                         <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href=""
-                                                    class="nav-link text-white">Tất cả người dùng</a></li>
-                                            <li class="list-group-item"><a href=""
-                                                    class="nav-link text-white">Thêm người dùng mới</a></li>
-                                            <li class="list-group-item"><a href=""
+                                            <li class="list-group-item"><a href="/admin/kh"
+                                                    class="nav-link text-white">Tất cả khách hàng</a></li>
+                                            <li class="list-group-item"><a href="/admin/users"
+                                                    class="nav-link text-white">Tất cả nhân viên</a></li>
+                                            <li class="list-group-item"><a href="/admin/editusers{{Auth::user()->id_user}}"
                                                     class="nav-link text-white">Hồ sơ</a></li>
                                         </ul>
                                     </div>
