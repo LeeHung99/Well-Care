@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image_products;
+use App\Models\Objects;
+use App\Models\Sick;
 use App\Models\Products;
-use App\Models\Third_categories;
 use Illuminate\Http\Request;
+use App\Models\Third_categories;
 use Illuminate\Support\Facades\DB;
 
 class AdminProductController extends Controller
@@ -74,7 +77,10 @@ class AdminProductController extends Controller
     public function storeView()
     {
         $third_cate = Third_categories::all();
-        return view('admin/product/store_product', ['third_cate' => $third_cate]);
+        $sick = Sick::all();
+        $object = Objects::all();
+        // dd($sick, $object);
+        return view('admin/product/store_product', ['third_cate' => $third_cate, 'sick' => $sick, 'object' => $object]);
     }
     public function store(Request $request)
     {
@@ -92,8 +98,13 @@ class AdminProductController extends Controller
         $avatarPath = null;
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
-            $avatarPath = $avatar->store('images/product', 'public'); // Lưu avatar vào 'storage/app/public/images/product'
+            $avatarName = time() . '_' . $avatar->getClientOriginalName();
+            $avatar->move(public_path('images/product'), $avatarName); // Lưu avatar vào 'public/images/product'
+            $avatarPath = 'images/product/' . $avatarName;
         }
+
+        $sick = implode(', ', $request->sick);
+        $object = implode(', ', $request->obj);
         $product = Products::create([
             'name' => $request->name,
             'price' => $request->price,
@@ -101,9 +112,42 @@ class AdminProductController extends Controller
             'brand' => $request->brand,
             'hide' => $request->hide,
             'id_third_category' => $request->category,
-            'avatar' => $request->avatar, // Thay bằng đường dẫn hình ảnh
+            'avatar' => $avatarPath,
+            'sick' => $sick ? $sick : null,
+            'object' => $object ? $object : null,
         ]);
+
+        if ($request->hasFile('avatar_sub')) {
+            $imageProduct = new Image_products();
+            
+            foreach ($request->file('avatar_sub') as $index => $subImage) {
+                $subImageName = time() . '_' . $subImage->getClientOriginalName();
+                $subImage->move(public_path('images/product_sub'), $subImageName);
+                
+                $imageColumn = 'image_' . ($index + 1);
+                $imageProduct->$imageColumn = 'images/product_sub/' . $subImageName;
+            }
+            
+            $imageProduct->save();
     
+            // Cập nhật id_image_product cho sản phẩm
+            $product->id_image_product = $imageProduct->id_image_product;
+            $product->save();
+        }
+
+        // if ($request->hasFile('avatar_sub')) {
+        //     foreach ($request->file('avatar_sub') as $subImage) {
+        //         $subImageName = time() . '_' . $subImage->getClientOriginalName();
+        //         $subImage->move(public_path('images/product_sub'), $subImageName);
+
+        //         $imageProduct = Image_products::create([
+        //             'image_1' => 'images/product_sub/' . $subImageName,
+        //         ]);
+
+        //         $product->update(['id_image_product' => $imageProduct->id_image_product]);
+        //     }
+        // }
+
         return redirect()->back()->with('success', 'Thêm sản phẩm thành công!');
     }
 }
