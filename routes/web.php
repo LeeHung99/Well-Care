@@ -12,6 +12,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\AdminPostsController;
 use App\Http\Controllers\AdminSeCategoryController;
 use App\Http\Controllers\AdminThirdCategoryController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminVoucherController;
 
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
@@ -70,7 +71,15 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::get('/thirdcategory', [AdminThirdCategoryController::class, 'index']);
     Route::get('/createthirdcategory', [AdminThirdCategoryController::class, 'createthirdcategory']);
     Route::post('/storethirdcategory', [AdminThirdCategoryController::class, 'storethirdcategory']);
-    Route::get('/editthirdcategory{id_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
-    Route::post('/updatethirdcategory{id_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
-    Route::post('/destroythirdcategory{id_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
+    Route::get('/editthirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
+    Route::post('/updatethirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
+    Route::post('/destroythirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
+
+    
+    Route::get('/users', [AdminUsersController::class, 'index']);
+    Route::get('/createusers', [AdminUsersController::class, 'createusers']);
+    Route::post('/storeusers', [AdminUsersController::class, 'storeusers']);
+    Route::get('/editusers{id_users}', [AdminUsersController::class, 'editusers']);
+    Route::post('/updateusers{id_users}', [AdminUsersController::class, 'updateusers']);
+    Route::post('/destroyusers{id_users}', [AdminUsersController::class, 'destroyusers']);
 });
