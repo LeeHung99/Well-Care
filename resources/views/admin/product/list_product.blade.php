@@ -2,7 +2,7 @@
 @section('noidungchinh')
     <div class="title_post d-flex my-3">
         <h2 class="me-3">Danh sách sản phẩm</h2>
-        <a class="btn btn-outline-primary" href="/admin/product">Thêm danh mục mới</a>
+        <a class="btn btn-outline-primary" href="/admin/storeproduct">Thêm danh sản phẩm</a>
     </div>
     @if (Session::exists('thongbao'))
         <h4 class="alert alert-info text-center">{{ Session::get('thongbao') }}</h4>

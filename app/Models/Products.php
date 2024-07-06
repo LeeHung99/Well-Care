@@ -12,6 +12,7 @@ class Products extends Model
     protected $primaryKey = 'id_product';
     protected $fillable = [
         'name', 'avatar', 'price', 'in_stock', 'brand', 'hide', 'id_third_category',
+        'id_image_product', 'sick', 'object'
     ];
     public function Third_categories()
     {
@@ -21,8 +22,12 @@ class Products extends Model
     {
         return $this->belongsTo(Third_categories::class, 'id_image_product');
     }
-    public function Sick(){
+    public function Sick()
+    {
         return $this->belongsTo(Sick::class, 'id_sick');
     }
-
+    public function images_product()
+    {
+        return $this->belongsTo(Image_products::class, 'id_image_product');
+    }
 }

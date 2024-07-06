@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Bills;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
@@ -13,11 +16,63 @@ use Illuminate\Support\Facades\Session;
 class CheckOutController extends Controller
 {
 
+    public function checkPayment(Request $request)
+    {
+        $vnp_HashSecret = "04NAW27CAY6P5MU57XM770ODFLXJHYPX";
+
+        // Lấy tất cả dữ liệu từ request
+        $inputData = $request->all();
+        for ($i = 0; $i < count($request->cart); $i++) {
+            $value = $request->cart;
+            $productArr[$value[$i]['id_product']] = [
+                'quantity' => $value[$i]['quantity'],
+                'price' => $value[$i]['price'],
+            ];
+        }
+        $formData = $request->formData;
+        $payUrl = $request->paymentMethod;
+        $totalAmount = $request->totalAmount;
+        $trueKeys = array_keys(array_filter($payUrl));
+        if (isset($inputData['vnp_SecureHash'])) {
+            $vnp_SecureHash = $inputData['vnp_SecureHash'];
+            unset($inputData['vnp_SecureHash']);
+
+            ksort($inputData);
+            $hashData = "";
+            foreach ($inputData as $key => $value) {
+                $hashData .= $key . "=" . urlencode($value) . '&';
+            }
+            $hashData = rtrim($hashData, '&');
+            $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+
+            if ($secureHash == $vnp_SecureHash) {
+                // Kiểm tra trạng thái giao dịch
+                if ($inputData['vnp_ResponseCode'] == '00' && $inputData['vnp_TransactionStatus'] == '00') {
+                    // Thanh toán thành công
+                    // Lấy thông tin từ db
+                    $productArr = DB::table('product_session')->get();
+                    try {
+                        // Lưu đơn hàng vào database
+                        $this->saveOrderToDatabase($formData, $productArr, $trueKeys, $totalAmount);
+                        return response()->json(['success' => true, 'message' => 'Đơn hàng đã được lưu thành công']);
+                    } catch (\Exception $e) {
+                        return response()->json(['success' => false, 'error' => 'Đơn hàng lưu thất bại: ' . $e->getMessage()]);
+                    }
+                } else {
+                    return response()->json(['success' => false, 'error' => 'Giao dịch không thành công']);
+                }
+            } else {
+                return response()->json(['success' => false, 'error' => 'Chữ ký không hợp lệ']);
+            }
+        } else {
+            return response()->json(['success' => false, 'error' => 'Thiếu thông tin bảo mật']);
+        }
+    }
     public function test_view_checkout(Request $request)
     {
         // return response()->json(['a' => 'a']);
         $vnp_HashSecret = "04NAW27CAY6P5MU57XM770ODFLXJHYPX";
-        if ($request->get('vnp_SecureHash')) {
+        if ($request->vnp_SecureHash) {
             $vnp_SecureHash = $request->get('vnp_SecureHash');
             $inputData = $request->except('vnp_SecureHash');
 
@@ -40,7 +95,8 @@ class CheckOutController extends Controller
                     // return redirect('/order_view')->with('error', $e->getMessage());
                 }
             } else {
-                return redirect('/order_view')->with('error', 'Thanh toán không thành công.');
+                return response()->json(['error' => 'Thanh toán không thành công']);
+                // return redirect('/order_view')->with('error', 'Thanh toán không thành công.');
             }
         }
         return view('test_view_checkout');
@@ -89,6 +145,8 @@ class CheckOutController extends Controller
                     'price' => $value[$i]['price'],
                 ];
 
+
+                // việc lưu vào db không có tác dụng
                 DB::table('product_session')->insert([
                     'id_product' => $value[$i]['id_product'],
                     'quantity' => $value[$i]['quantity'],
@@ -133,6 +191,16 @@ class CheckOutController extends Controller
                         'price' => $details->price,
                         'total_amount' => $totalAmount,
                     ]);
+
+                    // pull FE bị conflict cc gì đó nên chưa test
+                    $product = Products::find($productId);
+                    if ($product) {
+                        // Cập nhật số lượng còn lại
+                        $product->in_stock -= $details->quantity;
+                        // Cập nhật số lượng đã bán
+                        $product->sold += $details->quantity;
+                        $product->save();
+                    }
                 }
 
                 Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
@@ -151,19 +219,16 @@ class CheckOutController extends Controller
             } elseif ($payUrl['momo'] == true) {
                 // Nếu là thanh toán qua MOMO, chuyển hướng đến phương thức thanh toán MOMO
                 return $this->momoPayment($request, $productArr, $trueKeys, $totalAmount);
-            } else {
-                // Xử lý khi phương thức thanh toán không hợp lệ
-                return back()->with('error', 'Phương thức thanh toán không hợp lệ.');
             }
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
-    public function momoPayment(Request $request, $productArr)
+    public function momoPayment(Request $request, $productArr, $trueKeys, $totalAmount)
     {
         try {
-            $response = $this->createMoMoPaymentRequest($request, $productArr);
+            $response = $this->createMoMoPaymentRequest($request, $productArr, $trueKeys, $totalAmount);
             if ($response->successful()) {
                 $payUrl = $response['payUrl'];
                 $orderId = $response['orderId'];
@@ -183,7 +248,7 @@ class CheckOutController extends Controller
         }
     }
 
-    private function createMoMoPaymentRequest(Request $request, array $productArr)
+    private function createMoMoPaymentRequest(Request $request, array $productArr, $trueKeys, $totalAmount)
     {
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
         $partnerCode = 'MOMOBKUN20180529';
@@ -191,10 +256,10 @@ class CheckOutController extends Controller
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 
         $orderInfo = "Thanh toán qua MoMo";
-        $amount = "10000"; // Đổi thành $request->total_price khi lấy từ request
+        $amount = $totalAmount; // Đổi thành $request->total_price khi lấy từ request
         $orderId = time() . "";
-        $redirectUrl = route('momo.callback'); //"http://127.0.0.1:8000/order_view";
-        $ipnUrl =  route('momo.callback'); //"http://127.0.0.1:8000/order_view";
+        $redirectUrl = 'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view"; route('momo.callback')
+        $ipnUrl =  'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view";
         $extraData = "";
 
         $requestId = time() . "";
@@ -226,25 +291,46 @@ class CheckOutController extends Controller
     public function momoCallback(Request $request)
     {
         // Kiểm tra trạng thái thanh toán từ MoMo
+        // DB::table('product_session')->truncate();
+        // $productArr = [];
+        for ($i = 0; $i < count($request->cart); $i++) {
+            $value = $request->cart;
+            $productArr[$value[$i]['id_product']] = [
+                'quantity' => $value[$i]['quantity'],
+                'price' => $value[$i]['price'],
+            ];
+            // việc lưu vào db không có tác dụng
+            // DB::table('product_session')->insert([
+            //     'id_product' => $value[$i]['id_product'],
+            //     'quantity' => $value[$i]['quantity'],
+            //     'price' => $value[$i]['price'],
+            // ]);
+        }
+
         if ($request->resultCode == '0') {
             // Thanh toán thành công
             $orderId = $request->orderId;
+            $formData = $request->formData;
+            $payUrl = $request->paymentMethod;
+            $totalAmount = $request->totalAmount;
+            $trueKeys = array_keys(array_filter($payUrl));
             // Lấy thông tin đơn hàng từ session hoặc cache
-            $orderInfo = Session::get('pending_order_' . $orderId);
+            // $orderInfo = Session::get('pending_order_' . $orderId);
 
-            if ($orderInfo) {
+            if ($request->cart) {
                 // Lưu đơn hàng vào database
-                // dd($orderInfo['request'], $orderInfo['products']);
-                // $this->saveOrderToDatabase($request, $orderInfo['products']);
+                $this->saveOrderToDatabase($formData, $productArr, $trueKeys, $totalAmount);
 
                 // Xóa thông tin đơn hàng tạm thời
-                Session::forget('pending_order_' . $orderId);
+                // Session::forget('pending_order_' . $orderId);
 
-                return redirect()->route('order_view')->with('message', 'Đơn hàng đã được thanh toán thành công.');
+                return response()->json(['success' => 'Đặt hàng thành công']);
+                // return redirect()->route('order_view')->with('message', 'Đơn hàng đã được thanh toán thành công.');
             }
         } else {
             // Thanh toán thất bại
-            return redirect()->route('order.failed')->with('error', 'Thanh toán thất bại. Vui lòng thử lại.');
+            return response()->json(['error' => 'Đặt hàng thất bại']);
+            // return redirect()->route('order.failed')->with('error', 'Thanh toán thất bại. Vui lòng thử lại.');
         }
     }
 
@@ -257,7 +343,7 @@ class CheckOutController extends Controller
             $vnp_Returnurl = 'http://localhost:3000/'; // Trang trả về để lưu DB hoặc hiển thị kết quả
             $vnp_TmnCode = "Z0W62YGW"; // Mã website tại VNPAY
             $vnp_HashSecret = "04NAW27CAY6P5MU57XM770ODFLXJHYPX"; // Chuỗi bí mật
-    
+
             $vnp_TxnRef = rand(00, 9999); // Mã đơn hàng
             $vnp_OrderInfo = 'Thanh toán hóa đơn';
             $vnp_OrderType = 'billPayment';
@@ -265,7 +351,7 @@ class CheckOutController extends Controller
             $vnp_Locale = 'VN';
             $vnp_BankCode = "NCB";
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-    
+
             $inputData = array(
                 "vnp_Version" => "2.1.0",
                 "vnp_TmnCode" => $vnp_TmnCode,
@@ -280,11 +366,11 @@ class CheckOutController extends Controller
                 "vnp_ReturnUrl" => $vnp_Returnurl,
                 "vnp_TxnRef" => $vnp_TxnRef,
             );
-    
+
             if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                 $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
-    
+
             ksort($inputData);
             $query = "";
             $hashdata = "";
@@ -292,10 +378,10 @@ class CheckOutController extends Controller
                 $hashdata .= '&' . urlencode($key) . "=" . urlencode((string)$value);
                 $query .= urlencode($key) . "=" . urlencode((string)$value) . '&';
             }
-    
+
             $query = rtrim($query, '&');
             $hashdata = ltrim($hashdata, '&');
-    
+
             $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
             $vnp_Url = $vnp_Url . "?" . $query . '&vnp_SecureHash=' . $vnpSecureHash;
             return response()->json(['redirectUrl' => $vnp_Url]);
@@ -516,43 +602,57 @@ class CheckOutController extends Controller
 
     public function saveOrderToDatabase($formData, $productArr, $trueKeys, $totalAmount)
     {
-        return response()->json(['formData' => $formData, 'productArr' => $productArr, 'trueKeys' => $trueKeys, 'totalAmount' => $totalAmount]);
-        try {
-            // Kiểm tra dữ liệu đầu vào
-            if (empty($productArr)) {
-                throw new \Exception('Không có sản phẩm trong đơn hàng');
-            }
-            // Tạo đơn hàng mới
-            $bill = Bills::create([
-                'id_user' => 2, // Đảm bảo rằng user với id này tồn tại, thay id 2 thành auth()->id_user vì phải bắt đăng nhập
-                'transport_status' => 0,
-                'payment_status' => $trueKeys, // Giá trị mặc định là 0 nếu không có
-                'address' => $formData['address'], // Giá trị mặc định là 'HCM' nếu không có
-                'voucher' => $formData['name'], // Giá trị mặc định là 'huydeptrai' nếu không có
-            ]);
-
-            // Thêm chi tiết đơn hàng
-            foreach ($productArr as $productId => $details) {
-                if (is_array($details)) {
-                    $details = (object) $details;
-                }
-                // dd($productArr, $details, gettype($details), $details->id_product);
-                $bill->details()->create([
-                    'id_product' => $details->id_product,
-                    'quantity' => $details->quantity,
-                    'price' => $details->price,
-                    'total_amount' => $totalAmount,
-                ]);
-            }
-
-            Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
-            return true;
-        } catch (\Exception $e) {
-            Log::error('Lỗi khi lưu đơn hàng: ' . $e->getMessage(), [
-                // 'request' => $request->all(),
-                'productArr' => $productArr
-            ]);
-            throw new \Exception('Lỗi khi lưu đơn hàng: ' . $e->getMessage());
+        if ($trueKeys[0] == 'cash') {
+            $payment_status = 0;
+        } else {
+            $payment_status = 1;
         }
+        if (empty($productArr)) {
+            throw new \Exception('Không có sản phẩm trong đơn hàng');
+        }
+        // Tạo đơn hàng mới
+        $bill = Bills::create([
+            'id_user' => 2, // không cần id_user vì không cần đăng nhập => đã đăng nhập thì có id_user, không có thì cho = null hoặc gì đó...
+            'transport_status' => 0,
+            'payment_status' => $payment_status, // Giá trị mặc định là 0 nếu không có
+            'address' => $formData['address'], // Giá trị mặc định là 'HCM' nếu không có
+            'voucher' => null, // Giá trị mặc định là 'huydeptrai' nếu không có
+        ]);
+
+        $user = User::where('phone', $formData['phoneNumber'])->exists();
+        if($user){
+            User::create([
+                'name' => $formData['phoneNumber'],
+                'phone' => $formData['phoneNumber'],
+                'password' => Hash::make($formData['phoneNumber']),
+            ]);
+        }
+        // Thêm chi tiết đơn hàng
+        foreach ($productArr as $productId => $details) {
+
+            if (is_array($details)) {
+                $details = (object) $details;
+            }
+            // dd($productArr, $details, gettype($details), $details->id_product);
+            $bill->details()->create([
+                'id_product' => $productId,
+                'quantity' => $details->quantity,
+                'price' => $details->price,
+                'total_amount' => $totalAmount,
+            ]);
+
+            // pull FE bị conflict cc gì đó nên chưa test
+            $product = Products::find($productId);
+            if ($product) {
+                // Cập nhật số lượng còn lại
+                $product->in_stock -= $details->quantity;
+                // Cập nhật số lượng đã bán
+                $product->sold += $details->quantity;
+                $product->save();
+            }
+        }
+
+        Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
+        return response()->json(['success' => 'Đặt hàng thành công']);
     }
 }
