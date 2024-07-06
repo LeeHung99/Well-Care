@@ -2,7 +2,7 @@
 @section('noidungchinh')
     <div class="title_post d-flex my-3">
         <h2 class="me-3">Danh mục cấp 2</h2>
-        <a class="btn btn-outline-primary" href="/admin/createcategory">Thêm danh mục mới</a>
+        <a class="btn btn-outline-primary" href="/admin/createsecategory">Thêm danh mục mới</a>
     </div>
     @if (Session::exists('thongbao'))
         <h4 class="alert alert-info text-center">{{ Session::get('thongbao') }}</h4>
@@ -33,12 +33,12 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $item->secate_name }}</td>
-                                    <td><img src="http://127.0.0.1:8000/images/banner/{{$item->avatar}}" alt="" width="150px" height="75px"></td>
+                                    <td><img src="http://127.0.0.1:8000/images/category/{{$item->avatar}}" alt="" width="150px" height="75px"></td>
                                     <td>{{ $item->cate_name }}</td>
                                     <td>{{ $item->hide == 0 ? 'Đang ẩn' : 'Đang hiện' }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/admin/editcategory{{$item->id_category}}">Sửa</a>
-                                        <form class="d-inline" action="/admin/destroycategory{{$item->id_category}}" method="POST">
+                                        <a class="btn btn-primary btn-sm" href="/admin/editsecategory{{$item->id_se_category}}">Sửa</a>
+                                        <form class="d-inline" action="/admin/destroysecategory{{$item->id_se_category}}" method="POST">
                                             @csrf
                                             <button type='submit' onclick="return confirm('Xóa hả')"
                                                 class="btn btn-danger btn-sm">

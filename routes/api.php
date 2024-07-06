@@ -38,8 +38,7 @@ Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
 Route::post('order', [CheckOutController::class, 'store']);
 
 // Route::post('loginSMS', [UserController::class, 'send']);
+
+Route::middleware('api')->post('/loginSMS', [UserController::class, 'send']);
+Route::middleware('api')->post('/loginSMS_verify', [UserController::class, 'verify']);
 // Route::post('loginSMS_verify', [UserController::class, 'verify']);
-Route::middleware('api')->post('/loginSMS', function (Request $request) {
-    // Xử lý yêu cầu tại đây
-    return response()->json(['data' => $request]);
-});

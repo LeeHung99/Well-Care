@@ -63,9 +63,9 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::get('/secategory', [AdminSeCategoryController::class, 'index']);
     Route::get('/createsecategory', [AdminSeCategoryController::class, 'createsecategory']);
     Route::post('/storesecategory', [AdminSeCategoryController::class, 'storesecategory']);
-    Route::get('/editsecategory{id_category}', [AdminSeCategoryController::class, 'editsecategory']);
-    Route::post('/updatesecategory{id_category}', [AdminSeCategoryController::class, 'updatesecategory']);
-    Route::post('/destroysecategory{id_category}', [AdminSeCategoryController::class, 'destroysecategory']);
+    Route::get('/editsecategory{id_se_category}', [AdminSeCategoryController::class, 'editsecategory']);
+    Route::post('/updatesecategory{id_se_category}', [AdminSeCategoryController::class, 'updatesecategory']);
+    Route::post('/destroysecategory{id_se_category}', [AdminSeCategoryController::class, 'destroysecategory']);
 
     Route::get('/thirdcategory', [AdminThirdCategoryController::class, 'index']);
     Route::get('/createthirdcategory', [AdminThirdCategoryController::class, 'createthirdcategory']);
