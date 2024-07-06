@@ -92,7 +92,7 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     // Route::post('/destroythirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
 
     Route::get('/bill', [AdminBillController::class, 'index']);
-    Route::get('/createbill', [AdminBillController::class, 'createbill']);
+    Route::get('/billdetail{id_bill}{id_user}', [AdminBillController::class, 'billdetail']);
     Route::post('/storebill', [AdminBillController::class, 'storebill']);
     Route::get('/editbill{id_bill}', [AdminBillController::class, 'editbill']);
     Route::post('/updatebill{id_bill}', [AdminBillController::class, 'updatebill']);
