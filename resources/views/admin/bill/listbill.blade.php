@@ -22,8 +22,8 @@
                             <tr>
                                 <th scope="col">#Mã Đơn hàng</th>
                                 <th scope="col">Người Mua</th>
-                                <th scope="col">Tình Trạng</th>
-                                <th scope="col">Tổng Tiền</th>
+                                <th scope="col">Tình Trạng Đơn Hàng</th>
+                                <th scope="col">Tình Trạng Thanh Toán</th>  
                                 <th scope="col"><i class="fa-regular fa-clock"></i> Ngày mua</th>
                                 <th scope="col">Hành động</th>
                             </tr>
@@ -31,28 +31,36 @@
                         <tbody>
                             @foreach ($bill as $index => $item)
                                 <tr>
-                                    <th scope="row">{{ $index + 1 }}</th>
-                                    <td>{{ $post->title }}</td>
-                                    <td>{{ $post->user_name }}</td>
-                                    <td>{{ $post->catename }}</td>
-                                    <td>0</td>
-                                    <td>{{ $post->created_at }}</td>
+                                    <th scope="row">#{{ $item->id_bill }}</th>
+                                    <td>{{ $item->user_name }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/admin/editpost{{$post->id_post}}">Sửa</a>
-                                        <form class="d-inline" action="/admin/destroypost{{$post->id_post}}" method="POST">
-                                            @csrf
-                                            <button type='submit' onclick="return confirm('Xóa hả')"
-                                                class="btn btn-danger btn-sm">
-                                                Xóa
-                                            </button>
-                                        </form>
+                                        @php
+                                            foreach ($transport_status as $key2 => $status2) {
+                                                if ($item->transport_status == $key2) {
+                                                    echo $status2;
+                                                }
+                                            }
+                                        @endphp
+                                    </td>
+                                    <td>
+                                        @php
+                                            foreach ($payment_status as $key1 => $status1) {
+                                                if ($item->payment_status == $key1) {
+                                                    echo $status1;
+                                                }
+                                            }
+                                        @endphp
+                                    </td>
+                                    <td>{{ $item->created_at }}</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm" href="/admin/billdetail{{ $item->id_bill}}{{$item->id_user}}"><i class="fa-regular fa-eye"></i> Chi tiết</a>
                                     </td>
                                 </tr>
                             @endforeach
-                                
+
                         </tbody>
                     </table>
-                    {{ $posts->onEachSide(3)->links() }}
+                    {{ $bill->onEachSide(3)->links() }}
                 </div>
             </div>
         </div>
