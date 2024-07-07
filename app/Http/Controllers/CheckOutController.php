@@ -16,8 +16,9 @@ use Illuminate\Support\Facades\Session;
 class CheckOutController extends Controller
 {
 
-    public function checkPayment(Request $request)
+    public function vnpayCallback(Request $request)
     {
+        return response()->json(['a' => $request]);
         $vnp_HashSecret = "04NAW27CAY6P5MU57XM770ODFLXJHYPX";
 
         // Lấy tất cả dữ liệu từ request
@@ -135,12 +136,13 @@ class CheckOutController extends Controller
              * 
              * $productArr đang là mảng tạm để chứ product trong bills
              */
-            // $productArr = $request->cart;
+            $productArr = $request->cart;
             DB::table('product_session')->truncate();
             // $productArr = [];
             for ($i = 0; $i < count($request->cart); $i++) {
                 $value = $request->cart;
                 $productArr[$value[$i]['id_product']] = [
+                    'id_product' => $value[$i]['id_product'],
                     'quantity' => $value[$i]['quantity'],
                     'price' => $value[$i]['price'],
                 ];
@@ -157,6 +159,9 @@ class CheckOutController extends Controller
             // Kiểm tra phương thức thanh toán từ request
             $formData = $request->formData;
             $payUrl = $request->paymentMethod;
+            // $payUrl = [
+            //     'cash' => true
+            // ];
             $totalAmount = $request->totalAmount;
             $trueKeys = array_keys(array_filter($payUrl));
             if ($trueKeys[0] == 'cash') {
@@ -164,14 +169,25 @@ class CheckOutController extends Controller
             } else {
                 $payment_status = 1;
             }
-            if ($payUrl['cash'] == true) {
+            if ($payUrl['cash'] == true) { // $payUrl['cash'] == true bị thay ra vì test trên post man
                 // Kiểm tra dữ liệu đầu vào
+                // return response()->json(['a' => 'a']);
                 if (empty($productArr)) {
                     throw new \Exception('Không có sản phẩm trong đơn hàng');
                 }
+                // return response()->json(['formData' => $formData, 'hihi' => $formData['number']]);
+                $user = User::where('phone', $formData['number'])->exists();
+                if (!$user) {
+                    User::create([
+                        'name' => $formData['number'],
+                        'phone' => $formData['number'],
+                        'password' => Hash::make($formData['number']),
+                    ]);
+                }
                 // Tạo đơn hàng mới
+                $id_user = User::where('phone', $formData['number'])->first();
                 $bill = Bills::create([
-                    'id_user' => 2, // Đảm bảo rằng user với id này tồn tại, thay id 2 thành auth()->id_user vì phải bắt đăng nhập
+                    'id_user' => $id_user->id_user, // Đảm bảo rằng user với id này tồn tại, thay id 2 thành auth()->id_user vì phải bắt đăng nhập
                     'transport_status' => 0,
                     'payment_status' => $payment_status, // Giá trị mặc định là 0 nếu không có
                     'address' => $formData['address'], // Giá trị mặc định là 'HCM' nếu không có
@@ -184,9 +200,10 @@ class CheckOutController extends Controller
                     if (is_array($details)) {
                         $details = (object) $details;
                     }
+                    // return response()->json(['a' => $productId, 'productArr' => $productArr]);
                     // dd($productArr, $details, gettype($details), $details->id_product);
                     $bill->details()->create([
-                        'id_product' => $productId,
+                        'id_product' => $details->id_product, //$productId có thể thay cho $details->id_product
                         'quantity' => $details->quantity,
                         'price' => $details->price,
                         'total_amount' => $totalAmount,
@@ -214,6 +231,7 @@ class CheckOutController extends Controller
 
                 // return redirect()->route('order_view')->with('message', 'Đơn hàng đã được thanh toán thành công.');
             } elseif ($payUrl['vnpay'] == true) {
+                // return response()->json(['a' => 'a']);
                 // Nếu là thanh toán qua VNPAY, chuyển hướng đến phương thức thanh toán VNPAY
                 return $this->vnPayPayment($request, $productArr, $trueKeys, $totalAmount);
             } elseif ($payUrl['momo'] == true) {
@@ -228,23 +246,56 @@ class CheckOutController extends Controller
     public function momoPayment(Request $request, $productArr, $trueKeys, $totalAmount)
     {
         try {
+            // $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+            // $partnerCode = 'MOMOBKUN20180529';
+            // $accessKey = 'klm05TvNBzhg7h7j';
+            // $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+
+            // $orderInfo = "Thanh toán qua MoMo";
+            // $amount = $totalAmount; // Đổi thành $request->total_price khi lấy từ request
+            // $orderId = time() . "";
+            // $redirectUrl = 'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view"; route('momo.callback')
+            // $ipnUrl =  'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view";
+            // $extraData = "";
+
+            // $requestId = time() . "";
+            // $requestType = "payWithATM";
+
+            // $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+            // $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+            // $data = [
+            //     'partnerCode' => $partnerCode,
+            //     'partnerName' => "Test",
+            //     "storeId" => "MomoTestStore",
+            //     'requestId' => $requestId,
+            //     'amount' => $amount,
+            //     'orderId' => $orderId,
+            //     'orderInfo' => $orderInfo,
+            //     'redirectUrl' => $redirectUrl,
+            //     'ipnUrl' => $ipnUrl,
+            //     'lang' => 'vi',
+            //     'extraData' => $extraData,
+            //     'requestType' => $requestType,
+            //     'signature' => $signature
+            // ];
+
+            // // Thực hiện request POST đến MoMo và trả về response
+            // return Http::post($endpoint, $data);
             $response = $this->createMoMoPaymentRequest($request, $productArr, $trueKeys, $totalAmount);
             if ($response->successful()) {
-                $payUrl = $response['payUrl'];
-                $orderId = $response['orderId'];
-
-                // Lưu thông tin đơn hàng tạm thời vào session hoặc cache
-                Session::put('pending_order_' . $orderId, [
-                    'request' => $request->all(),
-                    'products' => $productArr
-                ]);
-
-                return redirect()->away($payUrl);
+                $responseData = $response->json();
+                if (isset($responseData['payUrl'])) {
+                    $payUrl = $responseData['payUrl'];
+                    return response()->json(['payUrl' => $payUrl]);
+                } else {
+                    throw new \Exception('Không nhận được payUrl từ MoMo');
+                }
             } else {
-                return back()->with('error', 'Không thể tạo yêu cầu thanh toán với MoMo.');
+                throw new \Exception('Không thể tạo yêu cầu thanh toán với MoMo: ' . $response->body());
             }
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -619,12 +670,12 @@ class CheckOutController extends Controller
             'voucher' => null, // Giá trị mặc định là 'huydeptrai' nếu không có
         ]);
 
-        $user = User::where('phone', $formData['phoneNumber'])->exists();
-        if($user){
+        $user = User::where('phone', $formData['number'])->exists();
+        if ($user) {
             User::create([
-                'name' => $formData['phoneNumber'],
-                'phone' => $formData['phoneNumber'],
-                'password' => Hash::make($formData['phoneNumber']),
+                'name' => $formData['number'],
+                'phone' => $formData['number'],
+                'password' => Hash::make($formData['number']),
             ]);
         }
         // Thêm chi tiết đơn hàng

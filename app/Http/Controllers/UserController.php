@@ -32,8 +32,8 @@ class UserController extends Controller
         // return response()->json(['data' => $data]);
         // dd($request);
         $configuration = new Configuration(
-            host: 'ggx3xj.api.infobip.com',
-            apiKey: '5144fbeb4470c78e61d0749aaaade38b-d349ec87-92ee-44f6-9cfc-50ab48c57064'
+            host: 'z1m6nx.api.infobip.com',
+            apiKey: 'd1dd7a07ee4cb00ff226b26a219cc575-bc7935b7-938e-443b-a561-7374b4ae203f'
         );
 
         // dd($request->input('phone'));
