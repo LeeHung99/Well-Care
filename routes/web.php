@@ -87,6 +87,7 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/storeproduct', [AdminProductController::class, 'store']);
     Route::post('/updateproduct{id}', [AdminProductController::class, 'updateproduct'])->name('updateproduct');
     Route::get('/destroyproduct{id}', [AdminProductController::class, 'destroy'])->name('destroyproduct');
+    Route::delete('delete-image/{id}', 'ImageController@deleteImage')->name('delete.image');
     // Route::get('/editthirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
     // Route::post('/updatethirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'updatethirdcategory']);
     // Route::post('/destroythirdcategory{id_third_category}', [AdminThirdCategoryController::class, 'destroythirdcategory']);
