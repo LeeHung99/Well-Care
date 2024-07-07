@@ -84,6 +84,7 @@ class UserController extends Controller
             $data = DB::table('otp_login')->where('otp_code', $inputOtp)->first();
             $expiration = $data->expiration;
             $userExists = $data->userExists;
+            
             // if ($inputOtp != $data->otp_code) { // $inputOtp != session('otp'. $phoneNumber['code'])
             //     return response()->json(['error' => 'OTP không chính xác'], 400);
             // }
@@ -97,6 +98,7 @@ class UserController extends Controller
             // session()->forget('otp_' . $phoneNumber);
 
             if ($userExists != 0) {
+                // return response()->json(['data' => $data, 'expiration' => $expiration, 'userExists' => $userExists]);
                 $user = User::where('phone', $data->phoneNumber)->first();
                 DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
                 return response()->json([

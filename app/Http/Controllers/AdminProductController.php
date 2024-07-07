@@ -55,7 +55,6 @@ class AdminProductController extends Controller
 
     public function updateproduct(Request $request, $id)
     {
-
         // $request->validate([
         //     'name' => 'string|max:255',
         //     'price' => 'numeric',
@@ -72,6 +71,14 @@ class AdminProductController extends Controller
         $data = Products::findOrFail($id);
         $imageProduct = Image_products::where('id_image_product', $data->id_image_product)->first();
 
+        // Nếu $imageProduct null, tạo mới một bản ghi Image_products
+        if (!$imageProduct) {
+            $imageProduct = new Image_products();
+            $imageProduct->save(); // Lưu để có id_image_product mới
+            $data->id_image_product = $imageProduct->id_image_product;
+            $data->save();
+        }
+
         // Update product details
         $data->update([
             'name' => $request->name,
@@ -80,8 +87,8 @@ class AdminProductController extends Controller
             'brand' => $request->brand,
             'hide' => $request->hide,
             'id_third_category' => $request->category,
-            'object' => implode(',', $request->input('object', [])),
-            'sick' => implode(',', $request->input('sick', [])),
+            'id_object' => $request->obj,
+            'id_sick' => $request->sick,
         ]);
 
         // Handle image deletions
@@ -119,8 +126,6 @@ class AdminProductController extends Controller
 
         $imageProduct->save();
 
-
-
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $avatarName = time() . '_' . $avatar->getClientOriginalName();
@@ -130,6 +135,7 @@ class AdminProductController extends Controller
 
         return redirect()->back()->with('success', 'Cập nhật sản phẩm thành công!');
     }
+
 
     public function storeView()
     {
@@ -161,8 +167,9 @@ class AdminProductController extends Controller
             $avatarPath = 'images/product/' . $avatarName;
         }
 
-        $sick = implode(', ', $request->sick);
-        $object = implode(', ', $request->obj);
+        // $sick = implode(', ', $request->sick);
+        // $object = implode(', ', $request->obj);
+        // dd($request->sick);
         $product = Products::create([
             'name' => $request->name,
             'price' => $request->price,
@@ -171,8 +178,8 @@ class AdminProductController extends Controller
             'hide' => $request->hide,
             'id_third_category' => $request->category,
             'avatar' => $avatarPath,
-            'sick' => $sick ? $sick : null,
-            'object' => $object ? $object : null,
+            'id_sick' => $request->sick,
+            'id_object' => $request->obj,
         ]);
 
         if ($request->hasFile('avatar_sub')) {

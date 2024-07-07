@@ -42,4 +42,5 @@ Route::middleware('api')->post('/loginSMS_verify', [UserController::class, 'veri
 Route::middleware('api')->post('/order_test', [CheckOutController::class, 'store']);
 Route::middleware('api')->post('/order_view', [CheckOutController::class, 'test_view_checkout']);
 Route::middleware('api')->post('/vnpayCallback', [CheckOutController::class, 'vnpayCallback']);
+Route::middleware('api')->post('/momoCallback', [CheckOutController::class, 'momoCallback']);
 // Route::post('loginSMS_verify', [UserController::class, 'verify']);

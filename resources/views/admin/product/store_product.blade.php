@@ -17,19 +17,19 @@
             <div class="col-xl-8">
                 <div class='mb-3 px-2'>
                     <label><b>Tên sản phẩm</b></label>
-                    <input type="text" name="name" value="" class="form-control" />
+                    <input type="text" required name="name" value="" class="form-control" />
                 </div>
                 <div class='mb-3 px-2'>
                     <label><b>Giá</b></label>
-                    <input type="text" name="price" value="" class="form-control" />
+                    <input type="text" required name="price" value="" class="form-control" />
                 </div>
                 <div class='mb-3 px-2'>
                     <label><b>Tồn kho</b></label>
-                    <input type="text" name="in_stock" value="" class="form-control" />
+                    <input type="text" required name="in_stock" value="" class="form-control" />
                 </div>
                 <div class='mb-3 px-2'>
                     <label><b>Thương hiệu</b></label>
-                    <input type="text" name="brand" value="" class="form-control" />
+                    <input type="text" required name="brand" value="" class="form-control" />
                 </div>
             </div>
             <div class="col-xl-4">
@@ -46,7 +46,7 @@
                     </div>
                     <div class="card-header">
                         <label><b>Hình ảnh</b></label>
-                        <input type="file" name="avatar" class="input_file" value="" />
+                        <input type="file" name="avatar" required class="input_file" value="" />
                         <div id="preview-containerr" style="margin-top:10px"></div>
                         {{-- <img src="http://127.0.0.1:8000/images/product/{{ $data->avatar }}" alt=""> --}}
                     </div>
@@ -62,27 +62,23 @@
 
                     <div class='mb-3 px-2'>
                         <label><b>Đối tượng sử dụng</b></label>
-                        @foreach ($object as $obj)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="obj[]" value="{{ $obj->id_object }}"
-                                    id="obj{{ $obj->id_object }}">
-                                <label class="form-check-label" for="obj{{ $obj->id_object }}">
+                        <select name="obj" class="form-control">
+                            @foreach ($object as $obj)
+                                <option value="{{ $obj->id_object }}" name="category">
                                     {{ $obj->name }}
-                                </label>
-                            </div>
-                        @endforeach
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class='mb-3 px-2'>
                         <label><b>Bệnh</b></label>
-                        @foreach ($sick as $s)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="sick[]" value="{{ $s->id_sick }}"
-                                    id="sick{{ $s->id_sick }}">
-                                <label class="form-check-label" for="sick{{ $s->id_sick }}">
+                        <select name="sick" class="form-control">
+                            @foreach ($sick as $s)
+                                <option value="{{ $s->id_sick }}" name="category">
                                     {{ $s->name }}
-                                </label>
-                            </div>
-                        @endforeach
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="card-body">
                         <div class="form-check ms-2">

@@ -53,12 +53,11 @@
                     <div class="card-header">
                         <label><b>Hình ảnh</b></label>
                         <input type="file" name="avatar" value="" class="input_file" class="form-control" />
-                        <img src="{{ asset($data->avatar) }}" alt="">
+                        {{-- <img src="{{ asset($data->avatar) }}" alt=""> --}}
                         <div id="preview-containerr">
 
                             <div class="img-containerr" data-field="">
-                                <img src="{{ asset($data->avatar) }}" alt="Image" class="preview-imgg"
-                                    style="max-width: 100px;">
+                                <img src="{{ asset($data->avatar) }}" alt="Image" class="preview-imgg" style="width: 50px">
                                 {{-- <button type="button" class="delete-btn"
                                     onclick="deleteDBImage(this, '{{ $image_field }}', {{ $image->id }})">X</button> --}}
                             </div>
@@ -88,23 +87,25 @@
 
                     <div class='mb-3 px-2'>
                         <label><b>Đối tượng sử dụng</b></label>
-                        @foreach ($objects as $object)
-                            <div>
-                                <input type="checkbox" name="object[]" value="{{ $object->id_object }}"
-                                    {{ in_array($object->id_object, explode(',', $data->object)) ? 'checked' : '' }}>
-                                <label>{{ $object->name }}</label>
-                            </div>
-                        @endforeach
+                        <select name="obj" class="form-control">
+                            @foreach ($objects as $obj)
+                                <option value="{{ $obj->id_object }}"
+                                    {{ $data->Objects->id_object == $obj->id_object ? 'selected' : '' }}>
+                                    {{ $obj->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class='mb-3 px-2'>
                         <label><b>Bệnh</b></label>
-                        @foreach ($sicks as $sick)
-                            <div>
-                                <input type="checkbox" name="sick[]" value="{{ $sick->id_sick }}"
-                                    {{ in_array($sick->id_sick, explode(',', $data->sick)) ? 'checked' : '' }}>
-                                <label>{{ $sick->name }}</label>
-                            </div>
-                        @endforeach
+                        <select name="sick" class="form-control">
+                            @foreach ($sicks as $s)
+                                <option value="{{ $s->id_sick }}"
+                                    {{ $data->Sick->id_sick == $s->id_sick ? 'selected' : '' }}>
+                                    {{ $s->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="card-body">
                         <div class="form-check ms-2">
