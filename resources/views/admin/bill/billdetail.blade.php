@@ -7,7 +7,7 @@
                 enctype="multipart/form-data"> @csrf
                 <select class="form-select" name="transport_status" aria-label="Default select example" required>
                     @foreach ($transport_status as $key => $status)
-                        <option value="{{ $key }}" {{$key == $bill->transport_status? "checked":""}}>
+                        <option value="{{ $key }}" {{$key == $bill->transport_status? "selected":""}}>
                             {{ $status }}</option>
                     @endforeach
                 </select>

@@ -13,11 +13,11 @@
                             {{ $message }}
                         @enderror </b>
                 </div>
-                <div class='mb-3 px-2' id="editor">
+                <div class='mb-3 px-2'>
                     <label> Mô tả ngắn</label>
                     <textarea name="shortdes" rows="3" class="form-control"></textarea>
                 </div>
-                <div class='mb-3 px-2' id="editor">
+                <div class='mb-3 px-2'>
                     <label> Nội dung</label>
                     <textarea name="des" rows="6" class="form-control"></textarea>
                 </div>
