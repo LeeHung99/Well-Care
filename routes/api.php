@@ -37,13 +37,6 @@ Route::get('userbyid{id_user}',[ProductController::class, 'userbyid']);
 // payment route
 Route::post('order', [CheckOutController::class, 'store']);
 
-// Route::post('loginSMS', [UserController::class, 'send']);
-// Route::post('loginSMS_verify', [UserController::class, 'verify']);
-// Route::middleware('api')->post('/loginSMS', function (Request $request) {
-//     // return response()->json(['data' => $request]);
-//     return 'cc';
-// });
-
 Route::middleware('api')->post('/loginSMS', [UserController::class, 'send']);
 Route::middleware('api')->post('/loginSMS_verify', [UserController::class, 'verify']);
 Route::middleware('api')->post('/order_test', [CheckOutController::class, 'store']);
