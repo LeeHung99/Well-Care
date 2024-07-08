@@ -25,6 +25,7 @@ Route::get('productsick{id_sick}', [ProductController::class, 'productsick']);
 Route::get('/productcate{id_category}', [ProductController::class, 'productCate']);
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
+Route::get('comment', [ProductController::class, 'comment']);
 
 
 Route::get('test{id_cate}', [ProductController::class, 'test']);

@@ -211,4 +211,11 @@ class ProductController extends Controller
             'user' => $user
         ], 200);
     }
+    function comment(){
+        $comment = DB::table('comment')
+        ->get();
+        return response()->json([
+            'comment' => $comment
+        ], 200);
+    }
 }
