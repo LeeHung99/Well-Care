@@ -225,13 +225,8 @@ class CheckOutController extends Controller
                 //     'price' => $value[$i]['price'],
                 // ]);
             }
-
-            // Kiểm tra phương thức thanh toán từ request
             $formData = $request->formData;
             $payUrl = $request->paymentMethod;
-            // $payUrl = [
-            //     'cash' => true
-            // ];
             $totalAmount = $request->totalAmount;
             $trueKeys = array_keys(array_filter($payUrl));
             if ($trueKeys[0] == 'cash') {
@@ -239,6 +234,20 @@ class CheckOutController extends Controller
             } else {
                 $payment_status = 1;
             }
+            session([
+                'productArr' => $productArr, 
+                'formData' => $formData,
+                'payUrl' => $payUrl,
+                'totalAmount' => $totalAmount,
+                'trueKeys' => $trueKeys,
+                'payment_status' => $payment_status
+            ]);
+
+            session()->save();
+            // Kiểm tra phương thức thanh toán từ request
+            
+           
+            
             if ($payUrl['cash'] == true) { // $payUrl['cash'] == true bị thay ra vì test trên post man
                 // Kiểm tra dữ liệu đầu vào
                 // return response()->json(['a' => 'a']);
@@ -379,8 +388,8 @@ class CheckOutController extends Controller
         $orderInfo = "Thanh toán qua MoMo";
         $amount = $totalAmount; // Đổi thành $request->total_price khi lấy từ request
         $orderId = time() . "";
-        $redirectUrl = 'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view"; route('momo.callback')
-        $ipnUrl =  'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view";
+        $redirectUrl = 'http://127.0.0.1:8000/api/momoCallback'; // 'http://localhost:3000/'; //"http://127.0.0.1:8000/order_view"; route('momo.callback')
+        $ipnUrl =  'http://127.0.0.1:8000/api/momoCallback'; //"http://127.0.0.1:8000/order_view";
         $extraData = "";
 
         $requestId = time() . "";
@@ -449,9 +458,26 @@ class CheckOutController extends Controller
 
 
         // code mới
-        $productArr = $request->cart;
-        for ($i = 0; $i < count($request->cart); $i++) {
-            $value = $request->cart;
+        // session([
+        //     'productArr' => $productArr, 
+        //     'formData' => $formData,
+        //     'payUrl' => $payUrl,
+        //     'totalAmount' => $totalAmount,
+        //     'trueKeys' => $trueKeys,
+        //     'payment_status' => $payment_status
+        // ]);
+        // \Log::info('All session data:', session()->all());
+        $productArr = session('productArr');
+        $formData = session('formData');
+        $payUrl = session('payUrl');
+        $totalAmount = session('totalAmount');
+        $trueKeys = session('trueKeys');
+        $payment_status = session('payment_status');
+        // $productArr = $request->cart;
+        return response()->json(['productArr' => $productArr]);
+        for ($i = 0; $i < count($productArr); $i++) {
+            $value = $productArr;
+            return response()->json(['productArr' => $productArr]);
             $productArr[$value[$i]['id_product']] = [
                 'id_product' => $value[$i]['id_product'],
                 'quantity' => $value[$i]['quantity'],
@@ -518,7 +544,8 @@ class CheckOutController extends Controller
         }
 
         Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
-        return response()->json(['success' => 'Đặt hàng thành công']);
+        // return response()->json(['success' => 'Đặt hàng thành công']);
+        return redirect('http://localhost:3000/');
     }
 
 

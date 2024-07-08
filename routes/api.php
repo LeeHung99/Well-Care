@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckOutController;
+use Illuminate\Session\Middleware\StartSession;
 
 
 Route::prefix('/cate')->group(function () {
@@ -42,5 +44,8 @@ Route::middleware('api')->post('/loginSMS_verify', [UserController::class, 'veri
 Route::middleware('api')->post('/order_test', [CheckOutController::class, 'store']);
 Route::middleware('api')->post('/order_view', [CheckOutController::class, 'test_view_checkout']);
 Route::middleware('api')->post('/vnpayCallback', [CheckOutController::class, 'vnpayCallback']);
-Route::middleware('api')->post('/momoCallback', [CheckOutController::class, 'momoCallback']);
+Route::middleware('api', StartSession::class)->get('/momoCallback', [CheckOutController::class, 'momoCallback']);
+
+
+Route::middleware('api')->post('/comment', [CommentController::class, 'comment']);
 // Route::post('loginSMS_verify', [UserController::class, 'verify']);
