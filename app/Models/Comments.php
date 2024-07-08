@@ -10,6 +10,9 @@ class Comments extends Model
     use HasFactory;
     protected $table = 'comments';
     protected $primaryKey = 'id_comment';
+    protected $fillable = [
+        'id_user', 'id_product', 'content'
+    ];
     public function User()
     {
         return $this->belongsTo(User::class, 'id_user');
