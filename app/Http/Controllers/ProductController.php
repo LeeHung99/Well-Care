@@ -97,7 +97,8 @@ class ProductController extends Controller
         ], 200);
     }
 
-    function voucher(){
+    function voucher()
+    {
         $data = DB::table('vouchers')
             ->limit(4)
             ->get();
@@ -116,104 +117,118 @@ class ProductController extends Controller
         ], 200);
     }
 
-    function bill(){
+    function bill()
+    {
         $bill = DB::table('bills')
-        ->get();
+            ->get();
         return response()->json([
             'bill' => $bill
         ], 200);
     }
-    function billdetail($id_bill){
+    function billdetail($id_bill)
+    {
         $billdetail = DB::table('bill_details')
-        ->where('id_bill',$id_bill)
-        ->get();
+            ->where('id_bill', $id_bill)
+            ->get();
         return response()->json([
             'billdetail' => $billdetail
         ], 200);
     }
-    function sick(){
+    function sick()
+    {
         $sick = DB::table('sick')
-        ->get();
+            ->get();
         return response()->json([
             'sick' => $sick
         ], 200);
     }
-    function object(){
+    function object()
+    {
         $object = DB::table('object')
-        ->get();
+            ->get();
         return response()->json([
             'object' => $object
         ], 200);
     }
-    function banner(){
+    function banner()
+    {
         $banner = DB::table('image_banners')
-        ->get();
+            ->get();
         return response()->json([
             'banner' => $banner
         ], 200);
     }
-    function productsick($id_sick){
+    function productsick($id_sick)
+    {
         $productsick = DB::table('products')
-        ->where('id_sick',$id_sick)
-        ->get();
+            ->where('id_sick', $id_sick)
+            ->get();
         return response()->json([
             'productsick' => $productsick
         ], 200);
     }
-    function test($id_cate){
-        $test = DB::table('third_categories')->where('id_se_category',$id_cate)->get();
+    function test($id_cate)
+    {
+        $test = DB::table('third_categories')->where('id_se_category', $id_cate)->get();
         return response()->json([
             'test' => $test
         ], 200);
     }
-    function articlePost(){
+    function articlePost()
+    {
         $articlePost = DB::table('article_categories')
-        ->get();
+            ->get();
         return response()->json([
             'articlePost' => $articlePost
         ], 200);
     }
-    function post(){
+    function post()
+    {
         $post = DB::table('posts')
-        ->get();
+            ->get();
         return response()->json([
             'post' => $post
         ], 200);
     }
-    function postbycate($id_cate){
+    function postbycate($id_cate)
+    {
         $postbycate = DB::table('posts')
-        ->where('id_article_category',$id_cate)
-        ->get();
+            ->where('id_article_category', $id_cate)
+            ->get();
         return response()->json([
             'postbycate' => $postbycate
         ], 200);
     }
-    function postDetail($id_post){
+    function postDetail($id_post)
+    {
         $postdetail = DB::table('posts')
-        ->where('id_post',$id_post)
-        ->get();
+            ->where('id_post', $id_post)
+            ->get();
         return response()->json([
             'postdetail' => $postdetail
         ], 200);
     }
-    function user(){
+    function user()
+    {
         $user = DB::table('users')
-        ->get();
+            ->get();
         return response()->json([
             'user' => $user
         ], 200);
     }
-    function userbyid($id_user){
+    function userbyid($id_user)
+    {
         $user = DB::table('users')
-        ->where('id_user', $id_user)
-        ->first();
+            ->where('id_user', $id_user)
+            ->first();
         return response()->json([
             'user' => $user
         ], 200);
     }
-    function comment(){
-        $comment = DB::table('comment')
-        ->get();
+    function comment()
+    {
+        $comment = DB::table('comments')
+            ->get();
         return response()->json([
             'comment' => $comment
         ], 200);
