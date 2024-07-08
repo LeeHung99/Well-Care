@@ -25,7 +25,18 @@ class UserController extends Controller
     // {
     //     $this->speedSMSService = $speedSMSService;
     // }
-
+    public function updateUser(Request $request, $id_user) {
+        $user = User::find($id_user);
+        if ($user) {
+            $user->name = $request->input('name');
+            $user->gender = $request->input('gender') === 'male' ? 0 : 1;
+            $user->date = $request->input('date');
+            $user->save();
+            return response()->json(['user' => $user]);
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
     public function send(Request $request)
     {
         // $data = $request->phoneNumber;

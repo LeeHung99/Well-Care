@@ -27,6 +27,7 @@ Route::get('productsick{id_sick}', [ProductController::class, 'productsick']);
 Route::get('/productcate{id_category}', [ProductController::class, 'productCate']);
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
+Route::get('comment', [ProductController::class, 'comment']);
 
 
 Route::get('test{id_cate}', [ProductController::class, 'test']);
@@ -36,6 +37,7 @@ Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
 Route::get('user', [ProductController::class, 'user']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
 Route::get('userbyid{id_user}',[ProductController::class, 'userbyid']);
+Route::put('userbyid{id_user}',[UserController::class, 'updateUser']);
 // payment route
 Route::post('order', [CheckOutController::class, 'store']);
 
