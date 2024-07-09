@@ -41,8 +41,8 @@
                                             href="/admin/editproduct{{ $item->id_product }}">Sửa</a>
                                         <form class="d-inline"
                                             action="{{ route('destroyproduct', ['id' => $item->id_product]) }}"
-                                            method="POST">
-                                            @csrf
+                                            method="GET">
+                                            {{-- @csrf --}}
                                             <button type='submit' onclick="return confirm('Xóa hả')"
                                                 class="btn btn-danger btn-sm">
                                                 Xóa

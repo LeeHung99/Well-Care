@@ -57,7 +57,7 @@
                         <div id="preview-containerr">
 
                             <div class="img-containerr" data-field="">
-                                <img src="{{ asset($data->avatar) }}" alt="Image" class="preview-imgg" style="width: 50px">
+                                <img src="{{ asset('/images/product/'.$data->avatar) }}" alt="Image" class="preview-imgg">
                                 {{-- <button type="button" class="delete-btn"
                                     onclick="deleteDBImage(this, '{{ $image_field }}', {{ $image->id }})">X</button> --}}
                             </div>
@@ -72,8 +72,9 @@
                             @foreach ($image_product as $index => $image)
                                 @foreach (['image_1', 'image_2', 'image_3', 'image_4'] as $image_field)
                                     @if ($image->$image_field)
+                                    {{-- @dd($image_field); --}}
                                         <div class="img-container" data-field="{{ $image_field }}">
-                                            <img src="{{ asset($image->$image_field) }}" alt="Image" class="preview-img"
+                                            <img src="{{ asset('images/product_sub/'.$image->$image_field) }}" alt="Image" class="preview-img"
                                                 style="max-width: 100px;">
                                             <button type="button" class="delete-btn"
                                                 onclick="deleteDBImage(this, '{{ $image_field }}', {{ $image->id }})">X</button>

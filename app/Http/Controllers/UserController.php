@@ -76,6 +76,8 @@ class UserController extends Controller
             $expiration = $data->expiration;
             $userExists = $data->userExists;
             $expiration = now()->addSecond(30);
+
+            DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
             if (now()->isAfter($expiration)) {
                 // session()->forget('otp_' . $phoneNumber);
                 return response()->json(['error' => 'OTP đã hết hạn'], 400);

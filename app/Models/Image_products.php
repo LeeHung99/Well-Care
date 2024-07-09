@@ -11,7 +11,7 @@ class Image_products extends Model
     protected $table = 'image_products';
     protected $primaryKey = 'id_image_product';
     protected $fillable = [
-        'image_1',
+        'image_1','image_2', 'image_3', 'image_4'
     ];
     public function Products()
     {
