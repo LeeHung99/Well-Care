@@ -19,18 +19,13 @@ use Infobip\Model\SmsAdvancedTextualRequest;
 
 class UserController extends Controller
 {
-    // protected $speedSMSService;
-
-    // public function __construct(SpeedSMSService $speedSMSService)
-    // {
-    //     $this->speedSMSService = $speedSMSService;
-    // }
     public function updateUser(Request $request, $id_user) {
         $user = User::find($id_user);
         if ($user) {
             $user->name = $request->input('name');
             $user->gender = $request->input('gender') === 'male' ? 0 : 1;
             $user->date = $request->input('date');
+            $user->address = $request->input('address');
             $user->save();
             return response()->json(['user' => $user]);
         } else {
@@ -39,21 +34,13 @@ class UserController extends Controller
     }
     public function send(Request $request)
     {
-        // $data = $request->phoneNumber;
-        // return response()->json(['data' => $data]);
-        // dd($request);
         $configuration = new Configuration(
             host: 'z1m6nx.api.infobip.com',
             apiKey: 'd1dd7a07ee4cb00ff226b26a219cc575-bc7935b7-938e-443b-a561-7374b4ae203f'
         );
 
-        // dd($request->input('phone'));
         $brand_name = 'WellCare';
         $sendSmsApi = new SmsApi(config: $configuration);
-
-        // $request->validate([
-        //     'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        // ]);
 
         $phoneNumber = $request->phoneNumber;
         // $phoneNumber = '0339332612';
@@ -76,40 +63,24 @@ class UserController extends Controller
         try {
             $smsResponse = $sendSmsApi->sendSmsMessage($request);
             return response()->json(['message' => 'Gửi OTP thành công', 'user_exists' => $userExists], 200);
-            // return 'gửi thành công';
         } catch (ApiException $apiException) {
             return response()->json(['error' => 'Lỗi gửi OTP: ' . $apiException->getMessage()], 500);
-            // return 'Lỗi' . $apiException->getMessage();;
         }
     }
     public function verify(Request $request)
     {
-        // $phoneNumber = session('phoneNumber');
-        // $phoneNumber = $request->phone;
         $inputOtp = $request->otp;
-        // return 'a';
         $otp_check = DB::table('otp_login')->where('otp_code', $inputOtp)->exists();
-        // $sessionData = session('otp_' . $phoneNumber);
-        // $storedOtp = $sessionData['code'];
         if ($otp_check != false) {
             $data = DB::table('otp_login')->where('otp_code', $inputOtp)->first();
             $expiration = $data->expiration;
             $userExists = $data->userExists;
-            
-            // if ($inputOtp != $data->otp_code) { // $inputOtp != session('otp'. $phoneNumber['code'])
-            //     return response()->json(['error' => 'OTP không chính xác'], 400);
-            // }
             $expiration = now()->addSecond(30);
             if (now()->isAfter($expiration)) {
                 // session()->forget('otp_' . $phoneNumber);
                 return response()->json(['error' => 'OTP đã hết hạn'], 400);
             }
-
-
-            // session()->forget('otp_' . $phoneNumber);
-
             if ($userExists != 0) {
-                // return response()->json(['data' => $data, 'expiration' => $expiration, 'userExists' => $userExists]);
                 $user = User::where('phone', $data->phoneNumber)->first();
                 DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
                 return response()->json([
@@ -117,7 +88,6 @@ class UserController extends Controller
                     'user' => $user
                 ], 200);
             } else {
-                // return response()->json(['phone' => $data->phoneNumber], 400);
                 $user = User::create([
                     'name' => $data->phoneNumber,
                     'phone' => $data->phoneNumber,
@@ -132,24 +102,5 @@ class UserController extends Controller
         } else {
             return response()->json(['error' => 'OTP không chính xác hoặc đã hết hạn'], 400);
         }
-        // return response()->json(['data' => $data]);
-
-
-        // if (!$data || $data == null) {
-        //     return response()->json(['error' => 'OTP không tồn tại hoặc đã hết hạn'], 400);
-        // }
-
-
-
-        // session test 
-        // session([
-        //     'otp_' . $phoneNumber => [
-        //         'code' => 123456,
-        //         'expiration' => $expiration,
-        //         'user_exists' => false
-        //     ]
-        // ]);
-
-        // return response()->json(['message' => 'Xác thực OTP thành công'], 200);
     }
 }
