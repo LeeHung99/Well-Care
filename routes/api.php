@@ -36,8 +36,8 @@ Route::get('post', [ProductController::class, 'post']);
 Route::get('postdetail{id_post}', [ProductController::class, 'postdetail']);
 Route::get('user', [ProductController::class, 'user']);
 Route::get('postbycate{id_cate}', [ProductController::class, 'postbycate']);
-Route::get('userbyid{id_user}',[ProductController::class, 'userbyid']);
-Route::put('userbyid{id_user}',[UserController::class, 'updateUser']);
+Route::get('userbyid{id_user}', [ProductController::class, 'userbyid']);
+Route::put('userbyid{id_user}', [UserController::class, 'updateUser']);
 // payment route
 Route::post('order', [CheckOutController::class, 'store']);
 
@@ -49,5 +49,5 @@ Route::middleware('api')->get('/vnpayCallback/{phoneNumber}', [CheckOutControlle
 Route::middleware('api', StartSession::class)->get('/momoCallback', [CheckOutController::class, 'momoCallback']);
 
 
-Route::middleware('api')->post('/comment', [CommentController::class, 'comment']);
+Route::middleware('api')->post('/comments', [CommentController::class, 'comment']);
 // Route::post('loginSMS_verify', [UserController::class, 'verify']);
