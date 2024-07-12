@@ -14,10 +14,10 @@
     </script>
     <script src="https://kit.fontawesome.com/29ac88f093.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.css" />
-    <link rel="stylesheet"
-        href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.0/ckeditor5-premium-features.css" />
-    <script type="importmap">
+    {{-- <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.css" /> --}}
+    {{-- <link rel="stylesheet"
+        href="https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.0/ckeditor5-premium-features.css" /> --}}
+    {{-- <script type="importmap">
         {
             "imports": {
                 "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.js",
@@ -26,8 +26,8 @@
                 "ckeditor5-premium-features/": "https://cdn.ckeditor.com/ckeditor5-premium-features/42.0.0/"
             }
         }
-    </script>
-    <script type="module" src="http://127.0.0.1:8000/assets/vendor/ckeditor5.js"></script>
+    </script> --}}
+    {{-- <script type="module" src="http://127.0.0.1:8000/assets/vendor/ckeditor5.js"></script> --}}
 </head>
 
 <body>
@@ -191,6 +191,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    @yield('js-custom')
 </body>
 
 </html>

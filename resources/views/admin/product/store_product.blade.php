@@ -1,3 +1,17 @@
+<style>
+    textarea {
+        width: 100%;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        /* height: 200px; */
+    }
+
+    textarea:focus {
+        outline: none !important;
+        /* border: 1px solid red; */
+        /* box-shadow: 0 0 10px #719ECE; */
+    }
+</style>
 @extends('admin/layout_admin/layout')
 @section('noidungchinh')
     @if (session('success'))
@@ -15,21 +29,43 @@
     <form enctype="multipart/form-data" class="m-auto" id="frm" method="post" action="/admin/storeproduct"> @csrf
         <div class="row">
             <div class="col-xl-8">
-                <div class='mb-3 px-2'>
-                    <label><b>Tên sản phẩm</b></label>
-                    <input type="text" required name="name" value="" class="form-control" />
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Tên sản phẩm</b></label>
+                        <input type="text" required name="name" value="" class="form-control" />
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Giá</b></label>
+                        <input type="text" required name="price" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Tồn kho</b></label>
+                        <input type="text" required name="in_stock" value="" class="form-control" />
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Thương hiệu</b></label>
+                        <input type="text" required name="brand" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Phần trăm giảm giá</b></label>
+                        <input type="text" required name="sale" value="" class="form-control" />
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Triệu chứng</b></label>
+                        <input type="text" required name="symptom" value="" class="form-control" />
+                    </div>
                 </div>
                 <div class='mb-3 px-2'>
-                    <label><b>Giá</b></label>
-                    <input type="text" required name="price" value="" class="form-control" />
+                    <label><b>Mô tả ngắn</b></label>
+                    <textarea name="short_des" id="short_des" cols="30" rows="10"></textarea>
                 </div>
                 <div class='mb-3 px-2'>
-                    <label><b>Tồn kho</b></label>
-                    <input type="text" required name="in_stock" value="" class="form-control" />
-                </div>
-                <div class='mb-3 px-2'>
-                    <label><b>Thương hiệu</b></label>
-                    <input type="text" required name="brand" value="" class="form-control" />
+                    <label><b>Mô tả sản phẩm</b></label>
+                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
                 </div>
             </div>
             <div class="col-xl-4">
@@ -80,30 +116,75 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="card-body">
-                        <div class="form-check ms-2">
-                            <input class="form-check-input" checked type="radio" id="flexCheckDefault" value="0"
-                                name="hide">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Ẩn
-                            </label>
+                    <div class="d-flex justify-content-between">
+                        <div class="card-body">
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" checked type="radio" id="flexCheckDefault"
+                                    value="0" name="hide">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Ẩn
+                                </label>
+                            </div>
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
+                                    name="hide">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Hiện
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-check ms-2">
-                            <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="hide">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Hiện
-                            </label>
+                        <div class="card-body">
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" checked type="radio" id="flexCheckDefault"
+                                    value="0" name="hot">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Bình thường
+                                </label>
+                            </div>
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
+                                    name="hot">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Nổi bật
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class='mt-3 px-2'>
-                    <button type="submit" class="btn btn-primary py-2 px-5 border-0">Cập nhật</button>
+                    <button type="submit" class="btn btn-primary py-2 px-5 border-0">Lưu</button>
                 </div>
             </div>
         </div>
     </form>
 @endsection
+{{-- <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script> --}}
+
+@section('js-custom')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var editorElement = document.querySelector('#description');
+            if (editorElement) {
+                ClassicEditor
+                    .create(editorElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+            // Khởi tạo CKEditor cho #short_des nếu cần
+            var shortDesElement = document.querySelector('#short_des');
+            if (shortDesElement) {
+                ClassicEditor
+                    .create(shortDesElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        });
+    </script>
+@endsection
+
 <style>
     .preview-img {
         max-width: 100px;
@@ -112,6 +193,7 @@
         border: 1px solid #ccc;
         border-radius: 3px;
     }
+
     .preview-imgg {
         max-width: 100px;
         margin: 0 1em 1em 0;

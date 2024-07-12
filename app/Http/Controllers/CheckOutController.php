@@ -67,7 +67,6 @@ class CheckOutController extends Controller
                 if (empty($productArr)) {
                     throw new \Exception('Không có sản phẩm trong đơn hàng');
                 }
-                // return response()->json(['formData' => $formData, 'hihi' => $formData['number']]);
                 $user = User::where('phone', $formData['number'])->exists();
                 if (!$user) {
                     User::create([
@@ -76,8 +75,8 @@ class CheckOutController extends Controller
                         'password' => Hash::make($formData['number']),
                     ]);
                 }
-                // Tạo đơn hàng mới
 
+                // Tạo đơn hàng mới
                 $voucher = $request->voucher;
                 $voucher_get = Vouchers::where('code', $voucher)->first();
                 if ($voucher) {
@@ -119,7 +118,6 @@ class CheckOutController extends Controller
                 return response()->json(['success' => 'Đặt hàng thành công']);
             } elseif ($payUrl['vnpay'] == true) {
 
-                // return response()->json(['a' => $request->all()]);
                 $product_session_check = Product_session::where('phone_number', $formData['number'])->exists();
                 if ($product_session_check) {
                     Product_session::where('phone_number', $formData['number'])->delete();

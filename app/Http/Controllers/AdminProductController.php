@@ -65,7 +65,6 @@ class AdminProductController extends Controller
         $data = Products::findOrFail($id);
         $imageProduct = Image_products::where('id_image_product', $data->id_image_product)->first();
 
-        // Nếu $imageProduct null, tạo mới một bản ghi Image_products
         if (!$imageProduct) {
             $imageProduct = new Image_products();
             $imageProduct->save(); // Lưu để có id_image_product mới
