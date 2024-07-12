@@ -25,6 +25,7 @@ Route::get('object', [ProductController::class, 'object']);
 Route::get('banner', [ProductController::class, 'banner']);
 Route::get('productsick{id_sick}', [ProductController::class, 'productsick']);
 Route::get('/productcate{id_category}', [ProductController::class, 'productCate']);
+Route::get('img_product/{id_product}', [ProductController::class, 'imgProduct'])->name('img_product');
 Route::get('bill', [ProductController::class, 'bill']);
 Route::get('billdetail{id_bill}', [ProductController::class, 'billdetail']);
 Route::get('comment', [ProductController::class, 'comment']);

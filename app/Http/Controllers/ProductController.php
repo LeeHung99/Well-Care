@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image_products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -94,6 +95,14 @@ class ProductController extends Controller
             ->get();
         return response()->json([
             'productSold' => $data
+        ], 200);
+    }
+
+    function imgProduct($id)
+    {
+        $data = Image_products::where('id_image_product', $id)->get();
+        return response()->json([
+            'image_product' => $data
         ], 200);
     }
 
