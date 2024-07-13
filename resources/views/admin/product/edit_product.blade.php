@@ -16,25 +16,78 @@
         action="/admin/updateproduct{{ $data->id_product }}"> @csrf
         <div class="row">
             <div class="col-xl-8">
-                <div class='mb-3 px-2'>
-                    <label><b>Tên sản phẩm</b></label>
-                    <input type="text" name="name" value="{{ $data->name }}" class="form-control" />
-                    @error('name')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Tên sản phẩm</b></label> <span style="color: red">*</span>
+                        <input type="text" name="name" value="{{ $data->name }}" class="form-control" />
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Giá</b></label> <span style="color: red">*</span>
+                        <input type="text" name="price" value="{{ number_format($data->price, 0, ',', '.') }}"
+                            class="form-control" />
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Tồn kho</b></label> <span style="color: red">*</span>
+                        <input type="text" name="in_stock" value="{{ $data->in_stock }}" class="form-control" />
+                        @if ($errors->has('in_stock'))
+                            <span class="text-danger">{{ $errors->first('in_stock') }}</span>
+                        @endif
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Thương hiệu</b></label> <span style="color: red">*</span>
+                        <input type="text" name="brand" value="{{ $data->brand }}" class="form-control" />
+                        @if ($errors->has('brand'))
+                            <span class="text-danger">{{ $errors->first('brand') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Phần trăm giảm giá</b></label>
+                        <input type="text" name="sale" value="{{ $data->sale }}" class="form-control" />
+                        @if ($errors->has('sale'))
+                            <span class="text-danger">{{ $errors->first('sale') }}</span>
+                        @endif
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Triệu chứng</b></label>
+                        <input type="text" name="symptom" value="{{ $data->symptom }}" class="form-control" />
+                        @if ($errors->has('symptom'))
+                            <span class="text-danger">{{ $errors->first('symptom') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Xuất xứ</b></label>
+                        <input type="text" name="origin" value="{{ $data->origin }}" class="form-control" />
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Dạng (hộp, chai)</b></label>
+                        <input type="text" name="unit" value="{{ $data->unit }}" class="form-control" />
+                    </div>
                 </div>
                 <div class='mb-3 px-2'>
-                    <label><b>Giá</b></label>
-                    <input type="text" name="price" value="{{ number_format($data->price, 0, ',', '.') }}"
-                        class="form-control" />
+                    <label><b>Mô tả ngắn</b></label> <span style="color: red">*</span>
+                    <textarea name="short_des" id="short_des" cols="30" rows="10">{{ $data->short_des }}</textarea>
+                    @if ($errors->has('short_des'))
+                        <span class="text-danger">{{ $errors->first('short_des') }}</span>
+                    @endif
                 </div>
                 <div class='mb-3 px-2'>
-                    <label><b>Tồn kho</b></label>
-                    <input type="text" name="in_stock" value="{{ $data->in_stock }}" class="form-control" />
-                </div>
-                <div class='mb-3 px-2'>
-                    <label><b>Thương hiệu</b></label>
-                    <input type="text" name="brand" value="{{ $data->brand }}" class="form-control" />
+                    <label><b>Mô tả sản phẩm</b></label> <span style="color: red">*</span>
+                    <textarea name="description" id="description" cols="30" rows="10">{{ $data->description }}</textarea>
+                    @if ($errors->has('description'))
+                        <span class="text-danger">{{ $errors->first('description') }}</span>
+                    @endif
                 </div>
             </div>
             <div class="col-xl-4">
@@ -51,31 +104,35 @@
                         </select>
                     </div>
                     <div class="card-header">
-                        <label><b>Hình ảnh</b></label>
-                        <input type="file" name="avatar" value="" class="input_file" class="form-control" />
+                        <label><b>Hình ảnh</b></label> <span style="color: red">*</span>
+                        <input type="file" name="avatar" value="{{ $data->avatar }}" accept=".png,.jpg,.jpeg,.webp"
+                            class="input_file" class="form-control" />
                         {{-- <img src="{{ asset($data->avatar) }}" alt=""> --}}
                         <div id="preview-containerr">
 
                             <div class="img-containerr" data-field="">
-                                <img src="{{ asset('/images/product/'.$data->avatar) }}" alt="Image" class="preview-imgg">
+                                <img src="{{ asset('/images/product/' . $data->avatar) }}" alt="Image"
+                                    class="preview-imgg">
                                 {{-- <button type="button" class="delete-btn"
                                     onclick="deleteDBImage(this, '{{ $image_field }}', {{ $image->id }})">X</button> --}}
                             </div>
-
                         </div>
+                        @if ($errors->has('avatar'))
+                            <span class="text-danger">{{ $errors->first('avatar') }}</span>
+                        @endif
                     </div>
                     <div class="card-header">
                         <label><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label>
-                        <input type="file" multiple id="fileInput" accept="image/png, image/gif, image/jpeg"
+                        <input type="file" multiple id="fileInput" name="" accept=".png,.jpg,.jpeg,.webp"
                             class="form-control upload__inputfile">
                         <div id="preview-container" style="margin-top: 10px">
                             @foreach ($image_product as $index => $image)
                                 @foreach (['image_1', 'image_2', 'image_3', 'image_4'] as $image_field)
                                     @if ($image->$image_field)
-                                    {{-- @dd($image_field); --}}
+                                        {{-- @dd($image_field); --}}
                                         <div class="img-container" data-field="{{ $image_field }}">
-                                            <img src="{{ asset('images/product_sub/'.$image->$image_field) }}" alt="Image" class="preview-img"
-                                                style="max-width: 100px;">
+                                            <img src="{{ asset('images/product_sub/' . $image->$image_field) }}"
+                                                alt="Image" class="preview-img" style="max-width: 100px;">
                                             <button type="button" class="delete-btn"
                                                 onclick="deleteDBImage(this, '{{ $image_field }}', {{ $image->id }})">X</button>
                                         </div>
@@ -83,11 +140,14 @@
                                 @endforeach
                             @endforeach
                         </div>
+                        {{-- @if ($errors->has('avatar_sub'))
+                            <span class="text-danger">{{ $errors->first('avatar_sub') }}</span>
+                        @endif --}}
                         <input type="hidden" id="deletedImages" name="deletedImages" value="">
                     </div>
 
                     <div class='mb-3 px-2'>
-                        <label><b>Đối tượng sử dụng</b></label>
+                        <label><b>Đối tượng sử dụng</b></label> <span style="color: red">*</span>
                         <select name="obj" class="form-control">
                             @foreach ($objects as $obj)
                                 <option value="{{ $obj->id_object }}"
@@ -98,7 +158,7 @@
                         </select>
                     </div>
                     <div class='mb-3 px-2'>
-                        <label><b>Bệnh</b></label>
+                        <label><b>Bệnh</b></label> <span style="color: red">*</span>
                         <select name="sick" class="form-control">
                             @foreach ($sicks as $s)
                                 <option value="{{ $s->id_sick }}"
@@ -108,20 +168,38 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="card-body">
-                        <div class="form-check ms-2">
-                            <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
-                                name="hide" {{ $data->hide == 0 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Ẩn
-                            </label>
+                    <div class="d-flex justify-content-between">
+                        <div class="card-body">
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
+                                    name="hide" {{ $data->hide == 0 ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Hiện
+                                </label>
+                            </div>
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
+                                    name="hide" {{ $data->hide == 1 ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Ẩn
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-check ms-2">
-                            <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="hide" {{ $data->hide == 1 ? 'checked' : '' }}>
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Hiện
-                            </label>
+                        <div class="card-body">
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
+                                    name="hot" {{ $data->hot == 0 ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Bình thường
+                                </label>
+                            </div>
+                            <div class="form-check ms-2">
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
+                                    name="hot" {{ $data->hot == 1 ? 'checked' : '' }}>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Nổi bật
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,6 +209,30 @@
             </div>
         </div>
     </form>
+@endsection
+@section('js-custom')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var editorElement = document.querySelector('#description');
+            if (editorElement) {
+                ClassicEditor
+                    .create(editorElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+            // Khởi tạo CKEditor cho #short_des nếu cần
+            var shortDesElement = document.querySelector('#short_des');
+            if (shortDesElement) {
+                ClassicEditor
+                    .create(shortDesElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        });
+    </script>
 @endsection
 <style>
     .card-header {
@@ -160,6 +262,8 @@
         const fileInput = document.querySelector('.upload__inputfile');
         const deletedImagesInput = document.getElementById('deletedImages');
         const MAX_FILES = 4;
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+        const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
         let currentFileCount = previewContainer.querySelectorAll('.img-container').length;
 
@@ -213,10 +317,21 @@
             const files = Array.from(event.target.files);
 
             files.forEach(file => {
-                if (file.type.startsWith('image/') && currentFileCount < MAX_FILES) {
+                // code cũ
+                // if (file.type.startsWith('image/') && currentFileCount < MAX_FILES) {
+                //     createImagePreview(file);
+                //     currentFileCount++;
+                //     updateFileInput();
+                // }
+
+                if (ALLOWED_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE &&
+                    currentFileCount < MAX_FILES) {
                     createImagePreview(file);
                     currentFileCount++;
                     updateFileInput();
+                } else {
+                    alert(
+                        `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`);
                 }
             });
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductEditValid;
+use App\Http\Requests\ProductValid;
 use App\Models\Sick;
 use App\Models\Objects;
 use App\Models\Products;
@@ -48,7 +50,7 @@ class AdminProductController extends Controller
         ]);
     }
 
-    public function updateproduct(Request $request, $id)
+    public function updateproduct(ProductEditValid $request, $id)
     {
         // $request->validate([
         //     'name' => 'string|max:255',
@@ -62,6 +64,10 @@ class AdminProductController extends Controller
         //     'sick.*' => 'exists:sicks,id_sick',
         // ]);
 
+        // dd($request);
+
+
+
         $data = Products::findOrFail($id);
         $imageProduct = Image_products::where('id_image_product', $data->id_image_product)->first();
 
@@ -70,35 +76,6 @@ class AdminProductController extends Controller
             $imageProduct->save(); // Lưu để có id_image_product mới
             $data->id_image_product = $imageProduct->id_image_product;
             $data->save();
-        }
-
-        // Update product details
-        $data->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'in_stock' => $request->in_stock,
-            'brand' => $request->brand,
-            'hide' => $request->hide,
-            'id_third_category' => $request->category,
-            'id_object' => $request->obj,
-            'id_sick' => $request->sick,
-        ]);
-
-        // Handle image deletions
-        if ($request->has('deletedImages') && $request->deletedImages != null) {
-            $deletedImages = explode(',', $request->deletedImages);
-            foreach ($deletedImages as $deletedImage) {
-                if (strpos($deletedImage, ':') !== false) {
-                    list($imageId, $field) = explode(':', $deletedImage);
-                    if ($imageProduct->$field) {
-                        $filePath = public_path($imageProduct->$field);
-                        if (file_exists($filePath)) {
-                            unlink($filePath);
-                        }
-                        $imageProduct->$field = null;
-                    }
-                }
-            }
         }
 
         // upload avatar_sub
@@ -125,6 +102,46 @@ class AdminProductController extends Controller
             $data->avatar = $avatarName; // Lưu đường dẫn của avatar vào bảng products
         }
 
+        // Update product details
+        $data->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'in_stock' => $request->in_stock,
+            'brand' => $request->brand,
+            'sale' => $request->sale,
+            'symptom' => $request->symptom,
+            'origin' => $request->origin,
+            'unit' => $request->unit,
+            'short_des' => $request->short_des,
+            'description' => $request->description,
+            'avatar' => $data->avatar,
+            'hide' => $request->hide,
+            'id_third_category' => $request->category,
+            'id_sick' => $request->sick,
+            'id_object' => $request->obj,
+            'hot' => $request->hot,
+            'hide' => $request->hide,
+        ]);
+
+        // Handle image deletions
+        if ($request->has('deletedImages') && $request->deletedImages != null) {
+            $deletedImages = explode(',', $request->deletedImages);
+            foreach ($deletedImages as $deletedImage) {
+                if (strpos($deletedImage, ':') !== false) {
+                    list($imageId, $field) = explode(':', $deletedImage);
+                    if ($imageProduct->$field) {
+                        $filePath = public_path('images/product_sub/' . $imageProduct->$field);
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                        $imageProduct->$field = null;
+                    }
+                }
+            }
+            $imageProduct->save(); // Lưu thay đổi sau khi xóa
+        }
+
+
         return redirect()->back()->with('success', 'Cập nhật sản phẩm thành công!');
     }
 
@@ -137,7 +154,7 @@ class AdminProductController extends Controller
         // dd($sick, $object);
         return view('admin/product/store_product', ['third_cate' => $third_cate, 'sick' => $sick, 'object' => $object]);
     }
-    public function store(Request $request)
+    public function store(ProductValid $request)
     {
         // $request->validate([
         //     'name' => 'string|max:255',
@@ -163,11 +180,19 @@ class AdminProductController extends Controller
             'price' => $request->price,
             'in_stock' => $request->in_stock,
             'brand' => $request->brand,
+            'sale' => $request->sale,
+            'symptom' => $request->symptom,
+            'origin' => $request->origin,
+            'unit' => $request->unit,
+            'short_des' => $request->short_des,
+            'description' => $request->description,
             'hide' => $request->hide,
             'id_third_category' => $request->category,
             'avatar' => $avatarPath,
             'id_sick' => $request->sick,
             'id_object' => $request->obj,
+            'hot' => $request->hot,
+            'hide' => $request->hide,
         ]);
 
         if ($request->hasFile('avatar_sub')) {
@@ -192,14 +217,15 @@ class AdminProductController extends Controller
     }
 
 
-    public function destroy(Request $request){
+    public function destroy(Request $request)
+    {
         // dd($request->id);
         $id = $request->id;
         $product = Products::where('id_product', $id)->first();
-        if($product){   
+        if ($product) {
             $product->delete();
             return redirect()->back()->with('success', 'Sản phẩm đã được xóa');
-        } else{
+        } else {
             return redirect()->back()->with('error', 'Không có sản phẩm tương tự');
         }
     }

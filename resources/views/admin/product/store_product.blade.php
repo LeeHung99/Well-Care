@@ -31,47 +31,81 @@
             <div class="col-xl-8">
                 <div class="d-flex">
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Tên sản phẩm</b></label>
-                        <input type="text" required name="name" value="" class="form-control" />
+                        <label><b>Tên sản phẩm</b></label> <span style="color: red">*</span>
+                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" />
+                        @if ($errors->has('name'))
+                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
                     </div>
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Giá</b></label>
-                        <input type="text" required name="price" value="" class="form-control" />
+                        <label><b>Giá</b></label> <span style="color: red">*</span>
+                        <input type="text" name="price" value="{{ old('price') }}" class="form-control" />
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="d-flex">
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Tồn kho</b></label>
-                        <input type="text" required name="in_stock" value="" class="form-control" />
+                        <label><b>Tồn kho</b></label> <span style="color: red">*</span>
+                        <input type="text" name="in_stock" value="{{ old('in_stock') }}" class="form-control" />
+                        @if ($errors->has('in_stock'))
+                            <span class="text-danger">{{ $errors->first('in_stock') }}</span>
+                        @endif
                     </div>
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Thương hiệu</b></label>
-                        <input type="text" required name="brand" value="" class="form-control" />
+                        <label><b>Thương hiệu</b></label> <span style="color: red">*</span>
+                        <input type="text" name="brand" value="{{ old('brand') }}" class="form-control" />
+                        @if ($errors->has('brand'))
+                            <span class="text-danger">{{ $errors->first('brand') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="d-flex">
                     <div class='mb-3 px-2' style="width: 50%">
                         <label><b>Phần trăm giảm giá</b></label>
-                        <input type="text" required name="sale" value="" class="form-control" />
+                        <input type="text" name="sale" value="{{ old('sale') }}" class="form-control" />
+                        @if ($errors->has('sale'))
+                            <span class="text-danger">{{ $errors->first('sale') }}</span>
+                        @endif
                     </div>
                     <div class='mb-3 px-2' style="width: 50%">
                         <label><b>Triệu chứng</b></label>
-                        <input type="text" required name="symptom" value="" class="form-control" />
+                        <input type="text" name="symptom" value="{{ old('symptom') }}" class="form-control" />
+                        @if ($errors->has('symptom'))
+                            <span class="text-danger">{{ $errors->first('symptom') }}</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Xuất xứ</b></label>
+                        <input type="text" name="origin" value="" class="form-control" />
+                    </div>
+                    <div class='mb-3 px-2' style="width: 50%">
+                        <label><b>Dạng (hộp, chai)</b></label>
+                        <input type="text" name="unit" value="" class="form-control" />
                     </div>
                 </div>
                 <div class='mb-3 px-2'>
-                    <label><b>Mô tả ngắn</b></label>
+                    <label><b>Mô tả ngắn</b></label> <span style="color: red">*</span>
                     <textarea name="short_des" id="short_des" cols="30" rows="10"></textarea>
+                    @if ($errors->has('short_des'))
+                        <span class="text-danger">{{ $errors->first('short_des') }}</span>
+                    @endif
                 </div>
                 <div class='mb-3 px-2'>
-                    <label><b>Mô tả sản phẩm</b></label>
+                    <label><b>Mô tả sản phẩm</b></label> <span style="color: red">*</span>
                     <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                    @if ($errors->has('description'))
+                        <span class="text-danger">{{ $errors->first('description') }}</span>
+                    @endif
                 </div>
             </div>
             <div class="col-xl-4">
                 <div class="card" style="width: 90%;">
                     <div class="card-header">
-                        <label><b>Danh mục</b></label>
+                        <label><b>Danh mục</b></label> <span style="color: red">*</span>
                         <select name="category" class="form-control">
                             @foreach ($third_cate as $category)
                                 <option value="{{ $category->id_third_category }}" name="category">
@@ -79,11 +113,17 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('category'))
+                            <span class="text-danger">{{ $errors->first('category') }}</span>
+                        @endif
                     </div>
                     <div class="card-header">
-                        <label><b>Hình ảnh</b></label>
-                        <input type="file" name="avatar" required class="input_file" value="" />
+                        <label><b>Hình ảnh</b></label> <span style="color: red">*</span>
+                        <input type="file" name="avatar" class="input_file" value="" />
                         <div id="preview-containerr" style="margin-top:10px"></div>
+                        @if ($errors->has('avatar'))
+                            <span class="text-danger">{{ $errors->first('avatar') }}</span>
+                        @endif
                         {{-- <img src="http://127.0.0.1:8000/images/product/{{ $data->avatar }}" alt=""> --}}
                     </div>
                     <div class="card-header">
@@ -94,10 +134,13 @@
                             class="upload__inputfile">
                         <div id="fileInputsContainer"></div>
                         <div id="preview-container" style="margin-top:10px"></div>
+                        @if ($errors->has('avatar_sub'))
+                            <span class="text-danger">{{ $errors->first('avatar_sub') }}</span>
+                        @endif
                     </div>
 
                     <div class='mb-3 px-2'>
-                        <label><b>Đối tượng sử dụng</b></label>
+                        <label><b>Đối tượng sử dụng</b></label> <span style="color: red">*</span>
                         <select name="obj" class="form-control">
                             @foreach ($object as $obj)
                                 <option value="{{ $obj->id_object }}" name="category">
@@ -105,9 +148,12 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('obj'))
+                            <span class="text-danger">{{ $errors->first('obj') }}</span>
+                        @endif
                     </div>
                     <div class='mb-3 px-2'>
-                        <label><b>Bệnh</b></label>
+                        <label><b>Bệnh</b></label> <span style="color: red">*</span>
                         <select name="sick" class="form-control">
                             @foreach ($sick as $s)
                                 <option value="{{ $s->id_sick }}" name="category">
@@ -115,18 +161,21 @@
                                 </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('sick'))
+                            <span class="text-danger">{{ $errors->first('sick') }}</span>
+                        @endif
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="card-body">
                             <div class="form-check ms-2">
                                 <input class="form-check-input" checked type="radio" id="flexCheckDefault"
-                                    value="0" name="hide">
+                                    value="1" name="hide">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Ẩn
                                 </label>
                             </div>
                             <div class="form-check ms-2">
-                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
+                                <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
                                     name="hide">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Hiện
