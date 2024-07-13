@@ -1,22 +1,23 @@
 <?php
 
-use App\Http\Controllers\AdminBannerController;
-use App\Http\Controllers\AdminBillController;
-use App\Http\Controllers\AdminCategoryController;
 use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\AdminKhController;
-use App\Http\Controllers\AdminLogoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\AdminBillController;
+use App\Http\Controllers\AdminLogoController;
 use App\Http\Controllers\AdminPostsController;
+use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminVoucherController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminSeCategoryController;
 use App\Http\Controllers\AdminThirdCategoryController;
-use App\Http\Controllers\AdminUsersController;
-use App\Http\Controllers\AdminVoucherController;
-use App\Http\Controllers\AdminProductController;
 
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
@@ -106,4 +107,6 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/updateusers{id_user}', [AdminUsersController::class, 'updateusers']);
     Route::post('/destroyusers{id_user}', [AdminUsersController::class, 'destroyusers']);
     Route::get('/kh', [AdminKhController::class, 'index']);
+
+    Route::post('/upload', [UploadController::class, 'upload'])->name('ckeditor.upload');
 });

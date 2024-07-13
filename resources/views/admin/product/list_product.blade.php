@@ -1,3 +1,8 @@
+<style>
+    thead a {
+        color: black
+    }
+</style>
 @extends('admin/layout_admin/layout')
 @section('noidungchinh')
     <div class="title_post d-flex my-3">
@@ -7,6 +12,15 @@
     @if (Session::exists('thongbao'))
         <h4 class="alert alert-info text-center">{{ Session::get('thongbao') }}</h4>
     @endif
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @elseif(session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="main-post">
         <div class="row">
             <div class="col-xl-12">
@@ -15,11 +29,47 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">
+                                    <a
+                                        href="{{ route('product', ['sort_by' => 'name', 'sort_order' => $sort_by == 'name' && $sort_order == 'asc' ? 'desc' : 'asc']) }}">
+                                        Tên sản phẩm
+                                        @if ($sort_by == 'name')
+                                            @if ($sort_order == 'asc')
+                                                <span>&uarr;</span>
+                                            @else
+                                                <span>&darr;</span>
+                                            @endif
+                                        @endif
+                                    </a>
+                                </th>
                                 <th scope="col">Danh mục</th>
                                 <th scope="col">Hình ảnh</th>
-                                <th scope="col">Giá</th>
-                                <th scope="col">Tồn kho</th>
+                                <th scope="col">
+                                    <a
+                                        href="{{ route('product', ['sort_by' => 'price', 'sort_order' => $sort_by == 'price' && $sort_order == 'asc' ? 'desc' : 'asc']) }}">
+                                        Giá
+                                        @if ($sort_by == 'price')
+                                            @if ($sort_order == 'asc')
+                                                <span>&uarr;</span>
+                                            @else
+                                                <span>&darr;</span>
+                                            @endif
+                                        @endif
+                                    </a>
+                                </th>
+                                <th scope="col" style="width: 100px">
+                                    <a
+                                        href="{{ route('product', ['sort_by' => 'in_stock', 'sort_order' => $sort_by == 'in_stock' && $sort_order == 'asc' ? 'desc' : 'asc']) }}">
+                                        Tồn kho
+                                        @if ($sort_by == 'in_stock')
+                                            @if ($sort_order == 'asc')
+                                                <span>&uarr;</span>
+                                            @else
+                                                <span>&darr;</span>
+                                            @endif
+                                        @endif
+                                    </a>
+                                </th>
                                 <th scope="col">Thương hiệu</th>
                                 <th scope="col">Ẩn / Hiện</th>
                             </tr>
@@ -39,15 +89,25 @@
                                     <td>
                                         <a class="btn btn-primary btn-sm"
                                             href="/admin/editproduct{{ $item->id_product }}">Sửa</a>
-                                        <form class="d-inline"
+
+                                        <button type="button" class="btn btn-danger btn-sm delete-button"
+                                            data-id="{{ $item->id_product }}">
+                                            Xóa
+                                        </button>
+                                        <form id="delete-form-{{ $item->id_product }}"
+                                            action="{{ route('destroyproduct', ['id' => $item->id_product]) }}"
+                                            method="GET" style="display: none;">
+                                            {{-- @csrf --}}
+                                            @method('DELETE')
+                                        </form>
+                                        {{-- <form class="d-inline"
                                             action="{{ route('destroyproduct', ['id' => $item->id_product]) }}"
                                             method="GET">
-                                            {{-- @csrf --}}
                                             <button type='submit' onclick="return confirm('Xóa hả')"
                                                 class="btn btn-danger btn-sm">
                                                 Xóa
                                             </button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -62,3 +122,26 @@
         </div>
     </div>
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const formId = this.getAttribute('data-id');
+                Swal.fire({
+                    title: 'Bạn có chắc chắn không?',
+                    text: "Bạn sẽ không thể hoàn tác điều này!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Có, xóa nó!',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-form-${formId}`).submit();
+                    }
+                });
+            });
+        });
+    });
+</script>

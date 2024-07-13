@@ -210,23 +210,43 @@
         </div>
     </form>
 @endsection
+<script src="{{ asset('js/ckeditor-upload-adapter.js') }}"></script>
 @section('js-custom')
     <script>
+        function MyCustomUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new UploadAdapter(loader);
+            };
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            var editorConfig = {
+                extraPlugins: [MyCustomUploadAdapterPlugin],
+                // ... các cấu hình khác nếu cần ...
+            };
+
             var editorElement = document.querySelector('#description');
             if (editorElement) {
                 ClassicEditor
-                    .create(editorElement)
+                    .create(editorElement, editorConfig)
                     .catch(error => {
                         console.error(error);
                     });
             }
 
-            // Khởi tạo CKEditor cho #short_des nếu cần
             var shortDesElement = document.querySelector('#short_des');
             if (shortDesElement) {
                 ClassicEditor
-                    .create(shortDesElement)
+                    .create(shortDesElement, editorConfig)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+            var editorElement = document.querySelector('#editor');
+            if (editorElement) {
+                ClassicEditor
+                    .create(editorElement, editorConfig)
                     .catch(error => {
                         console.error(error);
                     });
@@ -331,7 +351,8 @@
                     updateFileInput();
                 } else {
                     alert(
-                        `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`);
+                        `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`
+                    );
                 }
             });
 

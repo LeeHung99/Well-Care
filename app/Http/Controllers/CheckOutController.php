@@ -265,11 +265,11 @@ class CheckOutController extends Controller
 
                         Product_session::where('phone_number', $phoneNumber)->delete();
                         Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
-                        // return response()->json(['success' => true, 'message' => 'Đơn hàng đã được lưu thành công']);
-                        return response()->json([
-                            'redirect' => 'http://localhost:3000',
-                            'message' => 'Thanh toán thành công'
-                        ]);
+                        return redirect('http://localhost:3000?success=Thanh toán thành công');
+                        // return response()->json([
+                        //     'redirect' => 'http://localhost:3000',
+                        //     'message' => 'Thanh toán thành công'
+                        // ]);
                     } catch (\Exception $e) {
                         return response()->json(['success' => false, 'error' => 'Đơn hàng lưu thất bại: ' . $e->getMessage()]);
                     }
@@ -471,10 +471,11 @@ class CheckOutController extends Controller
 
                 Product_session::where('phone_number', $phoneNumber)->delete();
                 Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
-                return response()->json([
-                    'redirect' => 'http://localhost:3000',
-                    'message' => 'Thanh toán thành công'
-                ]);
+                return redirect('http://localhost:3000?success=Thanh toán thành công');
+                // return response()->json([
+                //     'redirect' => 'http://localhost:3000',
+                //     'message' => 'Thanh toán thành công'
+                // ]);
             }
         } else {
             // Thanh toán thất bại

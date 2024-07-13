@@ -15,12 +15,21 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $perpage = 15;
+        $sort_by = $request->get('sort_by', 'created_at');
+        $sort_order = $request->get('sort_order', 'desc');
+
         $data = Products::with('Third_categories')
+            ->orderBy($sort_by, $sort_order)
             ->paginate($perpage);
-        return view('admin/product/list_product', ['data' => $data]);
+
+        return view('admin.product.list_product', [
+            'data' => $data,
+            'sort_by' => $sort_by,
+            'sort_order' => $sort_order
+        ]);
     }
 
     public function edit($id)
