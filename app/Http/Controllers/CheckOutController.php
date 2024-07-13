@@ -52,6 +52,7 @@ class CheckOutController extends Controller
                 ];
             }
             $formData = $request->formData;
+            // return response()->json(['request' => $request->all(), 'message' => $formData['message']]);
             $payUrl = $request->paymentMethod;
             $totalAmount = $request->totalPrice;
             $trueKeys = array_keys(array_filter($payUrl));
@@ -83,6 +84,7 @@ class CheckOutController extends Controller
                 //     $voucher->count_voucher -= 1;
                 //     $voucher->save();
                 // }
+              
                 $id_user = User::where('phone', $formData['number'])->first();
                 $bill = Bills::create([
                     'id_user' => $id_user->id_user,
@@ -90,6 +92,7 @@ class CheckOutController extends Controller
                     'payment_status' => $payment_status,
                     'address' => $formData['address'],
                     'voucher' =>  '', //$voucher_get['code'] ? $voucher_get['code'] :
+                    'ghichu' => $formData['message']
                 ]);
 
                 // Thêm chi tiết đơn hàng
@@ -237,6 +240,7 @@ class CheckOutController extends Controller
                             'payment_status' => $productSessions->first()->payment_status,
                             'address' => $productSessions->first()->address,
                             'voucher' => $productSessions->first()->voucher ?: null,
+                            'ghichu' => $productSessions->first()->ghichu,
                         ]);
 
 
@@ -445,6 +449,7 @@ class CheckOutController extends Controller
                     'payment_status' => $productSessions->first()->payment_status,
                     'address' => $productSessions->first()->address,
                     'voucher' => $productSessions->first()->voucher ?: null,
+                    'ghichu' => $productSessions->first()->ghichu,
                 ]);
                 foreach ($productSessions as $session) {
                     $bill->details()->create([
