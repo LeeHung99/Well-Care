@@ -63,6 +63,7 @@ class AdminBannerController extends Controller
         return view('admin/banner/editbanner', ['banners' => $banners, 'positions' => $this->position]);
     }
     public function updatebanner(Request $request, string $id_image_banner){
+        
         $position = $request['position'];
        
         if ($request->hasFile('image')) {
