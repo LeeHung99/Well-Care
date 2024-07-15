@@ -184,12 +184,18 @@ class AdminProductController extends Controller
         }
         // dd($request);
 
+        if($request->sale == ''){
+            $sale = 0;
+        } else{
+            $sale = $request->sale;
+        }
         $product = Products::create([
+            'id_image_product' => 1,
             'name' => $request->name,
             'price' => $request->price,
             'in_stock' => $request->in_stock,
             'brand' => $request->brand,
-            'sale' => $request->sale,
+            'sale' => $sale,
             'symptom' => $request->symptom,
             'origin' => $request->origin,
             'unit' => $request->unit,

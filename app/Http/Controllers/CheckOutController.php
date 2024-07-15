@@ -86,7 +86,7 @@ class CheckOutController extends Controller
                     $voucher_get->save();
                 }
                 // return response()->json(['voucher_get' => $voucher_get]);
-              
+
                 $id_user = User::where('phone', $formData['number'])->first();
                 $bill = Bills::create([
                     'id_user' => $id_user->id_user,
@@ -94,7 +94,8 @@ class CheckOutController extends Controller
                     'payment_status' => $payment_status,
                     'address' => $formData['address'],
                     'voucher' =>  $voucher_get['code'] ? $voucher_get['code'] : '', //$voucher_get['code'] ? $voucher_get['code'] :
-                    'ghichu' => $formData['message']
+                    'ghichu' => $formData['message'],
+                    'total_amount' => $totalAmount, 
                 ]);
 
                 // Thêm chi tiết đơn hàng
@@ -106,7 +107,7 @@ class CheckOutController extends Controller
                         'id_product' => $details->id_product, //$productId có thể thay cho $details->id_product
                         'quantity' => $details->quantity,
                         'price' => $details->price,
-                        'total_amount' => $totalAmount,
+                        // 'total_amount' => $totalAmount,
                     ]);
 
                     $product = Products::find($productId);
@@ -129,7 +130,11 @@ class CheckOutController extends Controller
                 }
                 // $voucher = $request->voucher;
                 $voucherId = $request->voucherId;
-                $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                if ($voucherId != 0) {
+                    $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                } else {
+                    $voucher_get = [];
+                }
 
                 // return response()->json(['voucher_get' => $voucher_get, 'voucherCode' => $voucher_get['code']]);
                 $phoneNumber = $formData['number'];
@@ -139,9 +144,9 @@ class CheckOutController extends Controller
                         'phone_number' => $phoneNumber,
                         'payment_status' => $payment_status,
                         'address' => $formData['address'],
-                        'voucher' => $voucher_get['code'] ? $voucher_get['code'] : '', 
+                        'voucher' => $voucher_get ? $voucher_get['code'] : '',
                         'ghichu' => $formData['message'],
-                        'total_amount' => $totalAmount, 
+                        'total_amount' => $totalAmount,
                         'id_product' => $product['id_product'],
                         'quantity' => $product['quantity'],
                         'price' => $product['price']
@@ -157,7 +162,11 @@ class CheckOutController extends Controller
                 }
 
                 $voucherId = $request->voucherId;
-                $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                if ($voucherId != 0) {
+                    $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                } else {
+                    $voucher_get = [];
+                }
 
                 $phoneNumber = $formData['number'];
                 $productSessionData = [];
@@ -166,7 +175,7 @@ class CheckOutController extends Controller
                         'phone_number' => $phoneNumber,
                         'payment_status' => $payment_status,
                         'address' => $formData['address'],
-                        'voucher' => $voucher_get['code'] ? $voucher_get['code'] : '', 
+                        'voucher' => $voucher_get ? $voucher_get['code'] : '',
                         'ghichu' => $formData['message'],
                         'total_amount' => $totalAmount,
                         'id_product' => $product['id_product'],
@@ -217,6 +226,7 @@ class CheckOutController extends Controller
                     try {
                         $productSessions = Product_session::where('phone_number', $phoneNumber)->get();
 
+                        // return response()->json(['productSessions' => $productSessions]);
                         if ($productSessions->isEmpty()) {
                             throw new \Exception('Không có sản phẩm trong đơn hàng');
                         }
@@ -245,6 +255,7 @@ class CheckOutController extends Controller
                             'address' => $productSessions->first()->address,
                             'voucher' => $productSessions->first()->voucher ?: null,
                             'ghichu' => $productSessions->first()->ghichu,
+                            'total_amount' => $productSessions->first()->total_amount,
                         ]);
 
 
@@ -254,7 +265,7 @@ class CheckOutController extends Controller
                                 'id_product' => $session->id_product,
                                 'quantity' => $session->quantity,
                                 'price' => $session->price,
-                                'total_amount' => $session->total_amount,
+                                // 'total_amount' => $session->total_amount,
                             ]);
 
 
@@ -269,10 +280,9 @@ class CheckOutController extends Controller
 
                         Product_session::where('phone_number', $phoneNumber)->delete();
                         Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
-                        
+
                         // TH1
                         return redirect('http://localhost:3000?success=Thanh toán thành công');
-
                     } catch (\Exception $e) {
                         return response()->json(['success' => false, 'error' => 'Đơn hàng lưu thất bại: ' . $e->getMessage()]);
                     }
@@ -453,13 +463,14 @@ class CheckOutController extends Controller
                     'address' => $productSessions->first()->address,
                     'voucher' => $productSessions->first()->voucher ?: null,
                     'ghichu' => $productSessions->first()->ghichu,
+                    'total_amount' => $productSessions->first()->total_amount,
                 ]);
                 foreach ($productSessions as $session) {
                     $bill->details()->create([
                         'id_product' => $session->id_product,
                         'quantity' => $session->quantity,
                         'price' => $session->price,
-                        'total_amount' => $session->total_amount,
+                        // 'total_amount' => $session->total_amount,
                     ]);
 
 

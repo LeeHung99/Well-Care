@@ -11,6 +11,10 @@
         /* border: 1px solid red; */
         /* box-shadow: 0 0 10px #719ECE; */
     }
+
+    .card-header {
+        padding: 10px;
+    }
 </style>
 @extends('admin/layout_admin/layout')
 @section('noidungchinh')
@@ -79,12 +83,18 @@
                 </div>
                 <div class="d-flex">
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Xuất xứ</b></label>
-                        <input type="text" name="origin" value="" class="form-control" />
+                        <label><b>Xuất xứ</b></label> <span style="color: red">*</span>
+                        <input type="text" name="origin" value="{{ old('origin') }}" class="form-control" />
+                        @if ($errors->has('origin'))
+                            <span class="text-danger">{{ $errors->first('origin') }}</span>
+                        @endif
                     </div>
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Dạng (hộp, chai)</b></label>
-                        <input type="text" name="unit" value="" class="form-control" />
+                        <label><b>Dạng (hộp, chai)</b></label> <span style="color: red">*</span>
+                        <input type="text" name="unit" value="{{ old('unit') }}" class="form-control" />
+                        @if ($errors->has('unit'))
+                            <span class="text-danger">{{ $errors->first('unit') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class='mb-3 px-2'>
@@ -127,7 +137,7 @@
                         {{-- <img src="http://127.0.0.1:8000/images/product/{{ $data->avatar }}" alt=""> --}}
                     </div>
                     <div class="card-header">
-                        <label><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label>
+                        <label style="margin-bottom: 10px"><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label>
                         <input type="file" multiple="multiple" id="fileInput" data-id="input1"
                             data-append="preview-container" data-max-length="4" data-class="upload__box"
                             accept="image/png, image/gif, image/jpeg" data-max_length="100" name="avatar_sub[]"
@@ -139,7 +149,7 @@
                         @endif
                     </div>
 
-                    <div class='mb-3 px-2'>
+                    <div class='mb-3 px-2' style="margin-top: 10px">
                         <label><b>Đối tượng sử dụng</b></label> <span style="color: red">*</span>
                         <select name="obj" class="form-control">
                             @foreach ($object as $obj)

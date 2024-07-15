@@ -67,11 +67,11 @@
                 </div>
                 <div class="d-flex">
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Xuất xứ</b></label>
+                        <label><b>Xuất xứ</b></label> <span style="color: red">*</span>
                         <input type="text" name="origin" value="{{ $data->origin }}" class="form-control" />
                     </div>
                     <div class='mb-3 px-2' style="width: 50%">
-                        <label><b>Dạng (hộp, chai)</b></label>
+                        <label><b>Dạng (hộp, chai)</b></label> <span style="color: red">*</span>
                         <input type="text" name="unit" value="{{ $data->unit }}" class="form-control" />
                     </div>
                 </div>
@@ -210,7 +210,7 @@
         </div>
     </form>
 @endsection
-<script src="{{ asset('js/ckeditor-upload-adapter.js') }}"></script>
+{{-- <script src="{{ asset('js/ckeditor-upload-adapter.js') }}"></script> --}}
 @section('js-custom')
     <script>
         function MyCustomUploadAdapterPlugin(editor) {

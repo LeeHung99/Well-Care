@@ -34,10 +34,13 @@ const editorConfig = {
 };
 
 ClassicEditor
-    .create( document.querySelector( '#editor' ), editorConfig )
-    .then( editor => {
-        console.log( editor );
-    } )
-    .catch( error => {
-        console.error( error );
-    } );
+    .create(document.querySelector('#editor'), {
+        extraPlugins: [MyCustomUploadAdapterPlugin],
+        // Các cấu hình khác...
+    })
+    .then(editor => {
+        console.log('Editor đã được khởi tạo', editor);
+    })
+    .catch(error => {
+        console.error(error);
+    });
