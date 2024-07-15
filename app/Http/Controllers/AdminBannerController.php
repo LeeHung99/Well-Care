@@ -12,6 +12,7 @@ Paginator::useBootstrap();
 class AdminBannerController extends Controller
 {
     protected   $position = [
+        '0' => 'Banner topbar',
         '1' => 'Slide Banner',
         '2' =>  'Banner Header',
         '3' => 'Banner Footer',
