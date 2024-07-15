@@ -52,9 +52,10 @@ class CheckOutController extends Controller
                 ];
             }
             $formData = $request->formData;
-            // return response()->json(['request' => $request->all(), 'message' => $formData['message']]);
+            // return response()->json(['request' => $request->all(), 'message' => $formData['message'], 'request' => $request->voucherId]);
             $payUrl = $request->paymentMethod;
             $totalAmount = $request->totalPrice;
+            $voucherId = $request->voucherId;
             $trueKeys = array_keys(array_filter($payUrl));
             if ($trueKeys[0] == 'cash') {
                 $payment_status = 0;
@@ -79,11 +80,12 @@ class CheckOutController extends Controller
 
                 // Tạo đơn hàng mới
                 // $voucher = $request->voucher;
-                // $voucher_get = Vouchers::where('code', $voucher)->first();
-                // if ($voucher) {
-                //     $voucher->count_voucher -= 1;
-                //     $voucher->save();
-                // }
+                $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                if ($voucher_get) {
+                    $voucher_get->count_voucher -= 1;
+                    $voucher_get->save();
+                }
+                // return response()->json(['voucher_get' => $voucher_get]);
               
                 $id_user = User::where('phone', $formData['number'])->first();
                 $bill = Bills::create([
@@ -91,7 +93,7 @@ class CheckOutController extends Controller
                     'transport_status' => 0,
                     'payment_status' => $payment_status,
                     'address' => $formData['address'],
-                    'voucher' =>  '', //$voucher_get['code'] ? $voucher_get['code'] :
+                    'voucher' =>  $voucher_get['code'] ? $voucher_get['code'] : '', //$voucher_get['code'] ? $voucher_get['code'] :
                     'ghichu' => $formData['message']
                 ]);
 
@@ -126,8 +128,10 @@ class CheckOutController extends Controller
                     Product_session::where('phone_number', $formData['number'])->delete();
                 }
                 // $voucher = $request->voucher;
-                // $voucher_get = Vouchers::where('name', $voucher)->first();
+                $voucherId = $request->voucherId;
+                $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
 
+                // return response()->json(['voucher_get' => $voucher_get, 'voucherCode' => $voucher_get['code']]);
                 $phoneNumber = $formData['number'];
                 $productSessionData = [];
                 foreach ($productArr as $product) {
@@ -135,7 +139,7 @@ class CheckOutController extends Controller
                         'phone_number' => $phoneNumber,
                         'payment_status' => $payment_status,
                         'address' => $formData['address'],
-                        'voucher' =>   '', // $voucher_get['code'] ? $voucher_get['code'] :
+                        'voucher' => $voucher_get['code'] ? $voucher_get['code'] : '', 
                         'ghichu' => $formData['message'],
                         'total_amount' => $totalAmount, 
                         'id_product' => $product['id_product'],
@@ -152,8 +156,8 @@ class CheckOutController extends Controller
                     Product_session::where('phone_number', $formData['number'])->delete();
                 }
 
-                // $voucher = $request->voucher;
-                // $voucher_get = Vouchers::where('name', $voucher)->first();
+                $voucherId = $request->voucherId;
+                $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
 
                 $phoneNumber = $formData['number'];
                 $productSessionData = [];
@@ -162,7 +166,7 @@ class CheckOutController extends Controller
                         'phone_number' => $phoneNumber,
                         'payment_status' => $payment_status,
                         'address' => $formData['address'],
-                        'voucher' => '', //$voucher_get['code'] ? $voucher_get['code'] : 
+                        'voucher' => $voucher_get['code'] ? $voucher_get['code'] : '', 
                         'ghichu' => $formData['message'],
                         'total_amount' => $totalAmount,
                         'id_product' => $product['id_product'],
@@ -265,11 +269,10 @@ class CheckOutController extends Controller
 
                         Product_session::where('phone_number', $phoneNumber)->delete();
                         Log::info('Đơn hàng đã được lưu thành công', ['bill_id' => $bill->id]);
+                        
+                        // TH1
                         return redirect('http://localhost:3000?success=Thanh toán thành công');
-                        // return response()->json([
-                        //     'redirect' => 'http://localhost:3000',
-                        //     'message' => 'Thanh toán thành công'
-                        // ]);
+
                     } catch (\Exception $e) {
                         return response()->json(['success' => false, 'error' => 'Đơn hàng lưu thất bại: ' . $e->getMessage()]);
                     }
