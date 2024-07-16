@@ -6,10 +6,30 @@ use App\Models\Category;
 use App\Models\Image_products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Bills;
+
 
 class ProductController extends Controller
 {
-
+        public function updateBill(Request $request)
+        {
+            $validatedData = $request->validate([
+                'id_bill' => 'required|integer',
+                'transport_status' => 'required|integer'
+            ]);
+    
+            $bill = Bills::find($validatedData['id_bill']);
+    
+            if (!$bill) {
+                return response()->json(['message' => 'Bill not found'], 404);
+            }
+    
+            $bill->transport_status = $validatedData['transport_status'];
+            $bill->save();
+    
+            return response()->json(['message' => 'Bill updated successfully'], 200);
+        }
+    
     function cate()
     {
         $cate = DB::table('category')->get();
