@@ -10,4 +10,5 @@ class Objects extends Model
     use HasFactory;
     protected $table = 'object';
     protected $primaryKey = 'id_object';
+    protected $fillable = ['name', 'hide'];
 }

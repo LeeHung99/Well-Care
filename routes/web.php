@@ -18,8 +18,11 @@ use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminVoucherController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminCommentController;
+use App\Http\Controllers\AdminObjectController;
 use App\Http\Controllers\AdminSeCategoryController;
 use App\Http\Controllers\AdminThirdCategoryController;
+use App\Http\Controllers\SickController;
 
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
@@ -111,6 +114,25 @@ Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function 
     Route::post('/updateusers{id_user}', [AdminUsersController::class, 'updateusers']);
     Route::post('/destroyusers{id_user}', [AdminUsersController::class, 'destroyusers']);
     Route::get('/kh', [AdminKhController::class, 'index']);
+
+
+    Route::get('/sick', [SickController::class, 'index'])->name('sick');
+    Route::get('/storeView', [SickController::class, 'storeView'])->name('storeView');
+    Route::post('/storesick', [SickController::class, 'store'])->name('storesick');
+    Route::get('/editsick{id}', [SickController::class, 'editView'])->name('editsick');
+    Route::post('/updatesick{id}', [SickController::class, 'update'])->name('updatesick');
+    Route::get('/destroysick{id}', [SickController::class, 'destroy'])->name('destroysick');
+    
+    Route::get('/object', [AdminObjectController::class, 'index'])->name('object');
+    Route::get('/storeobject', [AdminObjectController::class, 'storeView'])->name('storeobject');
+    Route::post('/storeobject', [AdminObjectController::class, 'store']);
+    Route::get('/editobject{id}', [AdminObjectController::class, 'editView'])->name('editobject');
+    Route::post('/updateobject{id}', [AdminObjectController::class, 'update'])->name('updateobject');
+    Route::get('/destroyobject{id}', [AdminObjectController::class, 'destroy'])->name('destroyobject');
+    
+
+    Route::get('/comment', [AdminCommentController::class, 'index'])->name('comment');
+    Route::get('/destroycomment{id}', [AdminCommentController::class, 'destroy'])->name('destroycomment');
 
     Route::post('/upload-image', [UploadController::class, 'upload'])->name('ckeditor.upload');
 });
