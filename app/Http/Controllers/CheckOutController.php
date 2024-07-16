@@ -55,7 +55,7 @@ class CheckOutController extends Controller
             // return response()->json(['request' => $request->all(), 'message' => $formData['message'], 'request' => $request->voucherId]);
             $payUrl = $request->paymentMethod;
             $totalAmount = $request->totalPrice;
-            $voucherId = $request->voucherId;
+            
             $trueKeys = array_keys(array_filter($payUrl));
             if ($trueKeys[0] == 'cash') {
                 $payment_status = 0;
@@ -80,8 +80,14 @@ class CheckOutController extends Controller
 
                 // Tạo đơn hàng mới
                 // $voucher = $request->voucher;
-                $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
-                if ($voucher_get) {
+                $voucherId = $request->voucherId;
+                if ($voucherId != 0) {
+                    $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                } else {
+                    $voucher_get = [];
+                }
+                // $voucher_get = Vouchers::where('id_voucher', $voucherId)->first();
+                if (!empty($voucher_get)) {
                     $voucher_get->count_voucher -= 1;
                     $voucher_get->save();
                 }
@@ -93,7 +99,7 @@ class CheckOutController extends Controller
                     'transport_status' => 0,
                     'payment_status' => $payment_status,
                     'address' => $formData['address'],
-                    'voucher' =>  $voucher_get['code'] ? $voucher_get['code'] : '', //$voucher_get['code'] ? $voucher_get['code'] :
+                    'voucher' =>  $voucher_get ? $voucher_get['code'] : '', //$voucher_get['code'] ? $voucher_get['code'] :
                     'ghichu' => $formData['message'],
                     'total_amount' => $totalAmount, 
                 ]);
