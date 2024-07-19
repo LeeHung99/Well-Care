@@ -28,14 +28,14 @@
                 <div class="col-xl-12 d-flex justify-content-between align-content-center nav-bar">
                     <div class="view-website d-flex">
                         <i class="fa-solid fa-house-laptop"></i>
-                        <p>Well-care</p>
+                        <p><a href="http://localhost:3000/" class="nav-link" title="View website">Well-care</a></p>
                     </div>
                     <div class="view-user d-flex">
                         <p> Chào, <span> {{ Auth::user()->name }}</span></p>
                         <i class="fa-solid fa-user"></i>
                         <div class="dropdown-view-user">
                             <ul class="menu-user">
-                                <li><a href="">Chỉnh sửa hồ sơ</a></li>
+                                <li><a href="/admin/editusers{{ Auth::user()->id_user }}">Chỉnh sửa hồ sơ</a></li>
                                 <li><a href="/exit">Đăng xuất</a></li>
                             </ul>
                         </div>

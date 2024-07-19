@@ -76,7 +76,21 @@ class AdminController extends Controller
             ->orderBy('comment_count', 'desc')
             ->limit(10)
             ->get();
-
+        $topUsers = DB::table('users')
+            ->join('bills', 'users.id_user', '=', 'bills.id_user')
+            ->select(
+                'users.id_user',
+                'users.name',
+                'users.phone',
+                DB::raw('COUNT(bills.id_bill) as purchase_count'),
+                DB::raw('SUM(bills.total_amount) as total_spent')
+            )
+            ->groupBy('users.id_user', 'users.name', 'users.phone')
+            ->orderBy('purchase_count', 'desc')
+            ->orderBy('total_spent', 'desc')
+            ->limit(10)
+            ->get();
+  
         $startDate = Carbon::now()->subDays(7)->toDateString();
         $endDate = Carbon::now()->toDateString();
         $data = $this->getData($startDate, $endDate);
@@ -94,6 +108,7 @@ class AdminController extends Controller
             'endDate' => $endDate,
             'revenueData' => $revenueData,
             'selectedYear' => $currentYear,
+            'topUsers' => $topUsers,
         ]);
     }
     public function updateData(Request $request)
@@ -169,7 +184,7 @@ class AdminController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 1) {
+            if (Auth::user()->role != 0) {
                 // Đăng nhập thành công cho admin
                 $request->session()->regenerate();
                 return redirect()->route('dashboard')->with('success', 'Welcome Admin!');

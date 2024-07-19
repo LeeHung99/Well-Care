@@ -11,7 +11,7 @@ Paginator::useBootstrap();
 class AdminKhController extends Controller
 {
     public function index()
-    {
+    {     
         $perpage = 10;
         $kh = DB::table('users')
             ->where('role' , '0')

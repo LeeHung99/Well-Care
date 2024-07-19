@@ -225,17 +225,18 @@
                             <th scope="col">ID khách hàng</th>
                             <th scope="col">Tên khách hàng</th>
                             <th scope="col">Số điện thoại</th>
+                            <th scope="col">Số đơn hàng</th>
                             <th scope="col">Tổng tiền đã mua</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($productbc as $index => $item)
+                        @foreach ($topUsers as $index => $item)
                             <tr>
-                                <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}" alt=""
-                                        width="50px"></td>
+                                <th scope="row">#{{ $item->id_user }}</th>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->sold }}</td>
+                                <td>{{ $item->phone }}</td>
+                                <td>{{ $item->purchase_count }}</td>
+                                <td><b>{{number_format($item->total_spent)}} VNĐ</b></td>
                             </tr>
                         @endforeach
                     </tbody>

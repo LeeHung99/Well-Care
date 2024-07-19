@@ -22,7 +22,7 @@
                     @foreach ($logo as $index => $item)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td ><img src="http://127.0.0.1:8000/images/logo/{{$item->image}}" alt="" width="300px" height="300px"></td>
+                            <td ><img src="http://127.0.0.1:8000/images/logo/{{$item->image}}" alt="" width="150px" height="150px"></td>
                             <td>
                                <b> {{$position[$item->position]}}</b>
                             </td>

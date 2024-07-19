@@ -74,7 +74,7 @@
                                         alt="Không có hình ảnh" width="100px"></td>
                                 <td><b>{{ number_format($item->price) }} VNĐ</b></td>
                                 <td>{{ $item->quantity }}</td>
-                                <td><b>{{ number_format($item->total_amount) }} VNĐ</b></td>
+                                <td><b>{{ number_format(($item->price)*($item->quantity))}} VNĐ</b></td>
                                 <td>{{ $item->created_at }}</td>
                             </tr>
                         @endforeach
