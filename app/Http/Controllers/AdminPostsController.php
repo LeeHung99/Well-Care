@@ -79,14 +79,20 @@ class AdminPostsController extends Controller
         $description = $request['des'];
         $id_cate = $request['id_cate'];
         $avatar = $request['avatar'];
-        DB::table('posts')->where('id_post', $id_post)->update([
+        
+        $updatePost = [
             'title' => $title,
             'short_des' => $shortdes,
             'description' => $description,
             'id_article_category' => $id_cate,
-            'avatar' => $avatar,
             'id_user' => Auth::user()->id_user,
-        ]);
+        ];
+
+        if(!empty($avatar)){
+            $updatePost['avatar'] = $avatar;
+        }
+
+        DB::table('posts')->where('id_post', $id_post)->update($updatePost);
         $request->session()->flash('thongbao', 'Cập nhật bài viết thành công');
         return redirect('/admin/post');
     }

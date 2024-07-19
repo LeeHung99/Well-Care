@@ -53,130 +53,141 @@
                                     <a href="/admin/" class="nav-link text-white">Bảng tin</a>
                                 </button>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                        aria-controls="flush-collapseOne">
-                                        Bài viết
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="/admin/post"
-                                                    class="nav-link text-white">Tất cả bài viết</a></li>
-                                            <li class="list-group-item"><a href="/admin/createpost"
-                                                    class="nav-link text-white">Viết bài mới</a></li>
-                                        </ul>
+                            @if (Auth::user()->role == 1 || Auth::user()->role == 3)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Bài viết
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><a href="/admin/post"
+                                                        class="nav-link text-white">Tất cả bài viết</a></li>
+                                                <li class="list-group-item"><a href="/admin/createpost"
+                                                        class="nav-link text-white">Viết bài mới</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-item">
-                                <button class="accordion-button collapsed" type="button"><a style="color: white" href="{{ route('comment') }}">Phản
-                                        hồi</a></button>
+                            @endif
 
-                            </div>
-                            <div class="accordion-item" style="background-color: #1d2327">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                        aria-controls="flush-collapseTwo">
-                                        Danh mục sản phẩm
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="/admin/category"
-                                                    class="nav-link text-white">Danh mục cấp 1</a></li>
-                                            <li class="list-group-item"><a href="/admin/secategory"
-                                                    class="nav-link text-white">Danh mục cấp 2</a></li>
-                                            <li class="list-group-item"><a href="/admin/thirdcategory"
-                                                    class="nav-link text-white">Danh mục cấp 3</a></li>
-                                        </ul>
+
+                            @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                                <div class="accordion-item" style="background-color: #1d2327">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                            aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Danh mục sản phẩm
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><a href="/admin/category"
+                                                        class="nav-link text-white">Danh mục cấp 1</a></li>
+                                                <li class="list-group-item"><a href="/admin/secategory"
+                                                        class="nav-link text-white">Danh mục cấp 2</a></li>
+                                                <li class="list-group-item"><a href="/admin/thirdcategory"
+                                                        class="nav-link text-white">Danh mục cấp 3</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                        aria-controls="flush-collapseThree">
-                                        Sản phẩm
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="{{ route('product') }}"
-                                                    class="nav-link text-white">Tất cả sản phẩm</a></li>
-                                            <li class="list-group-item"><a href="{{ route('storeproduct') }}"
-                                                    class="nav-link text-white">Thêm sản phẩm</a></li>
-                                            <li class="list-group-item"><a href="{{ route('sick') }}"
-                                                    class="nav-link text-white">Danh sách bệnh</a></li>
-                                            <li class="list-group-item"><a href="{{ route('object') }}"
-                                                    class="nav-link text-white">Danh sách đối tượng</a></li>
-                                        </ul>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                            aria-expanded="false" aria-controls="flush-collapseThree">
+                                            Sản phẩm
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><a href="{{ route('product') }}"
+                                                        class="nav-link text-white">Tất cả sản phẩm</a></li>
+                                                <li class="list-group-item"><a href="{{ route('storeproduct') }}"
+                                                        class="nav-link text-white">Thêm sản phẩm</a></li>
+                                                <li class="list-group-item"><a href="{{ route('sick') }}"
+                                                        class="nav-link text-white">Danh sách bệnh</a></li>
+                                                <li class="list-group-item"><a href="{{ route('object') }}"
+                                                        class="nav-link text-white">Danh sách đối tượng</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-item">
-                                <button class="accordion-button collapsed" type="button">
-                                    <a href="/admin/bill" class="nav-link text-white">Đơn hàng</a>
-                                </button>
-                            </div>
-                            <div class="accordion-item">
-                                <button class="accordion-button collapsed" type="button">
-                                    <a href="/admin/voucher" class="nav-link text-white">Các ưu đãi</a>
-                                </button>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFour"
-                                        aria-expanded="false" aria-controls="flush-collapseFour">
-                                        Giao diện
+                            @endif
+                            @if (Auth::user()->role == 1)
+                                <div class="accordion-item">
+                                    <button class="accordion-button collapsed" type="button"><a style="color: white"
+                                            href="{{ route('comment') }}">Phản
+                                            hồi</a></button>
+
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-button collapsed" type="button">
+                                        <a href="/admin/bill" class="nav-link text-white">Đơn hàng</a>
                                     </button>
-                                </h2>
-                                <div id="flush-collapseFour" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="/admin/logo"
-                                                    class="nav-link text-white">Logo</a></li>
-                                            <li class="list-group-item"><a href="/admin/banner"
-                                                    class="nav-link text-white">Banner</a></li>
-                                        </ul>
+                                </div>
+                                <div class="accordion-item">
+                                    <button class="accordion-button collapsed" type="button">
+                                        <a href="/admin/voucher" class="nav-link text-white">Các ưu đãi</a>
+                                    </button>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFour"
+                                            aria-expanded="false" aria-controls="flush-collapseFour">
+                                            Giao diện
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFour" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><a href="/admin/logo"
+                                                        class="nav-link text-white">Logo</a></li>
+                                                <li class="list-group-item"><a href="/admin/banner"
+                                                        class="nav-link text-white">Banner</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
-                                        aria-expanded="false" aria-controls="flush-collapseFive">
-                                        Thành viên
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseFive" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="/admin/kh"
-                                                    class="nav-link text-white">Tất cả khách hàng</a></li>
-                                            <li class="list-group-item"><a href="/admin/users"
-                                                    class="nav-link text-white">Tất cả nhân viên</a></li>
-                                            <li class="list-group-item"><a
-                                                    href="/admin/editusers{{ Auth::user()->id_user }}"
-                                                    class="nav-link text-white">Hồ sơ</a></li>
-                                        </ul>
+                            @endif
+                            @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
+                                            aria-expanded="false" aria-controls="flush-collapseFive">
+                                            Thành viên
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFive" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><a href="/admin/kh"
+                                                        class="nav-link text-white">Tất cả khách hàng</a></li>
+                                                <li class="list-group-item"><a href="/admin/users"
+                                                        class="nav-link text-white">Tất cả nhân viên</a></li>
+                                                <li class="list-group-item"><a
+                                                        href="/admin/editusers{{ Auth::user()->id_user }}"
+                                                        class="nav-link text-white">Hồ sơ</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

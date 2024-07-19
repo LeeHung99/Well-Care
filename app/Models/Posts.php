@@ -10,6 +10,9 @@ class Posts extends Model
     use HasFactory;
     protected $table = 'posts';
     protected $primaryKey = 'id_post';
+    protected $filable = [
+        'title', 'short_des', 'description', 'avatar'
+    ];
     public function User()
     {
         return $this->belongsTo(User::class, 'id_user');

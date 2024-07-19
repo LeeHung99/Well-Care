@@ -50,7 +50,8 @@ class AdminSeCategoryController extends Controller
         $request->session()->flash('thongbao', 'Thêm danh mục thành công');
         return redirect('/admin/secategory');
     }
-    public function editsecategory(Request $request, string $id_se_category){
+    public function editsecategory(Request $request, string $id_se_category)
+    {
         $cate = DB::table('category')->get();
         $secategory = DB::table('se_categories')->where('id_se_category', $id_se_category)->first();
         if ($secategory == null) {
@@ -59,7 +60,8 @@ class AdminSeCategoryController extends Controller
         }
         return view('admin/se_category/editsecate', ['secategory' => $secategory, 'cate' => $cate]);
     }
-    public function updatesecategory(Request $request, string $id_se_category){
+    public function updatesecategory(Request $request, string $id_se_category)
+    {
         $name = $request['name'];
         $id_cate = $request['id_cate'];
         $hide = $request['hide'];
@@ -72,9 +74,13 @@ class AdminSeCategoryController extends Controller
             $filePath = 'images/category/' . $filename;
             $file->move(public_path('images/category'), $filename);
         } else {
-            $filename = null;
+            // $filename = null;
+            $imageExist = DB::table('se_categories')->where('id_se_category', $id_se_category)->first();
+            if ($imageExist) {
+                $filename = $imageExist->avatar;
+            }
         }
-        DB::table('se_categories')->where('id_se_category',$id_se_category)->update([
+        DB::table('se_categories')->where('id_se_category', $id_se_category)->update([
             'name' => $name,
             'id_category' => $id_cate,
             'hide' => $hide,

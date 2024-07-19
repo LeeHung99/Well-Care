@@ -90,7 +90,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-xl-4">
+            <div class="col-xl-4" style="display: flex; flex-direction: column; justify-content: space-between">
                 <div class="card" style="width: 90%;">
                     <div class="card-header">
                         <label><b>Danh mục</b></label>
@@ -103,8 +103,10 @@
                             @endforeach
                         </select>
                     </div>
+                </div>
+                <div class="card" style="width: 90%;">
                     <div class="card-header">
-                        <label><b>Hình ảnh</b></label> <span style="color: red">*</span>
+                        <label><b>Hình ảnh</b> <span style="color: red">*</span></label> 
                         <input type="file" name="avatar" value="{{ $data->avatar }}" accept=".png,.jpg,.jpeg,.webp"
                             class="input_file" class="form-control" />
                         {{-- <img src="{{ asset($data->avatar) }}" alt=""> --}}
@@ -121,6 +123,9 @@
                             <span class="text-danger">{{ $errors->first('avatar') }}</span>
                         @endif
                     </div>
+                </div>
+
+                <div class="card" style="width: 90%;">
                     <div class="card-header">
                         <label><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label>
                         <input type="file" multiple id="fileInput" name="" accept=".png,.jpg,.jpeg,.webp"
@@ -145,8 +150,10 @@
                         @endif --}}
                         <input type="hidden" id="deletedImages" name="deletedImages" value="">
                     </div>
+                </div>
 
-                    <div class='mb-3 px-2'>
+                <div class="card" style="width: 90%;">
+                    <div class='mb-3 px-2' style="margin-top: 10px">
                         <label><b>Đối tượng sử dụng</b></label> <span style="color: red">*</span>
                         <select name="obj" class="form-control">
                             @foreach ($objects as $obj)
@@ -157,6 +164,7 @@
                             @endforeach
                         </select>
                     </div>
+
                     <div class='mb-3 px-2'>
                         <label><b>Bệnh</b></label> <span style="color: red">*</span>
                         <select name="sick" class="form-control">
@@ -168,6 +176,7 @@
                             @endforeach
                         </select>
                     </div>
+
                     <div class="d-flex justify-content-between">
                         <div class="card-body">
                             <div class="form-check ms-2">
@@ -203,6 +212,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
                 <div class='mt-3 px-2'>
                     <button type="submit" class="btn btn-primary py-2 px-5 border-0">Cập nhật</button>
                 </div>
@@ -255,6 +267,19 @@
     </script>
 @endsection
 <style>
+    .card {
+        margin-bottom: 20px;
+    }
+
+    #preview-container {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+    }
+
+    .img-containerr {
+        margin-top: 10px;
+    }
     .card-header {
         display: flex;
         flex-direction: column;

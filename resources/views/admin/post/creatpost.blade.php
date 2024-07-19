@@ -15,11 +15,11 @@
                 </div>
                 <div class='mb-3 px-2'>
                     <label> Mô tả ngắn</label>
-                    <textarea name="shortdes" rows="3" class="form-control"></textarea>
+                    <textarea name="shortdes" id="shortdes" rows="3" class="form-control"></textarea>
                 </div>
                 <div class='mb-3 px-2'>
                     <label> Nội dung</label>
-                    <textarea name="des" rows="6" class="form-control"></textarea>
+                    <textarea name="des" id="des" rows="6" class="form-control"></textarea>
                 </div>
             </div>
             <div class="col-xl-3">
@@ -68,4 +68,28 @@
             </div>
         </div>
     </form>
+@endsection
+@section('js-custom')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var editorElement = document.querySelector('#shortdes');
+            if (editorElement) {
+                ClassicEditor
+                    .create(editorElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+            // Khởi tạo CKEditor cho #short_des nếu cần
+            var shortDesElement = document.querySelector('#des');
+            if (shortDesElement) {
+                ClassicEditor
+                    .create(shortDesElement)
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        });
+    </script>
 @endsection

@@ -20,9 +20,16 @@ class AdminProductController extends Controller
         $perpage = 15;
         $sort_by = $request->get('sort_by', 'created_at');
         $sort_order = $request->get('sort_order', 'desc');
+        $search = $request->get('search');
 
-        $data = Products::with('Third_categories')
-            ->orderBy($sort_by, $sort_order)
+        $query  = Products::with('Third_categories');
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('brand', 'like', '%' . $search . '%');
+        }
+
+        $data = $query->orderBy($sort_by, $sort_order)
             ->paginate($perpage);
 
         return view('admin.product.list_product', [
@@ -151,7 +158,7 @@ class AdminProductController extends Controller
         }
 
 
-        return redirect()->back()->with('success', 'Cập nhật sản phẩm thành công!');
+        return redirect()->route('product')->with('success', 'Cập nhật sản phẩm thành công!');
     }
 
 
@@ -184,9 +191,9 @@ class AdminProductController extends Controller
         }
         // dd($request);
 
-        if($request->sale == ''){
+        if ($request->sale == '') {
             $sale = 0;
-        } else{
+        } else {
             $sale = $request->sale;
         }
         $product = Products::create([

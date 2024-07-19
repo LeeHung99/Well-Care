@@ -2,12 +2,59 @@
     thead a {
         color: black
     }
+
+    .search-container {
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        /* height: 100vh; */
+    }
+
+    .search-box {
+        position: relative;
+        width: 300px;
+    }
+
+    .search-box input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        outline: none;
+    }
+
+    .search-box button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .search-box button img {
+        width: 20px;
+        height: 20px;
+    }
 </style>
 @extends('admin/layout_admin/layout')
 @section('noidungchinh')
-    <div class="title_post d-flex my-3">
-        <h2 class="me-3">Danh sách sản phẩm</h2>
-        <a class="btn btn-outline-primary" href="/admin/storeproduct">Thêm danh sản phẩm</a>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="title_post d-flex my-3">
+            <h2 class="me-3">Danh sách sản phẩm</h2>
+            <a class="btn btn-outline-primary" href="/admin/storeproduct">Thêm sản phẩm</a>
+        </div>
+        <div class="search-container">
+            <div class="search-box">
+                <form action="{{ route('product') }}" method="GET">
+                    <input type="text" name="search" value="{{ request()->get('search') }}" placeholder="Tìm kiếm...">
+                    <button type="submit">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="Tìm kiếm">
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
     @if (Session::exists('thongbao'))
         <h4 class="alert alert-info text-center">{{ Session::get('thongbao') }}</h4>
@@ -74,7 +121,9 @@
                                 <th scope="col">Ẩn / Hiện</th>
                             </tr>
                         </thead>
+
                         <tbody>
+
                             @foreach ($data as $index => $item)
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
@@ -100,17 +149,10 @@
                                             {{-- @csrf --}}
                                             @method('DELETE')
                                         </form>
-                                        {{-- <form class="d-inline"
-                                            action="{{ route('destroyproduct', ['id' => $item->id_product]) }}"
-                                            method="GET">
-                                            <button type='submit' onclick="return confirm('Xóa hả')"
-                                                class="btn btn-danger btn-sm">
-                                                Xóa
-                                            </button>
-                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
+
 
                         </tbody>
                     </table>

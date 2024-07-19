@@ -13,7 +13,7 @@
     }
 
     .card-header {
-        padding: 10px;
+        margin-bottom: 20px;
     }
 </style>
 @extends('admin/layout_admin/layout')
@@ -127,6 +127,8 @@
                             <span class="text-danger">{{ $errors->first('category') }}</span>
                         @endif
                     </div>
+                </div>
+                <div class="card" style="width: 90%; ">
                     <div class="card-header">
                         <label><b>Hình ảnh</b></label> <span style="color: red">*</span>
                         <input type="file" name="avatar" class="input_file" value="" />
@@ -136,8 +138,13 @@
                         @endif
                         {{-- <img src="http://127.0.0.1:8000/images/product/{{ $data->avatar }}" alt=""> --}}
                     </div>
+                </div>
+
+
+                <div class="card" style="width: 90%;">
                     <div class="card-header">
-                        <label style="margin-bottom: 10px"><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label>
+                        <label style="margin-bottom: 10px"><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label> <span
+                            style="color: red">*</span>
                         <input type="file" multiple="multiple" id="fileInput" data-id="input1"
                             data-append="preview-container" data-max-length="4" data-class="upload__box"
                             accept="image/png, image/gif, image/jpeg" data-max_length="100" name="avatar_sub[]"
@@ -148,7 +155,9 @@
                             <span class="text-danger">{{ $errors->first('avatar_sub') }}</span>
                         @endif
                     </div>
+                </div>
 
+                <div class="card" style="width: 90%;">
                     <div class='mb-3 px-2' style="margin-top: 10px">
                         <label><b>Đối tượng sử dụng</b></label> <span style="color: red">*</span>
                         <select name="obj" class="form-control">
@@ -210,6 +219,8 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class='mt-3 px-2'>
                     <button type="submit" class="btn btn-primary py-2 px-5 border-0">Lưu</button>
                 </div>
@@ -245,6 +256,9 @@
 @endsection
 
 <style>
+    .card{
+        margin-bottom: 20px
+    }
     .preview-img {
         max-width: 100px;
         margin: 0 1em 1em 0;
@@ -252,7 +266,11 @@
         border: 1px solid #ccc;
         border-radius: 3px;
     }
-
+    /* #preview-container{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        align-items: center;
+    } */
     .preview-imgg {
         max-width: 100px;
         margin: 0 1em 1em 0;

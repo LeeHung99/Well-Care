@@ -177,7 +177,6 @@ class AdminController extends Controller
     }
     public function loginVerify(Request $request)
     {
-        // dd($request);
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',

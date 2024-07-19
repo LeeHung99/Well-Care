@@ -80,7 +80,11 @@ class AdminThirdCategoryController extends Controller
             $filePath = 'images/category/' . $filename;
             $file->move(public_path('images/category'), $filename);
         } else {
-            $filename = null;
+            // $filename = null;
+            $imageExist = DB::table('third_categories')->where('id_third_category', $id_third_category)->first();
+            if ($imageExist) {
+                $filename = $imageExist->avatar;
+            }
         }
         DB::table('third_categories')->where('id_third_category', $id_third_category)->update([
             'name' => $name,
