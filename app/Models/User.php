@@ -18,4 +18,8 @@ class User extends Authenticatable
         'role',
         'address',
     ];
+
+    public function comment(){
+        return $this->hasMany(Comments::class, 'id_user');
+    }
 }

@@ -74,7 +74,9 @@
                                 </div>
                             </div>
                             <div class="accordion-item">
-                                <button class="accordion-button collapsed" type="button">Phản hồi</button>
+                                <button class="accordion-button collapsed" type="button"><a style="color: white" href="{{ route('comment') }}">Phản
+                                        hồi</a></button>
+
                             </div>
                             <div class="accordion-item" style="background-color: #1d2327">
                                 <h2 class="accordion-header">
@@ -114,9 +116,9 @@
                                                     class="nav-link text-white">Tất cả sản phẩm</a></li>
                                             <li class="list-group-item"><a href="{{ route('storeproduct') }}"
                                                     class="nav-link text-white">Thêm sản phẩm</a></li>
-                                            <li class="list-group-item"><a href="{{ route('storeproduct') }}"
-                                                    class="nav-link text-white">Danh sách Bệnh</a></li>
-                                            <li class="list-group-item"><a href="{{ route('storeproduct') }}"
+                                            <li class="list-group-item"><a href="{{ route('sick') }}"
+                                                    class="nav-link text-white">Danh sách bệnh</a></li>
+                                            <li class="list-group-item"><a href="{{ route('object') }}"
                                                     class="nav-link text-white">Danh sách đối tượng</a></li>
                                         </ul>
                                     </div>
