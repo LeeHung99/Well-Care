@@ -53,7 +53,8 @@
                                     <a href="/admin/" class="nav-link text-white">Bảng tin</a>
                                 </button>
                             </div>
-                            @if (Auth::user()->role == 1 || Auth::user()->role == 3)
+                            {{-- Role 1 & 3 --}}
+                            @if (is_post_editor())
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button"
@@ -77,7 +78,8 @@
                             @endif
 
 
-                            @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                            {{-- Role 1 & 2 --}}
+                            @if (is_editor())
                                 <div class="accordion-item" style="background-color: #1d2327">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button"
@@ -125,7 +127,8 @@
                                     </div>
                                 </div>
                             @endif
-                            @if (Auth::user()->role == 1)
+
+                            @if (is_admin())
                                 <div class="accordion-item">
                                     <button class="accordion-button collapsed" type="button"><a style="color: white"
                                             href="{{ route('comment') }}">Phản
@@ -164,31 +167,35 @@
                                 </div>
                             @endif
 
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
-                                        aria-expanded="false" aria-controls="flush-collapseFive">
-                                        Thành viên
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseFive" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body p-0">
-                                        <ul class="list-group list-group-flush">
-                                            @if (Auth::user()->role == 1)
-                                                <li class="list-group-item"><a href="/admin/kh"
-                                                        class="nav-link text-white">Tất cả khách hàng</a></li>
-                                                <li class="list-group-item"><a href="/admin/users"
-                                                        class="nav-link text-white">Tất cả nhân viên</a></li>
-                                            @endif
-                                            <li class="list-group-item"><a
-                                                    href="/admin/editusers{{ Auth::user()->id_user }}"
-                                                    class="nav-link text-white">Hồ sơ</a></li>
-                                        </ul>
+
+                            @if (is_editor())
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
+                                            aria-expanded="false" aria-controls="flush-collapseFive">
+                                            Thành viên
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseFive" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                @if (is_admin())
+                                                    <li class="list-group-item"><a href="/admin/kh"
+                                                            class="nav-link text-white">Tất cả khách hàng</a></li>
+                                                    <li class="list-group-item"><a href="/admin/users"
+                                                            class="nav-link text-white">Tất cả nhân viên</a></li>
+                                                @endif
+                                                <li class="list-group-item"><a
+                                                        href="/admin/editusers{{ Auth::user()->id_user }}"
+                                                        class="nav-link text-white">Hồ sơ</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+
 
                         </div>
                     </div>
@@ -208,5 +215,15 @@
     <script src="{{ asset('js/ckeditor-upload-adapter.js') }}"></script>
     @yield('js-custom')
 </body>
+<script>
+    @if (session('roleError'))
+        Swal.fire({
+            icon: 'warning',
+            title: 'Cảnh báo',
+            text: '{{ session('roleError') }}',
+            confirmButtonText: 'Đồng ý'
+        });
+    @endif
+</script>
 
 </html>

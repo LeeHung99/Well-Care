@@ -17,7 +17,7 @@ class CheckEditorRole
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check() || !in_array(Auth::user()->role, [1, 2])) {
-            return redirect()->route('login');
+            return redirect()->back()->with('roleError', 'Tài khoản không có quyền !');
         }
         return $next($request);
     }

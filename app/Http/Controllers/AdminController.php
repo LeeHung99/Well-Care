@@ -91,7 +91,7 @@ class AdminController extends Controller
             ->orderBy('total_spent', 'desc')
             ->limit(10)
             ->get();
-  
+
         $startDate = Carbon::now()->subDays(7)->toDateString();
         $endDate = Carbon::now()->toDateString();
         $data = $this->getData($startDate, $endDate);
@@ -184,13 +184,21 @@ class AdminController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role != 0) {
-                // Đăng nhập thành công cho admin
+            $user = Auth::user();
+            if ($user->role != 0) {
                 $request->session()->regenerate();
-                return redirect()->route('dashboard')->with('success', 'Welcome Admin!');
+
+                if ($user->role == 1) {
+                    return redirect()->route('dashboard')->with('success', 'Chào mừng Admin!');
+                } elseif ($user->role == 2) {
+                    // dd($user);
+                    return redirect()->route('dashboard')->with('success', 'Chào mừng Editor!');
+                } elseif ($user->role == 3) {
+                    return redirect()->route('dashboard')->with('success', 'Chào mừng Post Editor!');
+                }
             } else {
                 Auth::logout();
-                return redirect()->route('login')->with('error', 'Tài khoản không có quyền admin');
+                return redirect()->route('login')->with('error', 'Tài khoản không có quyền truy cập.');
             }
         }
 

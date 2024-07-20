@@ -16,8 +16,8 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || Auth::user()->role == 0) { 
-            return redirect()->route('login');
+        if (!Auth::check() || Auth::user()->role != 1) { 
+            return redirect()->back()->with('roleError', 'Tài khoản không có quyền !');
         }
         return $next($request);
     }
