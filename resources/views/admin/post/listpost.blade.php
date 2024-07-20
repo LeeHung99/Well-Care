@@ -24,7 +24,6 @@
                                 <th scope="col">Tiêu đề</th>
                                 <th scope="col">Tác giả</th>
                                 <th scope="col">Chuyên mục</th>
-                                <th scope="col">Bình luận <i class="fa-regular fa-comment"></i></th>
                                 <th scope="col"><i class="fa-regular fa-clock"></i> Thời gian</th>
                                 <th scope="col">Hành động</th>
                             </tr>
@@ -36,7 +35,6 @@
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->user_name }}</td>
                                     <td>{{ $post->catename }}</td>
-                                    <td>0</td>
                                     <td>{{ $post->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm" href="/admin/editpost{{$post->id_post}}">Sửa</a>

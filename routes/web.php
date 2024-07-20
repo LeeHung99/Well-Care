@@ -40,7 +40,7 @@ Route::get('vnpay_return', [CheckOutController::class, 'vnpayReturn'])->name('vn
 Route::get('/momo-callback', [CheckOutController::class, 'momoCallback'])->name('momo.callback');
 
 Route::get('/exit', [AdminController::class, 'exit']);
-Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function () {
+Route::middleware(['auth', CheckAdmin::class])->prefix('admin')->group(function () {    
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/update-data', [AdminController::class, 'updateData']);
     Route::get('/update-revenue-data', [AdminController::class, 'updateRevenueData']);
