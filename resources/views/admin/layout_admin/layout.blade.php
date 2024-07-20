@@ -163,31 +163,33 @@
                                     </div>
                                 </div>
                             @endif
-                            @if (Auth::user()->role == 1 || Auth::user()->role == 2)
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
-                                            aria-expanded="false" aria-controls="flush-collapseFive">
-                                            Thành viên
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseFive" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body p-0">
-                                            <ul class="list-group list-group-flush">
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFive"
+                                        aria-expanded="false" aria-controls="flush-collapseFive">
+                                        Thành viên
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFive" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body p-0">
+                                        <ul class="list-group list-group-flush">
+                                            @if (Auth::user()->role == 1)
                                                 <li class="list-group-item"><a href="/admin/kh"
                                                         class="nav-link text-white">Tất cả khách hàng</a></li>
                                                 <li class="list-group-item"><a href="/admin/users"
                                                         class="nav-link text-white">Tất cả nhân viên</a></li>
-                                                <li class="list-group-item"><a
-                                                        href="/admin/editusers{{ Auth::user()->id_user }}"
-                                                        class="nav-link text-white">Hồ sơ</a></li>
-                                            </ul>
-                                        </div>
+                                            @endif
+                                            <li class="list-group-item"><a
+                                                    href="/admin/editusers{{ Auth::user()->id_user }}"
+                                                    class="nav-link text-white">Hồ sơ</a></li>
+                                        </ul>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
+
                         </div>
                     </div>
                 </div>
