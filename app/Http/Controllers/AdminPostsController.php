@@ -13,17 +13,30 @@ Paginator::useBootstrap();
 
 class AdminPostsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $perpage = 15;
-        $posts = DB::table('posts')
+        $search = $request->query('search');
+
+        $postsQuery = DB::table('posts')
             ->join('users', 'posts.id_user', '=', 'users.id_user')
             ->join('article_categories', 'posts.id_article_category', '=', 'article_categories.id_article_category')
             ->select('users.name as user_name', 'article_categories.name as catename', 'posts.*')
-            ->orderByDesc('id_post')
-            ->paginate($perpage);
+            ->orderByDesc('id_post');
+
+        if ($search) {
+            $postsQuery->where(function ($query) use ($search) {
+                $query->where('posts.title', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orWhere('article_categories.name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $posts = $postsQuery->paginate($perpage);
+
         return view('admin/post/listpost', ['posts' => $posts]);
     }
+
     public function createpost()
     {
         $catepost = DB::table('article_categories')->get();
@@ -79,7 +92,7 @@ class AdminPostsController extends Controller
         $description = $request['des'];
         $id_cate = $request['id_cate'];
         $avatar = $request['avatar'];
-        
+
         $updatePost = [
             'title' => $title,
             'short_des' => $shortdes,
@@ -88,7 +101,7 @@ class AdminPostsController extends Controller
             'id_user' => Auth::user()->id_user,
         ];
 
-        if(!empty($avatar)){
+        if (!empty($avatar)) {
             $updatePost['avatar'] = $avatar;
         }
 

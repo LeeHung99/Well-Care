@@ -68,21 +68,6 @@ class AdminProductController extends Controller
 
     public function updateproduct(ProductEditValid $request, $id)
     {
-        // $request->validate([
-        //     'name' => 'string|max:255',
-        //     'price' => 'numeric',
-        //     'in_stock' => 'integer',
-        //     'brand' => 'string|max:255',
-        //     'hide' => 'in:0,1',
-        //     'category' => 'exists:third_categories,id_third_category',
-        //     'new_images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'object.*' => 'exists:objects,id_object',
-        //     'sick.*' => 'exists:sicks,id_sick',
-        // ]);
-
-        // dd($request);
-
-
 
         $data = Products::findOrFail($id);
         $imageProduct = Image_products::where('id_image_product', $data->id_image_product)->first();
@@ -167,20 +152,10 @@ class AdminProductController extends Controller
         $third_cate = Third_categories::all();
         $sick = Sick::all();
         $object = Objects::all();
-        // dd($sick, $object);
         return view('admin/product/store_product', ['third_cate' => $third_cate, 'sick' => $sick, 'object' => $object]);
     }
     public function store(ProductValid $request)
     {
-        // $request->validate([
-        //     'name' => 'string|max:255',
-        //     'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'price' => 'numeric',
-        //     'in_stock' => 'integer',
-        //     'brand' => 'string|max:255',
-        //     'hide' => 'in:0,1',
-        //     'category' => 'exists:third_categories,id_third_category',
-        // ]);
 
         $avatarPath = null;
         if ($request->hasFile('avatar')) {

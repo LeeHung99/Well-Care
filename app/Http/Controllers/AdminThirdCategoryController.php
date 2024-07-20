@@ -10,16 +10,28 @@ Paginator::useBootstrap();
 
 class AdminThirdCategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $perpage = 15;
-        $thirdcategories = DB::table('third_categories')
+        $search = $request->query('search');
+
+        $thirdCategoriesQuery = DB::table('third_categories')
             ->join('se_categories', 'third_categories.id_se_category', '=', 'se_categories.id_se_category')
             ->select('se_categories.name as secate_name', 'third_categories.name as thirdcate_name', 'third_categories.*')
-            ->orderByDesc('id_third_category')
-            ->paginate($perpage);
+            ->orderByDesc('id_third_category');
+
+        if ($search) {
+            $thirdCategoriesQuery->where(function ($query) use ($search) {
+                $query->where('se_categories.name', 'like', '%' . $search . '%')
+                    ->orWhere('third_categories.name', 'like', '%' . $search . '%');
+            });
+        }
+
+        $thirdcategories = $thirdCategoriesQuery->paginate($perpage);
+
         return view('admin/third_category/listthirdcate', ['thirdcategories' => $thirdcategories]);
     }
+
     public function createthirdcategory()
     {
         $secate = DB::table('se_categories')->get();

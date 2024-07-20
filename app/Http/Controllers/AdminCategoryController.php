@@ -5,19 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+
 Paginator::useBootstrap();
 
 class AdminCategoryController extends Controller
 {
-    public function index(){
+    public function index(Request $request)
+    {
         $perpage = 15;
-        $category = DB::table('category')
-            ->orderByDesc('id_category')
-            ->paginate($perpage);
+        $search = $request->query('search');
+
+        $categoryQuery = DB::table('category')->orderByDesc('id_category');
+
+        if ($search) {
+            $categoryQuery->where('name', 'like', '%' . $search . '%');
+        }
+
+        $category = $categoryQuery->paginate($perpage);
+
         return view('admin/category/listcate', ['category' => $category]);
     }
-    public function createcategory(){
-         return view('admin/category/creatcate');
+    public function createcategory()
+    {
+        return view('admin/category/creatcate');
     }
     public function storecategory(Request $request)
     {
@@ -39,7 +49,8 @@ class AdminCategoryController extends Controller
         }
         return view('admin/category/editcate', ['category' => $category]);
     }
-    public function updatecategory(Request $request, string $id_category){
+    public function updatecategory(Request $request, string $id_category)
+    {
         $name = $request['name'];
         $hide = $request['hide'];
         DB::table('category')->where('id_category', $id_category)->update([

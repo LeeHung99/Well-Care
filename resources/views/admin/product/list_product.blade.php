@@ -40,7 +40,7 @@
 </style>
 @extends('admin/layout_admin/layout')
 @section('noidungchinh')
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-end " style="width: 90%"> 
         <div class="title_post d-flex my-3">
             <h2 class="me-3">Danh sách sản phẩm</h2>
             <a class="btn btn-outline-primary" href="/admin/storeproduct">Thêm sản phẩm</a>

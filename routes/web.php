@@ -102,21 +102,21 @@ Route::middleware(['auth'])->group(function () {
         /**
          * Category
          */
-        Route::get('/category', [AdminCategoryController::class, 'index']);
+        Route::get('/category', [AdminCategoryController::class, 'index'])->name('category');
         Route::get('/createcategory', [AdminCategoryController::class, 'createcategory']);
         Route::post('/storecategory', [AdminCategoryController::class, 'storecategory']);
         Route::get('/editcategory{id_category}', [AdminCategoryController::class, 'editcategory']);
         Route::post('/updatecategory{id_category}', [AdminCategoryController::class, 'updatecategory']);
         Route::post('/destroycategory{id_category}', [AdminCategoryController::class, 'destroycategory']);
 
-        Route::get('/secategory', [AdminSeCategoryController::class, 'index']);
+        Route::get('/secategory', [AdminSeCategoryController::class, 'index'])->name('secategory');
         Route::get('/createsecategory', [AdminSeCategoryController::class, 'createsecategory']);
         Route::post('/storesecategory', [AdminSeCategoryController::class, 'storesecategory']);
         Route::get('/editsecategory{id_se_category}', [AdminSeCategoryController::class, 'editsecategory']);
         Route::post('/updatesecategory{id_se_category}', [AdminSeCategoryController::class, 'updatesecategory']);
         Route::post('/destroysecategory{id_se_category}', [AdminSeCategoryController::class, 'destroysecategory']);
 
-        Route::get('/thirdcategory', [AdminThirdCategoryController::class, 'index']);
+        Route::get('/thirdcategory', [AdminThirdCategoryController::class, 'index'])->name('thirdcategory');
         Route::get('/createthirdcategory', [AdminThirdCategoryController::class, 'createthirdcategory']);
         Route::post('/storethirdcategory', [AdminThirdCategoryController::class, 'storethirdcategory']);
         Route::get('/editthirdcategory{id_category}', [AdminThirdCategoryController::class, 'editthirdcategory']);
@@ -181,7 +181,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([CheckEditorPostRole::class])->prefix('admin')->group(function () {
         // Các route cho admin và post editor (role 1 và 3)
 
-        Route::get('/post', [AdminPostsController::class, 'index']);
+        Route::get('/post', [AdminPostsController::class, 'index'])->name('post');
         Route::get('/createpost', [AdminPostsController::class, 'createpost']);
         Route::post('/storepost', [AdminPostsController::class, 'storepost']);
         Route::get('/editpost{id_post}', [AdminPostsController::class, 'editpost']);
