@@ -30,7 +30,7 @@ class AdminObjectController extends Controller
                 'hide' => $request->hide
             ]);
 
-            return redirect()->back()->with('success', 'Thêm thành công!');
+            return redirect()->route('object')->with('success', 'Thêm thành công!');
         } catch (\Exception $e) {
             Log::error('Error creating object: ' . $e->getMessage());
             // return response()->json(['error' => $e->getMessage()], 500);
@@ -57,7 +57,7 @@ class AdminObjectController extends Controller
                 'hide' => $request->hide,
             ]);
 
-            return redirect()->back()->with('success', 'Cập nhật thành công!');
+            return redirect()->route('object')->with('success', 'Cập nhật thành công!');
         } catch (\Exception $e) {
             Log::error('Error updating object: ' . $e->getMessage());
             // return response()->json(['error' => $e->getMessage()], 500);

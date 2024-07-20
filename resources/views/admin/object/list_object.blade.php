@@ -40,7 +40,7 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->hide == 0 ? 'Đang hiện' : 'Đang ẩn' }}</td>
+                                    <td>{{ $item->hide == 1 ? 'Đang hiện' : 'Đang ẩn' }}</td>
                                     <td>{{ $item->created_at != null ? $item->created_at->format('d-m-Y') : ''}}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"

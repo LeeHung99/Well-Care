@@ -64,13 +64,13 @@
                             <div class="card-body">
                                 <div class="form-check ms-2">
                                     <input class="form-check-input" checked type="radio" id="flexCheckHidden"
-                                        value="1" name="hide">
+                                        value="0" name="hide">
                                     <label class="form-check-label" for="flexCheckHidden">
                                         Ẩn
                                     </label>
                                 </div>
                                 <div class="form-check ms-2">
-                                    <input class="form-check-input" type="radio" id="flexCheckVisible" value="0"
+                                    <input class="form-check-input" type="radio" id="flexCheckVisible" value="1"
                                         name="hide">
                                     <label class="form-check-label" for="flexCheckVisible">
                                         Hiện

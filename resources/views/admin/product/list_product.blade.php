@@ -134,7 +134,7 @@
                                     <td>{{ number_format($item->price, 0, ',', '.') . ' ₫' }}</td>
                                     <td>{{ $item->in_stock }}</td>
                                     <td>{{ $item->brand }}</td>
-                                    <td>{{ $item->hide == 1 ? 'Đang ẩn' : 'Đang hiện' }}</td>
+                                    <td>{{ $item->hide == 0 ? 'Đang ẩn' : 'Đang hiện' }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
                                             href="/admin/editproduct{{ $item->id_product }}">Sửa</a>

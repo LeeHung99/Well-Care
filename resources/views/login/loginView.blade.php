@@ -113,16 +113,25 @@
                             @endif
                             <form action="#" class="login-form">
                                 <div class="form-group">
-                                    <input type="text" class="form-control rounded-left" name="email"
-                                        placeholder="Email" required>
+                                    <input type="text" class="form-control rounded-left" value="{{ old('email') }}"
+                                        name="email" placeholder="Email">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <div class="form-group d-flex">
-                                    <input type="password" class="form-control rounded-left" name="password"
-                                        placeholder="Password" required>
-                                </div>
+
+
                                 <div class="form-group">
-                                    <button type="submit"
-                                        class="form-control btn btn-primary rounded submit px-3">Đăng nhập</button>
+                                    <input type="password" class="form-control rounded-left" name="password"
+                                        placeholder="Password">
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng
+                                        nhập</button>
                                 </div>
                             </form>
                         </div>

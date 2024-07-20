@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginValid;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -175,7 +176,7 @@ class AdminController extends Controller
     {
         return view('/login.loginView');
     }
-    public function loginVerify(Request $request)
+    public function loginVerify(LoginValid $request)
     {
         $request->validate([
             'email' => 'required|email',

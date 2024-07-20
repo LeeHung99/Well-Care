@@ -32,7 +32,7 @@ class SickController extends Controller
                 'hide' => $request->hide
             ]);
 
-            return redirect()->back()->with('success', 'Thêm bệnh thành công!');
+            return redirect()->route('sick')->with('success', 'Thêm bệnh thành công!');
         } catch (\Exception $e) {
             Log::error('Error creating sick: ' . $e->getMessage());
             // return response()->json(['error' => $e->getMessage()], 500);
@@ -62,7 +62,7 @@ class SickController extends Controller
                 'hide' => $request->hide,
             ]);
 
-            return redirect()->back()->with('success', 'Cập nhật thành công!');
+            return redirect()->route('sick')->with('success', 'Cập nhật thành công!');
         } catch (\Exception $e) {
             Log::error('Error updating sick: ' . $e->getMessage());
             // return response()->json(['error' => $e->getMessage()], 500);

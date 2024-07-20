@@ -235,7 +235,7 @@ class AdminProductController extends Controller
             $product->save();
         }
 
-        return redirect()->back()->with('success', 'Thêm sản phẩm thành công!');
+        return redirect()->route('product')->with('success', 'Thêm sản phẩm thành công!');
     }
 
 
