@@ -19,7 +19,8 @@ use Infobip\Model\SmsAdvancedTextualRequest;
 
 class UserController extends Controller
 {
-    public function updateUser(Request $request, $id_user) {
+    public function updateUser(Request $request, $id_user)
+    {
         $user = User::find($id_user);
         if ($user) {
             $user->name = $request->input('name');
@@ -62,8 +63,30 @@ class UserController extends Controller
 
         try {
             $smsResponse = $sendSmsApi->sendSmsMessage($request);
-            return response()->json(['message' => 'Gửi OTP thành công', 'user_exists' => $userExists], 200);
+            // Kiểm tra trạng thái của tin nhắn
+            $messageResults = $smsResponse->getMessages();
+            if (!empty($messageResults)) {
+                $messageStatus = $messageResults[0]->getStatus();
+                
+                if ($messageStatus->getGroupId() === 1) {
+                    // Nhóm 1 thường chỉ trạng thái "PENDING" hoặc "ACCEPTED"
+                    return response()->json(['message' => 'Gửi OTP thành công', 'user_exists' => $userExists], 200);
+                } else {
+                    // Các nhóm khác có thể chỉ ra lỗi
+                    $errorDescription = $messageStatus->getDescription();
+                    $errorName = $messageStatus->getName();
+                    $groupName = $messageStatus->getGroupName();
+                    
+                    $errorMessage = "Lỗi gửi OTP: $errorName - $errorDescription (Group: $groupName)";
+                    return response()->json(['error' => $errorMessage], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Không nhận được phản hồi từ Infobip'], 500);
+            }
         } catch (ApiException $apiException) {
+            // Log the full exception for debugging
+            // \Log::error('Infobip API Exception', ['exception' => $apiException]);
+            
             return response()->json(['error' => 'Lỗi gửi OTP: ' . $apiException->getMessage()], 500);
         }
     }
@@ -77,6 +100,7 @@ class UserController extends Controller
             $userExists = $data->userExists;
             $expiration = now()->addSecond(30);
 
+            // return response()->json(['data' => $data]);
             DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
             if (now()->isAfter($expiration)) {
                 // session()->forget('otp_' . $phoneNumber);
@@ -84,7 +108,7 @@ class UserController extends Controller
             }
             if ($userExists != 0) {
                 $user = User::where('phone', $data->phoneNumber)->first();
-                DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
+                DB::table('otp_login')->where('phoneNumber', $data->phoneNumber)->delete();
                 return response()->json([
                     'message' => 'Đăng nhập thành công',
                     'user' => $user
@@ -95,7 +119,7 @@ class UserController extends Controller
                     'phone' => $data->phoneNumber,
                     'password' => Hash::make($inputOtp),
                 ]);
-                DB::table('otp_login')->where('otp_code', $inputOtp)->delete();
+                DB::table('otp_login')->where('phoneNumber', $data->phoneNumber)->delete();
                 return response()->json([
                     'message' => 'Đăng nhập thành công',
                     'user' => $user
