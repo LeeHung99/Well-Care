@@ -35,8 +35,8 @@ class UserController extends Controller
     public function send(Request $request)
     {
         $configuration = new Configuration(
-            host: 'z1m6nx.api.infobip.com',
-            apiKey: '9678b9505beddc84fc22da2c3773fae4-22f64a8a-94ba-46c6-a693-4226a901e068'
+            host: '2v51dp.api.infobip.com', // z1m6nx.api.infobip.com
+            apiKey: '2eb7ed915f697472f9eddbda405d069e-873cc948-cfda-44fd-9e9a-a60b94cb3ce4' // 9678b9505beddc84fc22da2c3773fae4-22f64a8a-94ba-46c6-a693-4226a901e068
         );
 
         $brand_name = 'WellCare';
