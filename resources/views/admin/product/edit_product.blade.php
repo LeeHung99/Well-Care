@@ -307,8 +307,8 @@
         const fileInput = document.querySelector('.upload__inputfile');
         const deletedImagesInput = document.getElementById('deletedImages');
         const MAX_FILES = 4;
-        // const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
-        // const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+        const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
         let currentFileCount = previewContainer.querySelectorAll('.img-container').length;
 
@@ -363,22 +363,22 @@
 
             files.forEach(file => {
                 // code cũ
-                if (currentFileCount < MAX_FILES) {
-                    createImagePreview(file);
-                    currentFileCount++;
-                    updateFileInput();
-                }
-
-                // if (ALLOWED_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE &&
-                //     currentFileCount < MAX_FILES) {
+                // if (currentFileCount < MAX_FILES) {
                 //     createImagePreview(file);
                 //     currentFileCount++;
                 //     updateFileInput();
-                // } else {
-                //     alert(
-                //         `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`
-                //     );
                 // }
+
+                if (ALLOWED_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE &&
+                    currentFileCount < MAX_FILES) {
+                    createImagePreview(file);
+                    currentFileCount++;
+                    updateFileInput();
+                } else {
+                    alert(
+                        `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`
+                    );
+                }
             });
 
             // Clone the FileList to a new input for form submission

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ThirdCateValid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
@@ -37,7 +38,7 @@ class AdminThirdCategoryController extends Controller
         $secate = DB::table('se_categories')->get();
         return view('admin/third_category/creatthirdcate', ['secate' => $secate]);
     }
-    public function storethirdcategory(Request $request)
+    public function storethirdcategory(ThirdCateValid $request)
     {
         $name = $request['name'];
         $id_se_cate = $request['id_cate'];

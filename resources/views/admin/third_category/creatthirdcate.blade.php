@@ -8,8 +8,12 @@
             <div class="col-xl-8">
                 <div class='mb-3 px-2'>
                     <label><b>Tên Danh mục cấp 3</b></label>
-                    <input type="text" name="name" class="form-control" required />
+                    <input type="text" name="name" class="form-control" />
+                    @if ($errors->has('name'))
+                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @endif
                 </div>
+
                 <div class="card-header mb-3">
                     <strong>Ảnh đại diện</strong>
                 </div>
@@ -17,6 +21,7 @@
                     <div class="input-group mb-3">
                         <input type="file" name="image" class="form-control" id="imgInp">
                     </div>
+
                     <img id="blah" src="" alt="your image" width="70%" />
                 </div>
                 <script>
@@ -27,8 +32,11 @@
                         }
                     }
                 </script>
+                @if ($errors->has('image'))
+                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                @endif
                 <div class='mb-3 px-2'>
-                    <select class="form-select"  name="id_cate" aria-label="Default select example" required>
+                    <select class="form-select" name="id_cate" aria-label="Default select example" required>
                         @foreach ($secate as $key => $item)
                             <option value="{{ $item->id_se_category }}">{{ $item->name }}</option>
                         @endforeach
@@ -37,6 +45,9 @@
                 <div class='mb-3 px-2'>
                     <label><b>Thứ tự</b></label>
                     <input type="number" name="order" class="form-control" />
+                    @if ($errors->has('order'))
+                        <span class="text-danger">{{ $errors->first('order') }}</span>
+                    @endif
                 </div>
             </div>
             <div class="col-xl-4">
@@ -47,14 +58,14 @@
                     <div class="card-body">
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
-                                name="hide" required>
+                                name="hide" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Ẩn
                             </label>
                         </div>
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="hide" required>
+                                name="hide">
                             <label class="form-check-label" for="flexCheckDefault">
                                 Hiện
                             </label>
@@ -68,14 +79,14 @@
                     <div class="card-body">
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
-                                name="hot" required>
+                                name="hot" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Bình Thường
                             </label>
                         </div>
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="hot" required>
+                                name="hot">
                             <label class="form-check-label" for="flexCheckDefault">
                                 Nổi Bật
                             </label>
