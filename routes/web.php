@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::get('/bill', [AdminBillController::class, 'index']);
-        Route::get('/billdetail{id_bill}{id_user}', [AdminBillController::class, 'billdetail']);
+        Route::get('/billdetail{id_bill}/{id_user}', [AdminBillController::class, 'billdetail']);
         Route::post('/storebill', [AdminBillController::class, 'storebill']);
         Route::get('/editbill{id_bill}', [AdminBillController::class, 'editbill']);
         Route::post('/updatebill{id_bill}', [AdminBillController::class, 'updatebill']);

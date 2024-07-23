@@ -55,14 +55,14 @@
                     <div class="card-body">
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
-                                name="gender" {{ $nv->role == '0' ? 'checked' : '' }}>
+                                name="gender" {{ $nv->gender == '0' ? 'checked' : '' }}>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Nam
                             </label>
                         </div>
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="gender" {{ $nv->role == '1' ? 'checked' : '' }}>
+                                name="gender" {{ $nv->gender == '1' ? 'checked' : '' }}>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Nữ
                             </label>

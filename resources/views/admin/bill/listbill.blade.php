@@ -53,7 +53,7 @@
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/admin/billdetail{{ $item->id_bill}}{{$item->id_user}}"><i class="fa-regular fa-eye"></i> Chi tiết</a>
+                                        <a class="btn btn-primary btn-sm" href="/admin/billdetail{{ $item->id_bill}}/{{$item->id_user}}"><i class="fa-regular fa-eye"></i> Chi tiết</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="hide" {{ $category->hide == 0 ? 'checked' : '' }} required>
+                                name="hide" {{ $category->hide == 1 ? 'checked' : '' }} required>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Hiện
                             </label>
