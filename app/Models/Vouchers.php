@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Vouchers extends Model
 {
     use HasFactory;
-    protected $table = 'Vouchers';
+    protected $table = 'vouchers';
     protected $primaryKey = 'id_voucher';
     protected $fillable = [
         'name', 'code', 'number', 'status', 'count_voucher'
