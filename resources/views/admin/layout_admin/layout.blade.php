@@ -50,7 +50,7 @@
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             <div class="accordion-item">
                                 <button class="accordion-button collapsed" type="button">
-                                    <a href="/admin/" class="nav-link text-white">Bảng tin</a>
+                                    <a href="/admin/" class="nav-link text-white">Dashboard</a>
                                 </button>
                             </div>
                             {{-- Role 1 & 3 --}}
