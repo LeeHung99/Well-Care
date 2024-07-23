@@ -82,7 +82,7 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $item->secate_name }}</td>
-                                    <td><img src="http://127.0.0.1:8000/images/category/{{ $item->avatar }}" alt=""
+                                    <td><img src="https://cms.wellcarepharmacy.shop/images/category/{{ $item->avatar }}" alt=""
                                             width="150px" height="75px"></td>
                                     <td>{{ $item->cate_name }}</td>
                                     <td>{{ $item->hide == 0 ? 'Đang ẩn' : 'Đang hiện' }}</td>

@@ -70,7 +70,7 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td><b>{{ $item->name }}</b></td>
-                                <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}"
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}"
                                         alt="Không có hình ảnh" width="100px"></td>
                                 <td><b>{{ number_format($item->price) }} VNĐ</b></td>
                                 <td>{{ $item->quantity }}</td>

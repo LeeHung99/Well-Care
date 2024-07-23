@@ -129,7 +129,7 @@
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->Third_categories['name'] }}</td>
-                                    <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}" alt=""
+                                    <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
                                             width="150px" height="75px"></td>
                                     <td>{{ number_format($item->price, 0, ',', '.') . ' ₫' }}</td>
                                     <td>{{ $item->in_stock }}</td>

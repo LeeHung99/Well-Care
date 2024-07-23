@@ -13,7 +13,7 @@
                     <div class="input-group mb-3">
                         <input type="file" name="image" class="form-control" id="imgInp" >
                     </div>
-                    <img id="blah" src="http://127.0.0.1:8000/images/banner/{{$banners->image}}" alt="your image" width="70%" />
+                    <img id="blah" src="https://cms.wellcarepharmacy.shop/images/banner/{{$banners->image}}" alt="your image" width="70%" />
                 </div>
                 <script>
                     imgInp.onchange = evt => {

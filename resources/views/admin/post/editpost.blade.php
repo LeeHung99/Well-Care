@@ -51,7 +51,7 @@
                         <div class="input-group mb-3">
                             <input type="file" class="form-control" id="imgInp" name="avatar" value="{{$post->avatar}}">
                         </div>
-                        <img id="blah" src="http://127.0.0.1:8000/images/post/{{$post->avatar}}" alt="your image" width="90%" />
+                        <img id="blah" src="https://cms.wellcarepharmacy.shop/images/post/{{$post->avatar}}" alt="your image" width="90%" />
                     </div>
                 </div>
                 <div class='mt-3 px-2'>

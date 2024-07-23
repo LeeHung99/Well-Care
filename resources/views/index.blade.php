@@ -263,7 +263,7 @@
                         @foreach ($productbc as $index => $item)
                             <tr>
                                 <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}" alt=""
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
                                         width="50px"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->sold }}</td>
@@ -291,7 +291,7 @@
                         @foreach ($productbl as $index => $item)
                             <tr>
                                 <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}" alt=""
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
                                         width="50px"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->comment_count }}</td>
@@ -321,7 +321,7 @@
                         @foreach ($productshh as $index => $item)
                             <tr>
                                 <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}" alt=""
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
                                         width="50px"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->in_stock }}</td>
@@ -350,7 +350,7 @@
                         @foreach ($producthh as $index => $item)
                             <tr>
                                 <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="http://127.0.0.1:8000/images/product/{{ $item->avatar }}" alt=""
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
                                         width="50px"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->in_stock }}</td>
