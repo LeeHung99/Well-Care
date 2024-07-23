@@ -8,19 +8,31 @@
             <div class="col-xl-8">
                 <div class='mb-3 px-2'>
                     <label><b>Tên voucher</b></label>
-                    <input type="text" name="name"  class="form-control"></input>
+                    <input type="text" name="name" class="form-control"></input>
+                    @if ($errors->has('name'))
+                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                    @endif
                 </div>
                 <div class='mb-3 px-2'>
                     <label><b>Mã giảm giá</b></label>
-                    <input type="text" name="code"  class="form-control"></input>
+                    <input type="text" name="code" class="form-control"></input>
+                    @if ($errors->has('code'))
+                        <span class="text-danger">{{ $errors->first('code') }}</span>
+                    @endif
                 </div>
                 <div class='mb-3 px-2'>
                     <label><b>Giảm giá</b></label>
-                    <input type="number" name="number"  class="form-control"></input>
+                    <input type="number" name="number" class="form-control"></input>
+                    @if ($errors->has('number'))
+                        <span class="text-danger">{{ $errors->first('number') }}</span>
+                    @endif
                 </div>
                 <div class='mb-3 px-2'>
                     <label><b>Số lượng</b></label>
-                    <input type="number" name="count_voucher"  class="form-control"></input>
+                    <input type="number" name="count_voucher" class="form-control"></input>
+                    @if ($errors->has('count_voucher'))
+                        <span class="text-danger">{{ $errors->first('count_voucher') }}</span>
+                    @endif
                 </div>
             </div>
             <div class="col-xl-4">
@@ -31,15 +43,15 @@
                     <div class="card-body">
                         <div class="form-check ms-2">
                             <input class="form-check-input" type="radio" id="flexCheckDefault" value="0"
-                                name="status" required>
+                                name="status" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                                 Theo phần trăm (%)
                             </label>
                         </div>
                         <div class="form-check ms-2">
-                            <input class="form-check-input" type="radio" id="flexCheckDefault" value="1"
-                                name="status" required>
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="radio" id="flexCheckDefault1" value="1"
+                                name="status">
+                            <label class="form-check-label" for="flexCheckDefault1">
                                 Theo giá tiền (VNĐ)
                             </label>
                         </div>

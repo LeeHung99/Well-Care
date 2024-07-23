@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VoucherValid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +20,7 @@ class AdminVoucherController extends Controller
     {
         return view('admin/voucher/creatvoucher');
     }
-    public function storevoucher(Request $request)
+    public function storevoucher(VoucherValid $request)
     {
         $name = $request['name'];
         $code = $request['code'];
