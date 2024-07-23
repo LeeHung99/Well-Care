@@ -28,7 +28,7 @@
                 <div class="col-xl-12 d-flex justify-content-between align-content-center nav-bar">
                     <div class="view-website d-flex">
                         <i class="fa-solid fa-house-laptop"></i>
-                        <p><a href="http://localhost:3000/" class="nav-link" title="View website">Well-care</a></p>
+                        <p><a href="http://wellcarepharmacy.shop/" class="nav-link" title="View website">Well-care</a></p>
                     </div>
                     <div class="view-user d-flex">
                         <p> Chào, <span> {{ Auth::user()->name }}</span></p>
