@@ -26,7 +26,7 @@
                     </div>
                     <div class='mb-3 px-2' style="width: 50%">
                         <label><b>Giá</b></label> <span style="color: red">*</span>
-                        <input type="text" name="price" value="{{ number_format($data->price, 0, ',', '.') }}"
+                        <input type="text" name="price" value="{{ $data->price }}"
                             class="form-control" />
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
@@ -93,7 +93,7 @@
             <div class="col-xl-4" style="display: flex; flex-direction: column; justify-content: space-between">
                 <div class="card" style="width: 90%;">
                     <div class="card-header">
-                        <label><b>Danh mục</b></label>
+                        <label><b>Danh mục</b> <span style="color: red">*</span></label> 
                         <select name="category" class="form-control">
                             @foreach ($third_cate as $category)
                                 <option value="{{ $category->id_third_category }}" name="category"
@@ -128,7 +128,7 @@
                 <div class="card" style="width: 90%;">
                     <div class="card-header">
                         <label><b>Hình ảnh phụ (tối đa 4 hình ảnh)</b></label>
-                        <input type="file" multiple id="fileInput" name="" accept=".png,.jpg,.jpeg,.webp"
+                        <input type="file" multiple id="fileInput" name=""
                             class="form-control upload__inputfile">
                         <div id="preview-container" style="margin-top: 10px">
                             @foreach ($image_product as $index => $image)
@@ -145,9 +145,9 @@
                                 @endforeach
                             @endforeach
                         </div>
-                        {{-- @if ($errors->has('avatar_sub'))
+                        @if ($errors->has('avatar_sub'))
                             <span class="text-danger">{{ $errors->first('avatar_sub') }}</span>
-                        @endif --}}
+                        @endif
                         <input type="hidden" id="deletedImages" name="deletedImages" value="">
                     </div>
                 </div>
@@ -307,8 +307,8 @@
         const fileInput = document.querySelector('.upload__inputfile');
         const deletedImagesInput = document.getElementById('deletedImages');
         const MAX_FILES = 4;
-        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
-        const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
+        // const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+        // const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
         let currentFileCount = previewContainer.querySelectorAll('.img-container').length;
 
@@ -363,22 +363,22 @@
 
             files.forEach(file => {
                 // code cũ
-                // if (file.type.startsWith('image/') && currentFileCount < MAX_FILES) {
-                //     createImagePreview(file);
-                //     currentFileCount++;
-                //     updateFileInput();
-                // }
-
-                if (ALLOWED_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE &&
-                    currentFileCount < MAX_FILES) {
+                if (currentFileCount < MAX_FILES) {
                     createImagePreview(file);
                     currentFileCount++;
                     updateFileInput();
-                } else {
-                    alert(
-                        `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`
-                    );
                 }
+
+                // if (ALLOWED_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE &&
+                //     currentFileCount < MAX_FILES) {
+                //     createImagePreview(file);
+                //     currentFileCount++;
+                //     updateFileInput();
+                // } else {
+                //     alert(
+                //         `File ${file.name} không hợp lệ. Chỉ chấp nhận file PNG, JPG, WEBP dưới 2MB.`
+                //     );
+                // }
             });
 
             // Clone the FileList to a new input for form submission

@@ -49,6 +49,7 @@ class ProductValid extends FormRequest
             'name.required' => 'Bạn chưa nhập tên sản phẩm.',
             'price.required' => 'Bạn chưa nhập giá sản phẩm.',
             'price.numeric' => 'Giá sản phẩm phải là số.',
+            'price.min' => 'Giá trị nhỏ nhất phải bằng 0',
             'in_stock.required' => 'Bạn chưa nhập số lượng tồn kho.',
             'in_stock.integer' => 'Giá trị không hợp lệ.',
             'brand.required' => 'Bạn chưa nhập thương hiệu.',

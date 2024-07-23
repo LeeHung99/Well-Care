@@ -69,6 +69,7 @@ class AdminProductController extends Controller
     public function updateproduct(ProductEditValid $request, $id)
     {
 
+        // dd($request);
         $data = Products::findOrFail($id);
         $imageProduct = Image_products::where('id_image_product', $data->id_image_product)->first();
 
