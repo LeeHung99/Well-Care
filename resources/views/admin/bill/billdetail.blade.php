@@ -7,7 +7,7 @@
                 enctype="multipart/form-data"> @csrf
                 <select class="form-select" name="transport_status" aria-label="Default select example" required>
                     @foreach ($transport_status as $key => $status)
-                        <option value="{{ $key }}" {{$key == $bill->transport_status? "selected":""}}>
+                        <option value="{{ $key }}" {{ $key == $bill->transport_status ? 'selected' : '' }}>
                             {{ $status }}</option>
                     @endforeach
                 </select>
@@ -36,11 +36,15 @@
                     @endif
                 </p>
                 <p><b>Tình trạng:</b>
-                    @foreach ($payment_status as $key => $status)
-                        @if ($bill->payment_status == $key)
-                            {{ $status }}
-                        @endif
-                    @endforeach
+                    @if ($bill->transport_status == 2)
+                        Đã thanh toán
+                    @else
+                        @foreach ($payment_status as $key => $status)
+                            @if ($bill->payment_status == $key)
+                                {{ $status }}
+                            @endif
+                        @endforeach
+                    @endif
                 </p>
                 <p><b>Voucher sử dụng:</b>
                     @if ($bill->voucher == null)
@@ -74,7 +78,7 @@
                                         alt="Không có hình ảnh" width="100px"></td>
                                 <td><b>{{ number_format($item->price) }} VNĐ</b></td>
                                 <td>{{ $item->quantity }}</td>
-                                <td><b>{{ number_format(($item->price)*($item->quantity))}} VNĐ</b></td>
+                                <td><b>{{ number_format($item->price * $item->quantity) }} VNĐ</b></td>
                                 <td>{{ $item->created_at }}</td>
                             </tr>
                         @endforeach
