@@ -32,7 +32,6 @@ Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
 
-
 Route::get('order_view', function () {
     return 'cc';
 })->name('order_view');
