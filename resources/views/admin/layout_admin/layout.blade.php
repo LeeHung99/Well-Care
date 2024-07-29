@@ -71,6 +71,8 @@
                                                         class="nav-link text-white">Tất cả bài viết</a></li>
                                                 <li class="list-group-item"><a href="/admin/createpost"
                                                         class="nav-link text-white">Viết bài mới</a></li>
+                                                <li class="list-group-item"><a href="/admin/catepost"
+                                                        class="nav-link text-white">Danh mục bài viết</a></li>
                                             </ul>
                                         </div>
                                     </div>

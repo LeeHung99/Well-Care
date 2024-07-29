@@ -20,6 +20,8 @@ use App\Http\Controllers\AdminBannerController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminVoucherController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminCatePost;
+use App\Http\Controllers\AdminCatePostController;
 use App\Http\Controllers\AdminCommentController;
 use App\Http\Controllers\AdminObjectController;
 use App\Http\Controllers\AdminSeCategoryController;
@@ -29,7 +31,6 @@ use App\Http\Controllers\SickController;
 Route::get('login', [AdminController::class, 'loginAdmin'])->name('login');
 Route::post('login_verify', [AdminController::class, 'loginVerify'])->name('loginVerify');
 // Route::get('createAdminUser', [AdminController::class, 'createAdminUser']);
-
 
 Route::get('order_view', function () {
     return 'cc';
@@ -188,6 +189,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/updatepost{id_post}', [AdminPostsController::class, 'updatepost']);
         Route::post('/destroypost{id_post}', [AdminPostsController::class, 'destroypost']);
 
+        Route::get('catepost', [AdminCatePostController::class, 'index'])->name('catepost');
+        Route::get('createCatePostView', [AdminCatePostController::class, 'createView'])->name('createCatePostView');
+        Route::post('storeCatePost', [AdminCatePostController::class, 'store'])->name('storeCatePost');
+        Route::get('editCatePost/{id}', [AdminCatePostController::class, 'editView'])->name('editCatePost');
+        Route::post('updateCatePost/{id}', [AdminCatePostController::class, 'update'])->name('updateCatePost');
+        Route::get('destroyCatePost/{id}', [AdminCatePostController::class, 'destroy'])->name('destroyCatePost');
         /**
          * Insert image trong CKEditor
          */

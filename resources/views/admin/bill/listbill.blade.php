@@ -23,7 +23,7 @@
                                 <th scope="col">#Mã Đơn hàng</th>
                                 <th scope="col">Người Mua</th>
                                 <th scope="col">Tình Trạng Đơn Hàng</th>
-                                <th scope="col">Tình Trạng Thanh Toán</th>  
+                                <th scope="col">Tình Trạng Thanh Toán</th>
                                 <th scope="col"><i class="fa-regular fa-clock"></i> Ngày mua</th>
                                 <th scope="col">Hành động</th>
                             </tr>
@@ -44,16 +44,23 @@
                                     </td>
                                     <td>
                                         @php
-                                            foreach ($payment_status as $key1 => $status1) {
-                                                if ($item->payment_status == $key1) {
-                                                    echo $status1;
+                                            if ($item->transport_status == 2) {
+                                                echo $payment_status[1];
+                                            } else {
+                                                foreach ($payment_status as $key1 => $status1) {
+                                                    if ($item->payment_status == $key1) {
+                                                        echo $status1;
+                                                    }
                                                 }
                                             }
+
                                         @endphp
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/admin/billdetail{{ $item->id_bill}}/{{$item->id_user}}"><i class="fa-regular fa-eye"></i> Chi tiết</a>
+                                        <a class="btn btn-primary btn-sm"
+                                            href="/admin/billdetail{{ $item->id_bill }}/{{ $item->id_user }}"><i
+                                                class="fa-regular fa-eye"></i> Chi tiết</a>
                                     </td>
                                 </tr>
                             @endforeach

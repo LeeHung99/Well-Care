@@ -10,4 +10,7 @@ class Article_categories extends Model
     use HasFactory;
     protected $table = 'article_categories';
     protected $primaryKey = 'id_article_category';
+    protected $fillable = [
+        'name', 'hide'
+    ];
 }
