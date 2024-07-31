@@ -10,12 +10,34 @@ use Illuminate\Support\Facades\Log;
 
 class AdminObjectController extends Controller
 {
-    public function index()
+    /**
+     * function index with search
+     */
+    public function index(Request $request)
     {
         $perPage = 10;
-        $data = Objects::orderBy('created_at', 'desc')->paginate($perPage);
-        return view('admin.object.list_object', compact('data'));
+        $search = $request->get('search');
+
+        $query = Objects::orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $data = $query->paginate($perPage);
+
+        return view('admin.object.list_object', compact('data', 'search'));
     }
+
+    /**
+     * function index without search
+     */
+    // public function index()
+    // {
+    //     $perPage = 10;
+    //     $data = Objects::orderBy('created_at', 'desc')->paginate($perPage);
+    //     return view('admin.object.list_object', compact('data'));
+    // }
     public function storeView()
     {
         return view('admin.object.store_object');

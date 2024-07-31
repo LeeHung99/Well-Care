@@ -10,13 +10,36 @@ use Illuminate\Support\Facades\Log;
 
 class SickController extends Controller
 {
-    public function index()
+    /**
+     * function index with search
+     */
+    public function index(Request $request)
     {
         $perPage = 10;
-        $data = Sick::orderBy('created_at', 'desc')->paginate($perPage);
-        // dd($data);
-        return view('admin.sick.list_sick', compact('data'));
+        $search = $request->get('search');
+
+        $query = Sick::orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $data = $query->paginate($perPage);
+
+        return view('admin.sick.list_sick', compact('data', 'search'));
     }
+
+
+    /**
+     * function index without search
+     */
+    // public function index()
+    // {
+    //     $perPage = 10;
+    //     $data = Sick::orderBy('created_at', 'desc')->paginate($perPage);
+    //     // dd($data);
+    //     return view('admin.sick.list_sick', compact('data'));
+    // }
     public function storeView()
     {
         return view('admin.sick.store_sick');
@@ -70,7 +93,8 @@ class SickController extends Controller
         }
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $sick = Sick::where('id_sick', $id)->first();
 
         $productsCount = Products::where('id_sick', $id)->count();
