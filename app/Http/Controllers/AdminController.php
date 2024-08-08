@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginValid;
 use App\Models\User;
+use App\Models\Comments;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
+use App\Http\Requests\LoginValid;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 Paginator::useBootstrap();
 
@@ -92,6 +93,8 @@ class AdminController extends Controller
             ->limit(10)
             ->get();
 
+        $latestComment = Comments::with('user', 'product')
+            ->orderBy('created_at', 'desc')->limit(10)->get();
         $startDate = Carbon::now()->subDays(7)->toDateString();
         $endDate = Carbon::now()->toDateString();
         $data = $this->getData($startDate, $endDate);
@@ -110,6 +113,7 @@ class AdminController extends Controller
             'revenueData' => $revenueData,
             'selectedYear' => $currentYear,
             'topUsers' => $topUsers,
+            'latestComment' => $latestComment,
         ]);
     }
     public function updateData(Request $request)

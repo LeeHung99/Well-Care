@@ -214,95 +214,6 @@
         </div>
     </div>
     <div class="row pt-3">
-        <div class="col-xl-12 pe-4">
-            <div class="card">
-                <div class="card-header text-bg-danger">
-                    <b>Top 10 khách hàng mua hàng nhiều nhất</b>
-                </div>
-                <table class="table table-striped border text-center align-middle">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID khách hàng</th>
-                            <th scope="col">Tên khách hàng</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Số đơn hàng</th>
-                            <th scope="col">Tổng tiền đã mua</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($topUsers as $index => $item)
-                            <tr>
-                                <th scope="row">#{{ $item->id_user }}</th>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->phone }}</td>
-                                <td>{{ $item->purchase_count }}</td>
-                                <td><b>{{number_format($item->total_spent)}} VNĐ</b></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3">
-        <div class="col-xl-6">
-            <div class="card">
-                <div class="card-header text-bg-danger">
-                    <b>Top 10 sản phẩm bán chạy</b>
-                </div>
-                <table class="table table-striped border text-center align-middle">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID sản phẩm</th>
-                            <th scope="col">Hình ảnh</th>
-                            <th scope="col">Tên Sản Phẩm</th>
-                            <th scope="col">Số lượng đã bán</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($productbc as $index => $item)
-                            <tr>
-                                <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
-                                        width="50px"></td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->sold }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-xl-6 pe-4">
-            <div class="card">
-                <div class="card-header text-bg-danger">
-                    <b>Top 10 sản phẩm có nhiều bình luận nhất</b>
-                </div>
-                <table class="table table-striped border text-center align-middle">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID sản phẩm</th>
-                            <th scope="col">Hình ảnh</th>
-                            <th scope="col">Tên Sản Phẩm</th>
-                            <th scope="col">Số lượt bình luận</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($productbl as $index => $item)
-                            <tr>
-                                <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
-                                        width="50px"></td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->comment_count }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3">
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header text-bg-danger">
@@ -321,8 +232,8 @@
                         @foreach ($productshh as $index => $item)
                             <tr>
                                 <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
-                                        width="50px"></td>
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}"
+                                        alt="" width="50px"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->in_stock }}</td>
                             </tr>
@@ -350,10 +261,131 @@
                         @foreach ($producthh as $index => $item)
                             <tr>
                                 <th scope="row">#{{ $item->id_product }}</th>
-                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}" alt=""
-                                        width="50px"></td>
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}"
+                                        alt="" width="50px"></td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->in_stock }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-xl-12 pe-4">
+            <div class="card">
+                <div class="card-header text-bg-danger">
+                    <b>Top 10 khách hàng mua hàng nhiều nhất</b>
+                </div>
+                <table class="table table-striped border text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID khách hàng</th>
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Số đơn hàng</th>
+                            <th scope="col">Tổng tiền đã mua</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($topUsers as $index => $item)
+                            <tr>
+                                <th scope="row">#{{ $item->id_user }}</th>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->phone }}</td>
+                                <td>{{ $item->purchase_count }}</td>
+                                <td><b>{{ number_format($item->total_spent) }} VNĐ</b></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-xl-12 pe-4">
+            <div class="card">
+                <div class="card-header text-bg-danger">
+                    <b>Top 10 bình luận mới nhất</b>
+                </div>
+                <table class="table table-striped border text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID bình luận</th>
+                            <th scope="col">ID sản phẩm</th>
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Nội dung</th>
+                            {{-- <th scope="col">Số đơn hàng</th>
+                            <th scope="col">Tổng tiền đã mua</th> --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($latestComment as $index => $item)
+                            <tr>
+                                <th scope="row">#{{ $item->id_comment }}</th>
+                                <td>{{ $item->id_product }}</td>
+                                <td>{{ $item->user['name'] }}</td>
+                                <td style="width: 65%">{{ $item->content }}</td>
+                                {{-- <td><b>{{ number_format($item->total_spent) }} VNĐ</b></td> --}}
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header text-bg-danger">
+                    <b>Top 10 sản phẩm bán chạy</b>
+                </div>
+                <table class="table table-striped border text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID sản phẩm</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Tên Sản Phẩm</th>
+                            <th scope="col">Số lượng đã bán</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($productbc as $index => $item)
+                            <tr>
+                                <th scope="row">#{{ $item->id_product }}</th>
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}"
+                                        alt="" width="50px"></td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->sold }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xl-6 pe-4">
+            <div class="card">
+                <div class="card-header text-bg-danger">
+                    <b>Top 10 sản phẩm có nhiều bình luận nhất</b>
+                </div>
+                <table class="table table-striped border text-center align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID sản phẩm</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Tên Sản Phẩm</th>
+                            <th scope="col">Số lượt bình luận</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($productbl as $index => $item)
+                            <tr>
+                                <th scope="row">#{{ $item->id_product }}</th>
+                                <td><img src="https://cms.wellcarepharmacy.shop/images/product/{{ $item->avatar }}"
+                                        alt="" width="50px"></td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->comment_count }}</td>
                             </tr>
                         @endforeach
                     </tbody>

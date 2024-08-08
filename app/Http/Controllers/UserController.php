@@ -38,7 +38,7 @@ class UserController extends Controller
     {
         $configuration = new Configuration(
             host: '2v51dp.api.infobip.com',
-            apiKey: '2eb7ed915f697472f9eddbda405d069e-873cc948-cfda-44fd-9e9a-a60b94cb3ce4'
+            apiKey: '989ad8a177a201f0b7f80f1595d8af45-77acd5f0-8d69-41b2-b1a4-81561db6462c'
         );
 
         $brand_name = 'WellCare';

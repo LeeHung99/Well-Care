@@ -21,21 +21,55 @@ class AdminProductController extends Controller
         $sort_by = $request->get('sort_by', 'created_at');
         $sort_order = $request->get('sort_order', 'desc');
         $search = $request->get('search');
+        $category = $request->get('category');
+        $price_min = $request->get('price_min');
+        $price_max = $request->get('price_max');
+        $stock = $request->get('stock');
 
-        $query  = Products::with('Third_categories');
-
+        $query = Products::with('Third_categories');
+        $third_cate = Third_categories::all();
         if ($search) {
-            $query->where('name', 'like', '%' . $search . '%')
-                ->orWhere('brand', 'like', '%' . $search . '%');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('brand', 'like', '%' . $search . '%');
+            });
+        }
+        // dd($category);
+        if ($category) {
+            $query->where('id_third_category', $category);
+        }
+
+        if ($price_min) {
+            $query->where('price', '>=', $price_min)->orderBy('price', 'asc');
+        }
+
+        if ($price_max) {
+            $query->where('price', '<=', $price_max);
+        }
+
+        if ($stock) {
+            $query->where('in_stock', '<=', 20)->orderBy('in_stock', 'asc');
         }
 
         $data = $query->orderBy($sort_by, $sort_order)
-            ->paginate($perpage);
-
+            // ->orderBy('price', 'asc')
+            ->paginate($perpage)
+            ->appends([
+                'search' => $search,
+                'category' => $category,
+                'price_min' => $price_min,
+                'price_max' => $price_max,
+                'stock' => $stock,
+            ]);
+            // dd($data);
+        if ($data->isEmpty()) {
+            $data = 'Không có sản phẩm tương tự';
+        }
         return view('admin.product.list_product', [
             'data' => $data,
             'sort_by' => $sort_by,
-            'sort_order' => $sort_order
+            'sort_order' => $sort_order,
+            'categories' => $third_cate
         ]);
     }
 

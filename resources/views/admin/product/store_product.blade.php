@@ -380,51 +380,6 @@
             });
         });
 
-        // document.querySelectorAll('.input_file').forEach(function(fileInput) {
-        //     const reasonId = fileInput.id.split('_')[1];
-        //     const previewContainer = document.getElementById(`preview-containerr`);
-        //     let fileIndex = 0;
-
-        //     fileInput.addEventListener('change', function(event) {
-        //         // Xóa nội dung cũ của previewContainer
-        //         previewContainer.innerHTML = '';
-
-        //         const files = Array.from(event.target.files);
-        //         files.forEach(file => {
-        //             if (file.type.startsWith('image/')) {
-        //                 // Tạo một input file mới
-        //                 // const newInput = document.createElement('input');
-        //                 // newInput.type = 'file';
-        //                 // newInput.className = `images`;
-        //                 // newInput.name = `images[${fileIndex}]`;
-        //                 // newInput.style.display = 'none';
-
-        //                 // // Tạo một đối tượng DataTransfer và thêm file vào đó
-        //                 // const dataTransfer = new DataTransfer();
-        //                 // dataTransfer.items.add(file);
-        //                 // newInput.files = dataTransfer.files;
-        //                 // fileInputsContainer.appendChild(newInput);
-        //                 // fileIndex++;
-
-        //                 // Hiển thị preview
-        //                 const reader = new FileReader();
-        //                 reader.onload = function(e) {
-        //                     const img = document.createElement('img');
-        //                     img.src = e.target.result;
-        //                     img.alt = file.name;
-        //                     img.classList.add('preview-img');
-        //                     img.style.maxWidth = '100px';
-        //                     img.style.marginRight = '10px';
-        //                     previewContainer.appendChild(img);
-        //                 }
-        //                 reader.readAsDataURL(file);
-        //             }
-        //         });
-
-        //         // Reset input gốc
-        //         this.value = '';
-        //     });
-        // });
         document.querySelectorAll('.input_file').forEach(function(fileInput) {
             fileInput.addEventListener('change', function(event) {
                 const previewContainer = document.getElementById('preview-containerr');

@@ -1,8 +1,6 @@
-{{-- <style>
-    thead a {
-        color: black
-    }
-</style> --}}
+<style>
+
+</style>
 @extends('admin/layout_admin/layout')
 @section('noidungchinh')
     <div class="title_post d-flex my-3">
@@ -40,8 +38,8 @@
                                 <tr>
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td>{{ $item->user['name'] }}</td>
-                                    <td>{{ $item->product['name'] }}</td>
-                                    <td>{{ $item->content }}</td>
+                                    <td class="product-css">{{ $item->product['name'] }}</td>
+                                    <td style="width: 65%">{{ $item->content }}</td>
                                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm delete-button"
