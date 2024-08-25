@@ -47,9 +47,17 @@ class AdminProductController extends Controller
             $query->where('price', '<=', $price_max);
         }
 
-        if ($stock) {
-            $query->where('in_stock', '<=', 20)->orderBy('in_stock', 'asc');
+
+        if ($stock !== null) {
+            if ($stock == 0) {
+                $query->where('in_stock', 0)->orderBy('in_stock', 'asc');
+            } elseif ($stock == 1) {
+                $query->where('in_stock', '>', 0)
+                    ->where('in_stock', '<=', 20)
+                    ->orderBy('in_stock', 'asc');
+            }
         }
+
 
         $data = $query->orderBy($sort_by, $sort_order)
             // ->orderBy('price', 'asc')
@@ -61,7 +69,7 @@ class AdminProductController extends Controller
                 'price_max' => $price_max,
                 'stock' => $stock,
             ]);
-            // dd($data);
+        // dd($data);
         if ($data->isEmpty()) {
             $data = 'Không có sản phẩm tương tự';
         }

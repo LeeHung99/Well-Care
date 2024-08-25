@@ -132,6 +132,7 @@
 
         <select name="stock">
             <option value="">Tồn kho</option>
+            <option value="0" {{ request('stock') == 0 ? 'selected' : '' }}>Hết hàng</option>
             <option value="1" {{ request('stock') == 1 ? 'selected' : '' }}>Sắp hết hàng</option>
         </select>
 
