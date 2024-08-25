@@ -63,6 +63,7 @@ class AdminController extends Controller
         $perpage = 5;
         $productshh = DB::table('products')
             ->where('in_stock', '<=', 10)
+            ->where('in_stock', '>', 0)
             ->paginate($perpage);
         $producthh = DB::table('products')
             ->where('in_stock', 0)

@@ -248,7 +248,7 @@
                 <div class="card-header text-bg-danger">
                     <b>Danh sách sản phẩm hết hàng</b>
                 </div>
-                <table class="table table-striped border text-center align-middle">
+                <table class="table table-striped border text-center align-middle mb-0">
                     <thead>
                         <tr>
                             <th scope="col">ID sản phẩm</th>
@@ -341,7 +341,7 @@
                 <div class="card-header text-bg-danger">
                     <b>Top 10 sản phẩm bán chạy</b>
                 </div>
-                <table class="table table-striped border text-center align-middle">
+                <table class="table table-striped border text-center align-middle mb-0">
                     <thead>
                         <tr>
                             <th scope="col">ID sản phẩm</th>
@@ -369,7 +369,7 @@
                 <div class="card-header text-bg-danger">
                     <b>Top 10 sản phẩm có nhiều bình luận nhất</b>
                 </div>
-                <table class="table table-striped border text-center align-middle">
+                <table class="table table-striped border text-center align-middle mb-0">
                     <thead>
                         <tr>
                             <th scope="col">ID sản phẩm</th>
